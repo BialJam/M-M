@@ -2,6 +2,7 @@ package com.github.czyzby.bj2016.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,12 +11,14 @@ import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
+import com.github.czyzby.autumn.mvc.stereotype.Asset;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.bj2016.service.Box2DService;
 
 /** Renders Box2D world. */
 @View(id = "game", value = "ui/templates/game.lml")
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer {
+    @Asset("game/sprites.atlas") private TextureAtlas atlas;
     @Inject private Box2DService box2d;
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 

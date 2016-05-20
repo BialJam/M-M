@@ -1,0 +1,20 @@
+
+sprites.png
+size: 256,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dres
+  rotate: false
+  xy: 1, 51
+  size: 128, 135
+  orig: 128, 135
+  offset: 0, 0
+  index: -1
+dres-small
+  rotate: false
+  xy: 1, 1
+  size: 48, 49
+  orig: 48, 49
+  offset: 0, 0
+  index: -1
