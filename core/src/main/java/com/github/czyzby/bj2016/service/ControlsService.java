@@ -67,9 +67,6 @@ public class ControlsService extends AbstractService {
 
     /** @return controllers assigned to all players. Order matches players' IDs. */
     public Array<Control> getControls() {
-        if (controls.size != 4) {
-            throw new RuntimeException("Teraz.");
-        }
         return controls;
     }
 }

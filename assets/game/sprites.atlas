@@ -13,7 +13,21 @@ dres
   index: -1
 dres-small
   rotate: false
-  xy: 98, 65
+  xy: 195, 65
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+kibol
+  rotate: false
+  xy: 98, 1
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+kibol-small
+  rotate: false
+  xy: 195, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -11,6 +11,7 @@ import com.github.czyzby.autumn.annotation.Destroy;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.bj2016.Root;
 import com.github.czyzby.bj2016.configuration.Configuration;
+import com.github.czyzby.bj2016.entity.SpriteType;
 import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 
@@ -22,11 +23,13 @@ public class Box2DService {
     private static final float WIDTH = Root.WIDTH / 10f; // Width of Box2D world.
     private static final float HEIGHT = Root.HEIGHT / 10f; // Height of Box2D world.
     @Inject private ControlsService controlsService;
+    @Inject private PlayerService playerService;
 
     private World world;
     private float timeSinceUpdate;
     private final Viewport viewport = new StretchViewport(WIDTH, HEIGHT);
     private final Array<Control> activeControls = GdxArrays.newArray();
+    private final Array<SpriteType> spriteTypes = GdxArrays.newArray();
 
     /** Call this method to (re)create Box2D world according to current settings. */
     public void create() {
@@ -37,7 +40,7 @@ public class Box2DService {
             final Control control = controls.get(index);
             if (control.isActive()) {
                 activeControls.add(control);
-                // TODO Create a new player.
+                spriteTypes.add(playerService.getSpriteType(index));
             }
         }
     }
@@ -78,6 +81,7 @@ public class Box2DService {
     @Destroy
     public void dispose() {
         activeControls.clear();
+        spriteTypes.clear();
         if (world != null) {
             world.dispose();
             world = null;
