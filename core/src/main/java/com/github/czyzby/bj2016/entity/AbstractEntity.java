@@ -10,6 +10,7 @@ import com.github.czyzby.bj2016.service.Box2DService;
 public abstract class AbstractEntity implements Entity {
     protected final Box2DService box2d;
     protected final Body body;
+    private boolean destroyed;
 
     public AbstractEntity(final Box2DService box2d) {
         this.box2d = box2d;
@@ -27,5 +28,30 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public Body getBody() {
         return body;
+    }
+
+    @Override
+    public void setDestroyed(final boolean destroyed) {
+        this.destroyed = destroyed;
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    @Override
+    public void destroy() {
+        box2d.getWorld().destroyBody(body);
+    }
+
+    @Override
+    public float getX() {
+        return body.getPosition().x;
+    }
+
+    @Override
+    public float getY() {
+        return body.getPosition().y;
     }
 }

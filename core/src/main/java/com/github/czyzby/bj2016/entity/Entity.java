@@ -14,4 +14,19 @@ public interface Entity {
 
     /** @param delta time since last update. */
     void update(float delta);
+
+    /** @return if entity was destroyed this turn. */
+    boolean isDestroyed();
+
+    /** @param destroyed if true, entity will be removed after this update. */
+    void setDestroyed(boolean destroyed);
+
+    /** Invoked if the entity reports as destroyed. */
+    void destroy();
+
+    /** @return position on X axis. */
+    float getX();
+
+    /** @return position on Y axis. */
+    float getY();
 }

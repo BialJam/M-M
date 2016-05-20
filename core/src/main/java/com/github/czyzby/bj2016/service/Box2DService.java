@@ -13,17 +13,16 @@ import com.github.czyzby.bj2016.Root;
 import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.service.controls.Control;
+import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 
 /** Manages 2D physics engine. */
 @Component
 public class Box2DService extends AbstractService {
-    /** Pixel per unit ratio. */
-    private static final float PPU = 10f;
     private static final Vector2 GRAVITY = new Vector2(0f, 0f); // Box2D world gravity vector.
     private static final float STEP = 1f / 30f; // Length of a single Box2D step.
-    private static final float WIDTH = Root.WIDTH / PPU; // Width of Box2D world.
-    private static final float HEIGHT = Root.HEIGHT / PPU; // Height of Box2D world.
+    private static final float WIDTH = Root.WIDTH / Box2DUtil.PPU; // Width of Box2D world.
+    private static final float HEIGHT = Root.HEIGHT / Box2DUtil.PPU; // Height of Box2D world.
     @Inject private ControlsService controlsService;
     @Inject private PlayerService playerService;
 
@@ -54,6 +53,7 @@ public class Box2DService extends AbstractService {
             for (final Player player : players) {
                 player.update(STEP);
             }
+            // TODO update entities, destroy
         }
     }
 

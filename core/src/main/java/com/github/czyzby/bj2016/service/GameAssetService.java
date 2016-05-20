@@ -1,5 +1,6 @@
 package com.github.czyzby.bj2016.service;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -29,5 +30,11 @@ public class GameAssetService {
      * @return drawable created using chosen region. */
     public Drawable getDrawable(final String drawableName) {
         return new TextureRegionDrawable(getRegion(drawableName));
+    }
+
+    /** @param drawableName name of texture region.
+     * @return sprite created using chosen region. */
+    public Sprite getSprite(final String drawableName) {
+        return atlas.createSprite(drawableName);
     }
 }

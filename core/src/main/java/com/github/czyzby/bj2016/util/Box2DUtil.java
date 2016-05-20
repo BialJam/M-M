@@ -4,6 +4,9 @@ package com.github.czyzby.bj2016.util;
  *
  * @author MJ */ // ARGHRGH, no time for public static final. Let's go with an interface.
 public interface Box2DUtil {
+    /** Pixel per unit ratio. */
+    float PPU = 10f;
+
     /** Player 1 minions. */
     short CAT_PLAYER0 = 1 << 0;
     /** Player 2 minions. */

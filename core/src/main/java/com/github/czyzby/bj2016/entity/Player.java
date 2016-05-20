@@ -47,7 +47,7 @@ public class Player extends AbstractEntity {
 
         addHeadFixture(body);
         final PolygonShape shape = new PolygonShape();
-        shape.setAsBox(48f / 40f, 96f / 40f, new Vector2(0f, -1f), 0f);
+        shape.setAsBox(48f / 35f, 96f / 40f, new Vector2(0f, -1f), 0f);
         body.createFixture(getFixtureDef(shape));
         shape.dispose();
 
@@ -66,7 +66,8 @@ public class Player extends AbstractEntity {
 
     private static void addHeadFixture(final Body body) {
         final CircleShape shape = new CircleShape();
-        shape.setRadius(48f / 20f);
+        shape.setRadius(48f / 18f);
+        shape.setPosition(new Vector2(0f, 0.3f));
         body.createFixture(getFixtureDef(shape));
         shape.dispose();
     }
@@ -87,5 +88,11 @@ public class Player extends AbstractEntity {
         control.update(box2d.getViewport(), pos.x, pos.y);
         final Vector2 dir = control.getMovementDirection();
         body.applyForceToCenter(dir.x * Box2DUtil.PLAYER_SPEED * delta, dir.y * Box2DUtil.PLAYER_SPEED * delta, true);
+    }
+
+    /** @return true if player is currently moving. */
+    public boolean isMoving() {
+        final Vector2 dir = control.getMovementDirection();
+        return dir.x != 0f || dir.y != 0f;
     }
 }
