@@ -9,6 +9,10 @@ import com.github.czyzby.kiwi.log.LoggerService;
 public class AbstractService {
     private final Logger logger = LoggerService.forClass(getClass());
 
+    protected void log(final Object object) {
+        logger.info("{0}", object);
+    }
+
     protected void log(final String message, final Object... args) {
         logger.info(message, args);
     }

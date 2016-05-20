@@ -6,19 +6,35 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 
-/** Represents player sprites.
+/** Represents player Box2D entities.
  *
  * @author MJ */
 public class Player extends AbstractEntity {
     private final Control control;
+    private final int id;
+    private final SpriteType sprite;
 
-    public Player(final Box2DService box2d, final Control control) {
+    public Player(final Box2DService box2d, final int id, final Control control, final SpriteType sprite) {
         super(box2d);
+        this.id = id;
         this.control = control;
+        this.sprite = sprite;
+    }
+
+    /** @return unique ID of the player. */
+    public int getId() {
+        return id;
+    }
+
+    /** @return image representing the player. */
+    public SpriteType getSprite() {
+        return sprite;
     }
 
     @Override
@@ -26,22 +42,33 @@ public class Player extends AbstractEntity {
         final BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DynamicBody;
         bodyDef.fixedRotation = true;
-        bodyDef.linearDamping = 1f; // TODO
+        bodyDef.linearDamping = 2f;
+        final Body body = box2d.getWorld().createBody(bodyDef);
 
-        final CircleShape shape = new CircleShape();
-        shape.setRadius(0.5f);
+        addHeadFixture(body);
+        final PolygonShape shape = new PolygonShape();
+        shape.setAsBox(48f / 40f, 96f / 40f, new Vector2(0f, -1f), 0f);
+        body.createFixture(getFixtureDef(shape));
+        shape.dispose();
 
+        return body;
+    }
+
+    private static FixtureDef getFixtureDef(final Shape shape) {
         final FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.filter.categoryBits = Box2DUtil.CAT_PLAYERS;
         fixtureDef.filter.maskBits = Box2DUtil.MASK_PLAYER;
-        fixtureDef.density = 0.4f; // TODO
+        fixtureDef.density = 0.4f;
         fixtureDef.restitution = 0.3f;
+        return fixtureDef;
+    }
 
-        final Body body = box2d.getWorld().createBody(bodyDef);
-        body.createFixture(fixtureDef);
+    private static void addHeadFixture(final Body body) {
+        final CircleShape shape = new CircleShape();
+        shape.setRadius(48f / 20f);
+        body.createFixture(getFixtureDef(shape));
         shape.dispose();
-        return body;
     }
 
     @Override
@@ -49,11 +76,16 @@ public class Player extends AbstractEntity {
         return EntityType.PLAYER;
     }
 
+    /** @return input listener attached to player's entity. */
+    public Control getControl() {
+        return control;
+    }
+
     @Override
     public void update(final float delta) {
         final Vector2 pos = body.getPosition();
         control.update(box2d.getViewport(), pos.x, pos.y);
         final Vector2 dir = control.getMovementDirection();
-        body.applyForceToCenter(dir.x * Box2DUtil.PLAYER_SPEED * delta, dir.y * Box2DUtil.PLAYER_SPEED, true);
+        body.applyForceToCenter(dir.x * Box2DUtil.PLAYER_SPEED * delta, dir.y * Box2DUtil.PLAYER_SPEED * delta, true);
     }
 }

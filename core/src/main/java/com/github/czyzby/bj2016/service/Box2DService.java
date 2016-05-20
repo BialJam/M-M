@@ -11,25 +11,26 @@ import com.github.czyzby.autumn.annotation.Destroy;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.bj2016.Root;
 import com.github.czyzby.bj2016.configuration.Configuration;
-import com.github.czyzby.bj2016.entity.SpriteType;
+import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 
 /** Manages 2D physics engine. */
 @Component
-public class Box2DService {
-    private static final Vector2 GRAVITY = new Vector2(0f, -9.81f); // Box2D world gravity vector.
+public class Box2DService extends AbstractService {
+    /** Pixel per unit ratio. */
+    private static final float PPU = 10f;
+    private static final Vector2 GRAVITY = new Vector2(0f, 0f); // Box2D world gravity vector.
     private static final float STEP = 1f / 30f; // Length of a single Box2D step.
-    private static final float WIDTH = Root.WIDTH / 10f; // Width of Box2D world.
-    private static final float HEIGHT = Root.HEIGHT / 10f; // Height of Box2D world.
+    private static final float WIDTH = Root.WIDTH / PPU; // Width of Box2D world.
+    private static final float HEIGHT = Root.HEIGHT / PPU; // Height of Box2D world.
     @Inject private ControlsService controlsService;
     @Inject private PlayerService playerService;
 
     private World world;
     private float timeSinceUpdate;
     private final Viewport viewport = new StretchViewport(WIDTH, HEIGHT);
-    private final Array<Control> activeControls = GdxArrays.newArray();
-    private final Array<SpriteType> spriteTypes = GdxArrays.newArray();
+    private final Array<Player> players = GdxArrays.newArray();
 
     /** Call this method to (re)create Box2D world according to current settings. */
     public void create() {
@@ -39,8 +40,7 @@ public class Box2DService {
         for (int index = 0; index < Configuration.PLAYERS_AMOUNT; index++) {
             final Control control = controls.get(index);
             if (control.isActive()) {
-                activeControls.add(control);
-                spriteTypes.add(playerService.getSpriteType(index));
+                players.add(new Player(this, index, control, playerService.getSpriteType(index)));
             }
         }
     }
@@ -51,14 +51,21 @@ public class Box2DService {
         while (timeSinceUpdate > STEP) {
             timeSinceUpdate -= STEP;
             world.step(STEP, 8, 3);
-            // TODO Update entities.
+            for (final Player player : players) {
+                player.update(STEP);
+            }
         }
+    }
+
+    /** @return list of current players. */
+    public Array<Player> getPlayers() {
+        return players;
     }
 
     /** @param inputMultiplexer will listen to player input events. */
     public void initiateControls(final InputMultiplexer inputMultiplexer) {
-        for (final Control control : activeControls) {
-            control.attachInputListener(inputMultiplexer);
+        for (final Player player : players) {
+            player.getControl().attachInputListener(inputMultiplexer);
         }
     }
 
@@ -80,8 +87,7 @@ public class Box2DService {
 
     @Destroy
     public void dispose() {
-        activeControls.clear();
-        spriteTypes.clear();
+        players.clear();
         if (world != null) {
             world.dispose();
             world = null;
