@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.IntMap;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Initiate;
 import com.github.czyzby.bj2016.configuration.Configuration;
-import com.github.czyzby.bj2016.entity.SpriteType;
+import com.github.czyzby.bj2016.entity.sprite.SpriteType;
 
 /** Manages player game settings.
  *

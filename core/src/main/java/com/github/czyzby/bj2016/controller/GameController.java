@@ -16,7 +16,7 @@ import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.bj2016.entity.Player;
-import com.github.czyzby.bj2016.entity.PlayerSprite;
+import com.github.czyzby.bj2016.entity.sprite.PlayerSprite;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.GameAssetService;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;

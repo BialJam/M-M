@@ -1,4 +1,4 @@
-package com.github.czyzby.bj2016.entity;
+package com.github.czyzby.bj2016.entity.sprite;
 
 /** Contains types of are available character sprites in the game.
  *

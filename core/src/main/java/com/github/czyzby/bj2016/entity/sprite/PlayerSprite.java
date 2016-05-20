@@ -1,8 +1,9 @@
-package com.github.czyzby.bj2016.entity;
+package com.github.czyzby.bj2016.entity.sprite;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.gdx.scene2d.range.FloatRange;
 
