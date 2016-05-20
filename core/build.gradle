@@ -1,0 +1,17 @@
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-core'
+
+dependencies {
+  compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+  compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+  compile "com.badlogicgames.box2dlights:box2dlights:$box2dlightsVersion"
+  compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+  compile "com.github.czyzby:gdx-autumn-mvc:$autumnMvcVersion"
+  compile "com.github.czyzby:gdx-lml:$lmlVersion"
+  compile "com.github.czyzby:gdx-kiwi:$kiwiVersion"
+  compile "com.github.czyzby:gdx-autumn:$autumnVersion"
+  compile "com.kotcrab.vis:vis-ui:$visUiVersion"
+  compile "com.github.czyzby:noise4j:$noise4jVersion"
+  compile "com.github.czyzby:gdx-lml-vis:$lmlVisVersion"
+}
+        

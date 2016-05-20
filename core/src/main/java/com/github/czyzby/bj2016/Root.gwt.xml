@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.6.1//EN" "https://gwt.googlesource.com/gwt/+/2.6.1/distro-source/core/src/gwt-module.dtd">
+<module>
+    <source path="" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.preferences.dto.AbstractPreference" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.bj2016.configuration" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.bj2016.controller" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.bj2016.service" />
+</module>
