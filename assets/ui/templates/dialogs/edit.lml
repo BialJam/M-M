@@ -1,7 +1,7 @@
 <dialog id="dialog" title="@editControls" style="dialog" oneColumn="true">
 	<table id="mainTable"/>
 	<label style="small" color="vis-blue">@editControlsPrompt</label>
-	<container background="border-round">
+	<container background="round">
 		<floatingGroup prefSize="125">
 			<image id="mock" style="sprite" />
 		</floatingGroup>

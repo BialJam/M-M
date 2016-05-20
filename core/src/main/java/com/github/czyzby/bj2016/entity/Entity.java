@@ -11,4 +11,7 @@ public interface Entity {
 
     /** @return function of the entity. */
     EntityType getType();
+
+    /** @param delta time since last update. */
+    void update(float delta);
 }

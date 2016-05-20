@@ -2,7 +2,9 @@
 	<table defaultPad="4">
 		<:loop times="$playersAmount">
 			<textButton id="prev{loop:index}" onChange="prev">@lt</textButton>
-			<image id="sprite{loop:index}"/>
+			<container size="96" background="round">
+				<image id="sprite{loop:index}"/>
+			</container>
 			<textButton id="next{loop:index}" onChange="next">@gt</textButton>
 			<label color="vis-blue" style="small" align="left">@player{loop:index}</label>
 			<textButton id="edit{loop:index}" onChange="edit">@edit</textButton>
