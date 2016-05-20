@@ -62,7 +62,7 @@ public class Configuration {
     @Initiate
     public void initiateConfiguration(final SkinService skinService) {
         // Loading default VisUI skin with the selected scale:
-        VisUI.load(VisUI.SkinScale.X2);
+        VisUI.load("ui/skin.json");
         // Registering VisUI skin with "default" name - this skin will be the default one for all LML widgets:
         skinService.addSkin("default", VisUI.getSkin());
         // Methods not annotated with @LmlAction will not be available in LML views.

@@ -2,7 +2,7 @@
 	<!-- Note that all values (like width and height) are in viewport units, 
 		not pixels. Its somewhat safe to use "magic" values. Values in {= } are equations; 
 		values proceeded with $ reference Java methods. -->
-	<tabbedPane selected="0" width="400" minHeight="360">
+	<tabbedPane selected="0" width="450" minHeight="360">
 		<!-- :setting macro is defined at global.lml. -->
 		<:setting name="@music">
 			@musicVolume
@@ -34,7 +34,8 @@
 		<:if test="!$isMobile">
 		<:setting name="@gui">
 			@fullscreen
-			<table defaultPad="3" defaultGrowX="true">
+			<scrollPane width="430" height="200" fadeBars="false" disableX="true">
+			<table defaultPad="10" defaultGrowX="true" tablePadRight="30">
 			<!-- $displayModes is a method from SettingsController that returns all 
 				supported fullscreen modes. -->
 				<:each mode="$displayModes">
@@ -43,6 +44,7 @@
 				</:each>
 				<textButton onChange="resetFullscreen">@reset</textButton>
 			</table>
+			</scrollPane>
 		</:setting>
 		</:if>
 	</tabbedPane>

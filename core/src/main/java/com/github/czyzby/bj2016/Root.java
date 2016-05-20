@@ -4,5 +4,5 @@ package com.github.czyzby.bj2016;
  * with proper Autumn MVC annotations will be found, scanned and initiated. */
 public class Root {
     /** Default application size. */
-    public static final int WIDTH = 450, HEIGHT = 600;
+    public static final int WIDTH = 700, HEIGHT = 700;
 }
