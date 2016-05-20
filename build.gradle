@@ -39,6 +39,8 @@ tasks.eclipse.doLast {
   delete '.settings/'
 }
 
+task pack(dependsOn: ['packUi', 'packSprites'])
+
 // Run `gradle pack` task to generate skin.atlas file at assets/ui.
 import com.badlogic.gdx.tools.texturepacker.TexturePacker
 task packUi << {

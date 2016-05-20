@@ -5,7 +5,8 @@ package com.github.czyzby.bj2016.entity.sprite;
  * @author MJ */
 public enum SpriteType {
     THUG("dres"),
-    FAN("kibol");
+    FAN("kibol"),
+    EMO("emo");
 
     private final String id;
     private final String smallDrawable;

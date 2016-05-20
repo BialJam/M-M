@@ -3,40 +3,54 @@ package com.github.czyzby.bj2016.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
+import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.entity.sprite.PlayerSprite;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.GameAssetService;
+import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
+import com.github.czyzby.lml.annotation.LmlActor;
 
 /** Renders Box2D world. */
 @View(id = "game", value = "ui/templates/game.lml")
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer {
+    private static final int BG_X = (int) -(Box2DUtil.WIDTH / 2f), BG_Y = (int) -(Box2DUtil.HEIGHT / 2f);
+
     @Inject private Box2DService box2d;
     @Inject private GameAssetService gameAssetService;
+    @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
     private final Array<PlayerSprite> sprites = GdxArrays.newArray();
     private final float white = Color.WHITE.toFloatBits();
+    private Texture background;
 
     @Override
     public void show(final Stage stage, final Action action) {
         box2d.create();
         sprites.clear();
+        background = gameAssetService.getRandomBackground();
+        for (final Table table : playerViews) {
+            table.setVisible(false);
+        }
         for (final Player player : box2d.getPlayers()) {
             final Sprite sprite = gameAssetService.getSprite(player.getSprite().getDrawableName());
             sprites.add(new PlayerSprite(player, sprite));
+            playerViews.get(player.getId()).setVisible(true);
         }
         super.show(stage, Actions.sequence(action, Actions.run(new Runnable() {
             @Override
@@ -61,9 +75,10 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         }
         renderer.render(box2d.getWorld(), box2d.getViewport().getCamera().combined);
         final Batch batch = stage.getBatch();
-        batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);
         batch.begin();
+        batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);
         batch.setColor(white);
+        batch.draw(background, BG_X, BG_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
         for (final PlayerSprite sprite : sprites) {
             sprite.update(delta);
             sprite.draw(batch);

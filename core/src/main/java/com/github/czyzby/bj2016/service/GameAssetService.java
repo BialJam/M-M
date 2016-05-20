@@ -1,10 +1,13 @@
 package com.github.czyzby.bj2016.service;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.mvc.stereotype.Asset;
 
@@ -13,6 +16,7 @@ import com.github.czyzby.autumn.mvc.stereotype.Asset;
  * @author MJ */
 @Component
 public class GameAssetService {
+    @Asset(value = "game/bg0.png", type = Texture.class) Array<Texture> backgrounds;
     @Asset("game/sprites.atlas") private TextureAtlas atlas;
 
     /** @return atlas with all game sprites. */
@@ -36,5 +40,10 @@ public class GameAssetService {
      * @return sprite created using chosen region. */
     public Sprite getSprite(final String drawableName) {
         return atlas.createSprite(drawableName);
+    }
+
+    /** @return random background texture. */
+    public Texture getRandomBackground() {
+        return backgrounds.get(MathUtils.random(backgrounds.size - 1));
     }
 }

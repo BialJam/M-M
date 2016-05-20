@@ -1,5 +1,9 @@
-<table fillParent="true" align="bottom">
+<table fillParent="true" align="bottom" defaultExpand="true">
+	<table id="player0" align="topLeft">@player0</table>
+	<table id="player2" align="topRight">@player2</table>
 	<!-- Thanks to "goto:menu" action, clicking this button will change the 
 		screen to menu.lml. -->
-	<textButton onChange="goto:menu">@back</textButton>
+	<textButton onChange="goto:menu" align="bottom">@back</textButton>
+	<table id="player3" align="bottomLeft">@player3</table>
+	<table id="player1" align="bottomRight">@player1</table>
 </table>
