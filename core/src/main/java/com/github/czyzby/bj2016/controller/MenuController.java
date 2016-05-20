@@ -13,7 +13,7 @@ import com.github.czyzby.lml.parser.action.ActionContainer;
 /** Thanks to View annotation, this class will be automatically found and initiated.
  *
  * This is application's main view, displaying a menu with several options. */
-@View(id = "menu", value = "ui/templates/menu.lml")
+@View(id = "menu", value = "ui/templates/menu.lml", themes = "music/theme.ogg")
 public class MenuController implements ActionContainer {
     @Inject private InterfaceService interfaceService;
     @Inject private ControlsService controlsService;
