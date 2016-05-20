@@ -26,7 +26,7 @@ public class Box2DService {
     private World world;
     private float timeSinceUpdate;
     private final Viewport viewport = new StretchViewport(WIDTH, HEIGHT);
-    private final Array<Control> controls = GdxArrays.newArray();
+    private final Array<Control> activeControls = GdxArrays.newArray();
 
     /** Call this method to (re)create Box2D world according to current settings. */
     public void create() {
@@ -36,7 +36,7 @@ public class Box2DService {
         for (int index = 0; index < Configuration.PLAYERS_AMOUNT; index++) {
             final Control control = controls.get(index);
             if (control.isActive()) {
-                controls.add(control);
+                activeControls.add(control);
                 // TODO Create a new player.
             }
         }
@@ -54,7 +54,7 @@ public class Box2DService {
 
     /** @param inputMultiplexer will listen to player input events. */
     public void initiateControls(final InputMultiplexer inputMultiplexer) {
-        for (final Control control : controls) {
+        for (final Control control : activeControls) {
             control.attachInputListener(inputMultiplexer);
         }
     }
@@ -77,7 +77,7 @@ public class Box2DService {
 
     @Destroy
     public void dispose() {
-        controls.clear();
+        activeControls.clear();
         if (world != null) {
             world.dispose();
             world = null;

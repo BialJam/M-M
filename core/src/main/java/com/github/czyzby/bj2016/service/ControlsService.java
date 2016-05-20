@@ -6,17 +6,28 @@ import com.github.czyzby.autumn.annotation.Destroy;
 import com.github.czyzby.autumn.annotation.Initiate;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.config.AutumnActionPriority;
-import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.configuration.preferences.ControlsData;
 import com.github.czyzby.bj2016.configuration.preferences.ControlsPreference;
 import com.github.czyzby.bj2016.service.controls.Control;
+import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 
 /** Manages players' controls. */
 @Component
-public class ControlsService {
+public class ControlsService extends AbstractService {
     @Inject private ControlsPreference preference;
     private final Array<Control> controls = new Array<Control>();
+
+    /** @return amount of currently active players. */
+    public int getActivePlayersAmount() {
+        int count = 0;
+        for (final Control control : controls) {
+            if (control.isActive()) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     @Initiate
     public void readControlsFromPreferences() {
@@ -56,6 +67,9 @@ public class ControlsService {
 
     /** @return controllers assigned to all players. Order matches players' IDs. */
     public Array<Control> getControls() {
+        if (controls.size != 4) {
+            throw new RuntimeException("Teraz.");
+        }
         return controls;
     }
 }

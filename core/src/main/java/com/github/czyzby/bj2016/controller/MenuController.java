@@ -1,12 +1,10 @@
 package com.github.czyzby.bj2016.controller;
 
-import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.bj2016.controller.dialog.NotEnoughPlayersErrorController;
 import com.github.czyzby.bj2016.service.ControlsService;
-import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.lml.annotation.LmlAction;
 import com.github.czyzby.lml.parser.action.ActionContainer;
 
@@ -20,20 +18,10 @@ public class MenuController implements ActionContainer {
 
     @LmlAction("startGame")
     public void startPlaying() {
-        if (isAnyPlayerActive()) {
+        if (controlsService.getActivePlayersAmount() >= 2) {
             interfaceService.show(GameController.class);
         } else {
             interfaceService.showDialog(NotEnoughPlayersErrorController.class);
         }
-    }
-
-    private boolean isAnyPlayerActive() {
-        final Array<Control> controls = controlsService.getControls();
-        for (final Control control : controls) {
-            if (control.isActive()) {
-                return true;
-            }
-        }
-        return false;
     }
 }
