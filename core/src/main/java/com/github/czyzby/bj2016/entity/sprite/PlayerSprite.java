@@ -20,8 +20,7 @@ public class PlayerSprite implements Comparable<PlayerSprite> {
         this.player = player;
         this.sprite = sprite;
         sprite.setSize(sprite.getRegionWidth() / Box2DUtil.PPU, sprite.getRegionHeight() / Box2DUtil.PPU);
-        sprite.setOrigin(sprite.getRegionWidth() / 2f / Box2DUtil.PPU,
-                sprite.getRegionWidth() * 2f / 3f / Box2DUtil.PPU);
+        sprite.setOrigin(sprite.getRegionWidth() / 2f / Box2DUtil.PPU, sprite.getRegionWidth() / 2f / Box2DUtil.PPU);
     }
 
     /** @param delta time since last update. */

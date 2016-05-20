@@ -10,6 +10,7 @@ import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Destroy;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.bj2016.configuration.Configuration;
+import com.github.czyzby.bj2016.entity.BoundsEntity;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.bj2016.util.Box2DUtil;
@@ -32,6 +33,7 @@ public class Box2DService extends AbstractService {
     public void create() {
         dispose();
         world = new World(GRAVITY, true);
+        createGameBounds();
         final Array<Control> controls = controlsService.getControls();
         for (int index = 0; index < Configuration.PLAYERS_AMOUNT; index++) {
             final Control control = controls.get(index);
@@ -39,6 +41,10 @@ public class Box2DService extends AbstractService {
                 players.add(new Player(this, index, control, playerService.getSpriteType(index)));
             }
         }
+    }
+
+    private BoundsEntity createGameBounds() {
+        return new BoundsEntity(this);
     }
 
     /** @param delta time passed since last update. Will be used to update Box2D world.
