@@ -35,7 +35,7 @@
 		<:setting name="@gui">
 			@fullscreen
 			<scrollPane width="430" height="200" fadeBars="false" disableX="true">
-			<table defaultPad="10" defaultGrowX="true" tablePadRight="30">
+			<table defaultPad="5" defaultGrowX="true" tablePadRight="30">
 			<!-- $displayModes is a method from SettingsController that returns all 
 				supported fullscreen modes. -->
 				<:each mode="$displayModes">

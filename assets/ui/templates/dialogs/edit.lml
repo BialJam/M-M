@@ -1,9 +1,9 @@
-global.lml<dialog id="dialog" title="@editControls" style="dialog" oneColumn="true">
+<dialog id="dialog" title="@editControls" style="dialog" oneColumn="true">
 	<table id="mainTable"/>
 	<label style="small" color="vis-blue">@editControlsPrompt</label>
-	<container background="border">
-		<floatingGroup prefSize="90">
-			<image id="mock" style="touchpad-knob" />
+	<container background="border-round">
+		<floatingGroup prefSize="125">
+			<image id="mock" style="sprite" />
 		</floatingGroup>
 	</container>
 	<isolate>
