@@ -1,20 +1,20 @@
 
 sprites.png
-size: 256,256
+size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 dres
   rotate: false
-  xy: 1, 51
-  size: 128, 135
-  orig: 128, 135
+  xy: 1, 1
+  size: 96, 96
+  orig: 96, 96
   offset: 0, 0
   index: -1
 dres-small
   rotate: false
-  xy: 1, 1
-  size: 48, 49
-  orig: 48, 49
+  xy: 98, 65
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1

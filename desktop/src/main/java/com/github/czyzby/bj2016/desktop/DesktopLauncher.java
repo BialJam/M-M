@@ -8,7 +8,7 @@ import com.github.czyzby.bj2016.Root;
 
 /** Launches the desktop (LWJGL) application. */
 public class DesktopLauncher {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         createApplication();
     }
 
@@ -18,8 +18,8 @@ public class DesktopLauncher {
     }
 
     private static LwjglApplicationConfiguration getDefaultConfiguration() {
-        LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
-        configuration.title = "BJ2016";
+        final LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
+        configuration.title = "BialJam, M&M 2016";
         configuration.width = Root.WIDTH;
         configuration.height = Root.HEIGHT;
         return configuration;

@@ -1,6 +1,9 @@
 <dialog id="dialog" title="@controls" style="dialog">
 	<table defaultPad="4">
 		<:loop times="$playersAmount">
+			<textButton id="prev{loop:index}" onChange="prev">@lt</textButton>
+			<image id="sprite{loop:index}"/>
+			<textButton id="next{loop:index}" onChange="next">@gt</textButton>
 			<label color="vis-blue" style="small" align="left">@player{loop:index}</label>
 			<textButton id="edit{loop:index}" onChange="edit">@edit</textButton>
 			<textButton id="switch{loop:index}" onChange="switch" row="true">@switch</textButton>

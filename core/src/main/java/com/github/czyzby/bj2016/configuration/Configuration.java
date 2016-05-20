@@ -1,5 +1,6 @@
 package com.github.czyzby.bj2016.configuration;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.github.czyzby.autumn.annotation.Component;
@@ -60,13 +61,21 @@ public class Configuration {
      *
      * @param skinService contains GUI skin. */
     @Initiate
-    public void initiateConfiguration(final SkinService skinService) {
+    public void initiateConfiguration(final SkinService skinService, final InterfaceService interfaceService) {
         // Loading default VisUI skin with the selected scale:
         VisUI.load("ui/skin.json");
         // Registering VisUI skin with "default" name - this skin will be the default one for all LML widgets:
         skinService.addSkin("default", VisUI.getSkin());
         // Methods not annotated with @LmlAction will not be available in LML views.
         Lml.EXTRACT_UNANNOTATED_METHODS = false;
+        // Changing title on bundles (re)load.
+        interfaceService.setActionOnBundlesReload(new Runnable() {
+            @Override
+            public void run() {
+                Gdx.graphics.setTitle(interfaceService.getParser().getData().getDefaultI18nBundle().get("title")
+                        + " - BialJam, M&M 2016");
+            }
+        });
         // Changing the default resizer - centering actors on resize.
         InterfaceService.DEFAULT_VIEW_RESIZER = new ViewResizer() {
             @Override
