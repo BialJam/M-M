@@ -10,7 +10,7 @@ import com.github.czyzby.kiwi.util.gdx.scene2d.range.FloatRange;
 /** Draws a single player.
  *
  * @author MJ */
-public class PlayerSprite {
+public class PlayerSprite implements Comparable<PlayerSprite> {
     private final Player player;
     private final Sprite sprite;
     private final FloatRange rotation = new FloatRange(0f, 0.3f);
@@ -48,5 +48,11 @@ public class PlayerSprite {
     /** @param batch must be begun. */
     public void draw(final Batch batch) {
         sprite.draw(batch);
+    }
+
+    @Override
+    public int compareTo(final PlayerSprite other) {
+        final float y = player.getY(), otherY = other.player.getY();
+        return y > otherY ? -1 : y < otherY ? 1 : 0;
     }
 }

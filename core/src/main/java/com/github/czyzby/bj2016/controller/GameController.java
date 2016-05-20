@@ -56,7 +56,9 @@ public class GameController extends StandardViewShower implements ViewResizer, V
 
     @Override
     public void render(final Stage stage, final float delta) {
-        box2d.update(delta);
+        if (box2d.update(delta)) {
+            sprites.sort();
+        }
         renderer.render(box2d.getWorld(), box2d.getViewport().getCamera().combined);
         final Batch batch = stage.getBatch();
         batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);

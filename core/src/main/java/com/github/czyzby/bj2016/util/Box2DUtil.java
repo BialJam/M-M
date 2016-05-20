@@ -1,11 +1,17 @@
 package com.github.czyzby.bj2016.util;
 
+import com.github.czyzby.bj2016.Root;
+
 /** Contains Box2D constants.
  *
  * @author MJ */ // ARGHRGH, no time for public static final. Let's go with an interface.
 public interface Box2DUtil {
     /** Pixel per unit ratio. */
     float PPU = 10f;
+    /** Width of Box2D world. */
+    float WIDTH = Root.WIDTH / Box2DUtil.PPU;
+    /** Height of Box2D world. */
+    float HEIGHT = Root.HEIGHT / Box2DUtil.PPU;
 
     /** Player 1 minions. */
     short CAT_PLAYER0 = 1 << 0;

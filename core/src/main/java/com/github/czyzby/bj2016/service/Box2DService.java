@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Destroy;
 import com.github.czyzby.autumn.annotation.Inject;
-import com.github.czyzby.bj2016.Root;
 import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.service.controls.Control;
@@ -21,14 +20,12 @@ import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 public class Box2DService extends AbstractService {
     private static final Vector2 GRAVITY = new Vector2(0f, 0f); // Box2D world gravity vector.
     private static final float STEP = 1f / 30f; // Length of a single Box2D step.
-    private static final float WIDTH = Root.WIDTH / Box2DUtil.PPU; // Width of Box2D world.
-    private static final float HEIGHT = Root.HEIGHT / Box2DUtil.PPU; // Height of Box2D world.
     @Inject private ControlsService controlsService;
     @Inject private PlayerService playerService;
 
     private World world;
     private float timeSinceUpdate;
-    private final Viewport viewport = new StretchViewport(WIDTH, HEIGHT);
+    private final Viewport viewport = new StretchViewport(Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
     private final Array<Player> players = GdxArrays.newArray();
 
     /** Call this method to (re)create Box2D world according to current settings. */
@@ -44,10 +41,13 @@ public class Box2DService extends AbstractService {
         }
     }
 
-    /** @param delta time passed since last update. Will be used to update Box2D world. */
-    public void update(final float delta) {
+    /** @param delta time passed since last update. Will be used to update Box2D world.
+     * @return true if world was updated. */
+    public boolean update(final float delta) {
         timeSinceUpdate += delta;
+        boolean updated = false;
         while (timeSinceUpdate > STEP) {
+            updated = true;
             timeSinceUpdate -= STEP;
             world.step(STEP, 8, 3);
             for (final Player player : players) {
@@ -55,6 +55,7 @@ public class Box2DService extends AbstractService {
             }
             // TODO update entities, destroy
         }
+        return updated;
     }
 
     /** @return list of current players. */

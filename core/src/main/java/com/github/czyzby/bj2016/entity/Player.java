@@ -26,6 +26,25 @@ public class Player extends AbstractEntity {
         this.id = id;
         this.control = control;
         this.sprite = sprite;
+        setPosition(id);
+    }
+
+    private void setPosition(final int id) {
+        final Vector2 pos = new Vector2();
+        switch (id) {
+            case 0:
+                pos.set(-Box2DUtil.WIDTH / 3f, Box2DUtil.HEIGHT / 3f);
+                break;
+            case 1:
+                pos.set(Box2DUtil.WIDTH / 3f, -Box2DUtil.HEIGHT / 3f);
+                break;
+            case 2:
+                pos.set(Box2DUtil.WIDTH / 3f, Box2DUtil.HEIGHT / 3f);
+                break;
+            default:
+                pos.set(-Box2DUtil.WIDTH / 3f, -Box2DUtil.HEIGHT / 3f);
+        }
+        body.setTransform(pos, 0f);
     }
 
     /** @return unique ID of the player. */
