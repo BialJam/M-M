@@ -46,4 +46,9 @@ public class InactiveControl implements Control {
     @Override
     public void reset(final Player player) {
     }
+
+    @Override
+    public boolean isHumanControlled() {
+        return false;
+    }
 }

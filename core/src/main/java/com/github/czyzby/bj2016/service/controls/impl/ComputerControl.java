@@ -76,4 +76,9 @@ public class ComputerControl extends AbstractControl {
         timeSinceTarget = UPDATES_TO_CHANGE_TARGET;
         timeSinceMoveChange = UPDATES_TO_CHANGE_MOVEMENT;
     }
+
+    @Override
+    public boolean isHumanControlled() {
+        return false;
+    }
 }

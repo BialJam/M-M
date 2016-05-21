@@ -51,5 +51,5 @@ public interface Box2DUtil {
     /** Speed of players (delta-dependent). */
     float PLAYER_SPEED = 17500f;
     /** Speed of minions (delta-dependent). */
-    float MINION_SPEED = 1500f;
+    float MINION_SPEED = 1750f;
 }

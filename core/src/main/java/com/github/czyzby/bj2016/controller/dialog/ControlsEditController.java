@@ -273,6 +273,9 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
 
         @Override
         public boolean act(final float delta) {
+            if (!control.isHumanControlled()) {
+                return false;
+            }
             x.setTargetValue(getX() * (parentSize - size));
             y.setTargetValue(getY() * (parentSize - size));
             x.update(delta);

@@ -37,4 +37,7 @@ public interface Control {
      *
      * @param player will use the controls. */
     void reset(Player player);
+
+    /** @return returns false for bots. */
+    boolean isHumanControlled();
 }

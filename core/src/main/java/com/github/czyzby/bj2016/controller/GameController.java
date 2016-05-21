@@ -55,10 +55,12 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     private Texture background;
 
     private float timer;
+    private boolean running;
 
     @Override
     public void show(final Stage stage, final Action action) {
         box2d.create();
+        running = true;
         background = gameAssetService.getRandomBackground();
         for (final Table table : playerViews) {
             table.setVisible(false);
@@ -118,7 +120,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
 
     @Override
     public void render(final Stage stage, final float delta) {
-        if (box2d.update(delta)) {
+        if (running && box2d.update(delta)) {
             sprites.sort();
         }
         renderer.render(box2d.getWorld(), box2d.getViewport().getCamera().combined);
@@ -180,6 +182,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
             if (sprite.isDead()) {
                 deadPlayers.add(sprite);
                 removeDead = true;
+                validatePlayers();
             }
         }
         if (removeDead) {
@@ -189,6 +192,23 @@ public class GameController extends StandardViewShower implements ViewResizer, V
                 }
             }
         }
+    }
+
+    /** Will end game if all players are dead. */
+    private void validatePlayers() {
+        if (!isAnyPlayerActive()) {
+            running = false;
+            // TODO show dialog.
+        }
+    }
+
+    private boolean isAnyPlayerActive() {
+        for (final Player player : box2d.getPlayers()) {
+            if (!player.isDestroyed() && player.getControl().isHumanControlled()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void updatePlayerPoints(final Player player, final int points) {

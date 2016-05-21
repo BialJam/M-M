@@ -38,4 +38,9 @@ public abstract class AbstractControl implements Control {
     public void reset(final Player player) {
         movement.set(0f, 0f);
     }
+
+    @Override
+    public boolean isHumanControlled() {
+        return true;
+    }
 }

@@ -52,7 +52,7 @@ public class ControlsController implements ActionContainer, ViewDialogShower {
      * @param playerId ID of the player to refresh. */
     public void refreshPlayerView(final int playerId, final Control control) {
         final String editId = "edit" + playerId;
-        if (control.isActive()) {
+        if (control.isActive() && control.isHumanControlled()) {
             editButtons.get(editId).setDisabled(false);
         } else {
             editButtons.get(editId).setDisabled(true);

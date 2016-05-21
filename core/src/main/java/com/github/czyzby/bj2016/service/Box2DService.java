@@ -17,7 +17,6 @@ import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.entity.sprite.BlockType;
 import com.github.czyzby.bj2016.service.controls.Control;
-import com.github.czyzby.bj2016.service.controls.impl.ComputerControl;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
@@ -82,8 +81,8 @@ public class Box2DService extends AbstractService {
                 players.add(player);
                 control.reset(player);
                 spawnMinions(player);
-                if (!(control instanceof ComputerControl)) {
-                    player.setHealth(100f - penalty);
+                if (control.isHumanControlled()) {
+                    player.setHealth(100f - penalty - deaths[player.getId()]);
                 }
             }
         }
@@ -111,11 +110,11 @@ public class Box2DService extends AbstractService {
         if (playerY > 0f) {
             playerY -= 8f; // Y offset to prevent from going out of the bounds.
         }
-        final int minionsAmount = player.getControl() instanceof ComputerControl ? MINIONS_AMOUNT
-                : MINIONS_AMOUNT - penalty;
+        final int minionsAmount = player.getControl().isHumanControlled()
+                ? MINIONS_AMOUNT - penalty - deaths[player.getId()] : MINIONS_AMOUNT;
         for (int index = 0; index < minionsAmount; index++) {
             final float x = index % MINION_ROW_SIZE;
-            final float y = index / 8;
+            final float y = index / MINION_ROW_SIZE;
             final Minion minion = new Minion(this, player, gridService);
             minion.getBody().setTransform(x * 1.1f + playerX, y * 1.1f + playerY, 0f);
             player.addMinion();
