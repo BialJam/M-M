@@ -92,6 +92,7 @@ public class Box2DService extends AbstractService {
             final float y = index / 8;
             final Minion minion = new Minion(this, player, gridService);
             minion.getBody().setTransform(x * 1.1f + playerX, y * 1.1f + playerY, 0f);
+            player.addMinion();
             minions.add(minion);
         }
     }
@@ -132,27 +133,44 @@ public class Box2DService extends AbstractService {
             updated = true;
             timeSinceUpdate -= STEP;
             world.step(STEP, 8, 3);
-            for (final Player player : players) {
-                player.update(STEP);
-            }
-            for (final Block block : blocks) {
-                block.update(delta);
-                if (block.isDestroyed()) {
-                    block.destroy();
-                    // TODO Sound?
-                    blocks.remove();
-                }
-            }
-            for (final Minion minion : minions) {
-                minion.update(delta);
-                if (minion.isDestroyed()) {
-                    minion.destroy();
-                    // TODO SOUND?
-                    minions.remove();
-                }
-            }
+            updatePlayers();
+            updateBlocks(delta);
+            updateMinions(delta);
         }
         return updated;
+    }
+
+    private void updatePlayers() {
+        for (int index = players.size - 1; index >= 0; index--) {
+            final Player player = players.get(index);
+            player.update(STEP);
+            if (player.isDestroyed()) {
+                player.destroy();
+                players.removeValue(player, true);
+            }
+        }
+    }
+
+    private void updateBlocks(final float delta) {
+        for (final Block block : blocks) {
+            block.update(delta);
+            if (block.isDestroyed()) {
+                block.destroy();
+                // TODO Sound?
+                blocks.remove();
+            }
+        }
+    }
+
+    private void updateMinions(final float delta) {
+        for (final Minion minion : minions) {
+            minion.update(delta);
+            if (minion.isDestroyed()) {
+                minion.destroy();
+                // TODO SOUND?
+                minions.remove();
+            }
+        }
     }
 
     /** @return list of current players. */

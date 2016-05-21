@@ -20,7 +20,7 @@ color-picker-cross
   index: -1
 color-picker-selector-horizontal
   rotate: false
-  xy: 10, 1
+  xy: 555, 40
   size: 6, 1
   orig: 6, 1
   offset: 0, 0
@@ -215,6 +215,14 @@ t-dot
   xy: 1022, 212
   size: 1, 1
   orig: 1, 1
+  offset: 0, 0
+  index: -1
+t-dot-border
+  rotate: false
+  xy: 549, 36
+  size: 5, 5
+  split: 2, 2, 2, 2
+  orig: 5, 5
   offset: 0, 0
   index: -1
 t-hknob

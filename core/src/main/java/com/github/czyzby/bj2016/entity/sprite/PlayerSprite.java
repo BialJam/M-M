@@ -15,6 +15,7 @@ public class PlayerSprite implements Comparable<PlayerSprite> {
     private final Sprite sprite;
     private final FloatRange rotation = new FloatRange(0f, 0.3f);
     private boolean stopped = true;
+    private boolean removing;
 
     public PlayerSprite(final Player player, final Sprite sprite) {
         this.player = player;
@@ -23,9 +24,22 @@ public class PlayerSprite implements Comparable<PlayerSprite> {
         sprite.setOrigin(sprite.getRegionWidth() / 2f / Box2DUtil.PPU, sprite.getRegionWidth() / 2f / Box2DUtil.PPU);
     }
 
+    /** @return game entity. */
+    public Player getPlayer() {
+        return player;
+    }
+
     /** @param delta time since last update. */
     public void update(final float delta) {
-        if (player.isMoving()) {
+        if (player.isDestroyed()) {
+            if (!removing) {
+                removing = true;
+                rotation.setTargetValue(MathUtils.randomBoolean() ? 90f : 270f);
+            }
+            rotation.update(delta);
+            sprite.setRotation(rotation.getCurrentValue());
+            return;
+        } else if (player.isMoving()) {
             if (stopped) {
                 stopped = false;
                 rotation.setTargetValue(MathUtils.randomBoolean() ? 11f : -11f);
@@ -53,5 +67,10 @@ public class PlayerSprite implements Comparable<PlayerSprite> {
     public int compareTo(final PlayerSprite other) {
         final float y = player.getY(), otherY = other.player.getY();
         return y > otherY ? -1 : y < otherY ? 1 : 0;
+    }
+
+    /** @return true if player is dead. */
+    public boolean isDead() {
+        return player.isDestroyed();
     }
 }

@@ -19,6 +19,7 @@ import com.github.czyzby.bj2016.util.Box2DUtil;
 public class Player extends AbstractEntity {
     private final Control control;
     private final SpriteType sprite;
+    private int minionsAmount;
 
     public Player(final Box2DService box2d, final int id, final Control control, final SpriteType sprite) {
         super(box2d, id);
@@ -111,5 +112,23 @@ public class Player extends AbstractEntity {
     public boolean isMoving() {
         final Vector2 dir = control.getMovementDirection();
         return dir.x != 0f || dir.y != 0f;
+    }
+
+    /** Increments minions counter. */
+    public void addMinion() {
+        minionsAmount++;
+    }
+
+    /** Decrements minions counter. */
+    public void removeMinion() {
+        minionsAmount--;
+        if (minionsAmount == 0) {
+            setDestroyed(true);
+        }
+    }
+
+    /** @return current amount of minions. */
+    public int getMinionsAmount() {
+        return minionsAmount;
     }
 }

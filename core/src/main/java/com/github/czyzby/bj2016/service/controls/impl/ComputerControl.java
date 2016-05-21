@@ -30,6 +30,10 @@ public class ComputerControl extends AbstractControl {
         timeSinceMoveChange++;
         if (timeSinceTarget >= UPDATES_TO_CHANGE_TARGET) {
             timeSinceTarget -= UPDATES_TO_CHANGE_TARGET;
+            if (box2d.getPlayers().size <= 1) {
+                target = bot;
+                return;
+            }
             target = box2d.getPlayers().random();
             if (target == bot) {
                 target = box2d.getPlayers()

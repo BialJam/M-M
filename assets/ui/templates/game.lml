@@ -1,7 +1,21 @@
 <table fillParent="true" defaultExpand="true">
-	<table id="player0" align="topLeft">@player0</table>
-	<table id="player2" align="topRight" colspan="2" row="true">@player2</table>
-	<table id="player3" align="bottomLeft">@player3</table>
-	<textButton onChange="goto:menu" align="bottom">@back</textButton>
-	<table id="player1" align="bottomRight">@player1</table>
+	<table id="player0" align="topLeft" background="border-dot">
+		<label color="t-highlight">@player0</label>
+		<label id="points0" width="100" textAlign="right">81</label>
+	</table>
+	<label id="time" align="top" color="black">00:00</label>
+	<table id="player2" align="topRight" row="true" background="border-dot">
+		<label color="t-highlight">@player2</label>
+		<label id="points2" width="100" textAlign="right">81</label>
+	</table>
+	<table id="player3" align="bottomLeft" background="border-dot">
+		<label color="t-highlight">@player3</label>
+		<label id="points3" width="100" textAlign="right">81</label>
+	</table>
+	<textButton style="menu-bar" onChange="goto:menu" align="bottom">@back
+	</textButton>
+	<table id="player1" align="bottomRight" background="border-dot">
+		<label color="t-highlight">@player1</label>
+		<label id="points1" width="100" textAlign="right">81</label>
+	</table>
 </table>

@@ -1,5 +1,7 @@
 package com.github.czyzby.bj2016.entity;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -43,5 +45,16 @@ public class BoundsEntity extends AbstractEntity {
         final Body body = box2d.getWorld().createBody(bodyDef);
         body.createFixture(fixtureDef);
         return body;
+    }
+
+    @Override
+    public void beginCollision(final Entity entity) {
+        if (entity.getType() == EntityType.PLAYER) {
+            final Vector2 velocity = entity.getBody().getLinearVelocity();
+            final float angle = MathUtils.atan2(velocity.y + MathUtils.random(-2f, 2f),
+                    velocity.x + MathUtils.random(-2f, 2f));
+            entity.getBody().applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED,
+                    MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED, true);
+        }
     }
 }

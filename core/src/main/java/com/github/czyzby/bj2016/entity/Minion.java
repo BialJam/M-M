@@ -21,6 +21,7 @@ public class Minion extends AbstractEntity {
     private final Vector2 movement = new Vector2();
     private float timeSinceLastTrack = MathUtils.random(TRACK_REFRESH);
     @SuppressWarnings("unused") private final GridService grid;
+    private float health = 20f;
 
     public Minion(final Box2DService box2d, final Player parent, final GridService grid) {
         super(box2d, parent.getId());
@@ -123,5 +124,66 @@ public class Minion extends AbstractEntity {
             default:
                 return Box2DUtil.MASK_MINION_P3;
         }
+    }
+
+    @Override
+    public void beginCollision(final Entity entity) {
+        if (entity.getType() == EntityType.MINION) {
+            final Minion other = (Minion) entity;
+            if (other.getId() <= getId()) {
+                // We want just one of the minions to handle collision.
+                return;
+            }
+            final float offset = getDirectionOffset(body, other.body);
+            final float otherOffset = getDirectionOffset(other.body, body);
+            if (offset > otherOffset) {
+                damage(other.body);
+            } else if (otherOffset > offset) {
+                other.damage(body);
+            } else {
+                final float force = getTotalForce(body);
+                final float otherForce = getTotalForce(other.body);
+                if (force > otherForce) {
+                    other.damage(body);
+                } else if (force < otherForce) {
+                    damage(other.body);
+                }
+            }
+        }
+    }
+
+    /** @param body body of the minion that damaged this entity. */
+    private void damage(final Body body) {
+        final float angle = MathUtils.atan2(body.getPosition().y - this.body.getPosition().y,
+                body.getPosition().x - this.body.getPosition().x);
+        health -= getTotalForce(body);
+        this.body.applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.MINION_SPEED,
+                MathUtils.sin(angle) * Box2DUtil.MINION_SPEED, true);
+        if (health <= 0f) {
+            setDestroyed(true);
+        }
+    }
+
+    @Override
+    public void setDestroyed(final boolean destroyed) {
+        if (isDestroyed()) {
+            return;
+        }
+        super.setDestroyed(destroyed);
+        parent.removeMinion();
+    }
+
+    private static float getTotalForce(final Body body) {
+        return Math.abs(body.getLinearVelocity().x) + Math.abs(body.getLinearVelocity().y);
+    }
+
+    private static float getDirectionOffset(final Body body, final Body other) {
+        final Vector2 velocity = body.getLinearVelocity();
+        float angle = MathUtils.atan2(velocity.y, velocity.x);
+        final float x = MathUtils.cos(angle);
+        final float y = MathUtils.sin(angle);
+        angle = MathUtils.atan2(other.getPosition().y - body.getPosition().y,
+                other.getPosition().x - body.getPosition().x);
+        return Math.abs(x - MathUtils.cos(angle)) + Math.abs(y - MathUtils.sin(angle));
     }
 }

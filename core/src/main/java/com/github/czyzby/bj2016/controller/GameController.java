@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
@@ -28,6 +29,7 @@ import com.github.czyzby.bj2016.entity.sprite.PlayerSprite;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.GameAssetService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
+import com.github.czyzby.kiwi.util.common.Strings;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
 import com.github.czyzby.lml.annotation.LmlActor;
@@ -40,8 +42,13 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @Inject private Box2DService box2d;
     @Inject private GameAssetService gameAssetService;
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
+    @LmlActor("points[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Label> pointLabels;
+    private final int[] cachedPoints = new int[Configuration.PLAYERS_AMOUNT];
+    private final StringBuilder[] builders = new StringBuilder[] { new StringBuilder(), new StringBuilder(),
+            new StringBuilder(), new StringBuilder() };
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
     private final Array<PlayerSprite> sprites = GdxArrays.newArray();
+    private final Array<PlayerSprite> deadPlayers = GdxArrays.newArray();
     private final PooledList<BlockSprite> blocks = PooledList.newList();
     private final PooledList<MinionSprite> minions = PooledList.newList();
     private final float white = Color.WHITE.toFloatBits();
@@ -69,10 +76,12 @@ public class GameController extends StandardViewShower implements ViewResizer, V
 
     private void createPlayerSprites() {
         sprites.clear();
+        deadPlayers.clear();
         for (final Player player : box2d.getPlayers()) {
             final Sprite sprite = gameAssetService.getSprite(player.getSprite().getDrawableName());
             sprites.add(new PlayerSprite(player, sprite));
             playerViews.get(player.getId()).setVisible(true);
+            pointLabels.get(player.getId()).setText(String.valueOf(player.getId()));
         }
     }
 
@@ -123,17 +132,45 @@ public class GameController extends StandardViewShower implements ViewResizer, V
                 block.draw(batch);
             }
         }
+        for (final PlayerSprite player : deadPlayers) {
+            player.update(delta);
+            player.draw(batch);
+        }
         for (final MinionSprite minion : minions) {
             if (minion.render(batch, delta)) {
                 minions.remove();
             }
         }
-        for (final PlayerSprite sprite : sprites) {
-            sprite.update(delta);
-            sprite.draw(batch);
-        }
+        renderPlayers(delta, batch);
         batch.end();
         stage.act(delta);
         stage.draw();
+    }
+
+    private void renderPlayers(final float delta, final Batch batch) {
+        boolean removeDead = false;
+        for (final PlayerSprite sprite : sprites) {
+            sprite.update(delta);
+            sprite.draw(batch);
+            final Player player = sprite.getPlayer();
+            if (player.getMinionsAmount() != cachedPoints[player.getId()]) {
+                cachedPoints[player.getId()] = player.getMinionsAmount();
+                final StringBuilder builder = builders[player.getId()];
+                Strings.clearBuilder(builder);
+                builder.append(player.getMinionsAmount());
+                pointLabels.get(player.getId()).setText(builder);
+            }
+            if (sprite.isDead()) {
+                deadPlayers.add(sprite);
+                removeDead = true;
+            }
+        }
+        if (removeDead) {
+            for (int index = sprites.size - 1; index >= 0; index--) {
+                if (sprites.get(index).isDead()) {
+                    sprites.removeIndex(index);
+                }
+            }
+        }
     }
 }

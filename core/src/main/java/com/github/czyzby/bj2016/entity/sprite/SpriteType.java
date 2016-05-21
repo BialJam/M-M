@@ -6,10 +6,11 @@ package com.github.czyzby.bj2016.entity.sprite;
 public enum SpriteType {
     THUG("dres"),
     FAN("kibol"),
-    EMO("emo"),
     LADY("moher"),
+    PUNK("punk"),
+    BUM("menel"),
     BARBIE("barbie"),
-    PUNK("punk");
+    EMO("emo");
 
     private final String id;
     private final String smallDrawable;
