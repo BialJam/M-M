@@ -19,6 +19,7 @@ public class ComputerControl extends AbstractControl {
     private Player bot, target;
     private int timeSinceTarget = UPDATES_TO_CHANGE_TARGET;
     private int timeSinceMoveChange = UPDATES_TO_CHANGE_MOVEMENT;
+    private boolean multipleTargets;
 
     @Override
     public void attachInputListener(final InputMultiplexer inputMultiplexer) {
@@ -28,19 +29,29 @@ public class ComputerControl extends AbstractControl {
     public void update(final Box2DService box2d, final Viewport viewport, final float gameX, final float gameY) {
         timeSinceTarget++;
         timeSinceMoveChange++;
-        if (target != null && target.isDestroyed()) {
+        if (target == null || target.isDestroyed()) {
             timeSinceTarget += UPDATES_TO_CHANGE_TARGET;
         }
-        if (timeSinceTarget >= UPDATES_TO_CHANGE_TARGET) {
+        if (timeSinceTarget >= UPDATES_TO_CHANGE_TARGET && multipleTargets) {
             timeSinceTarget -= UPDATES_TO_CHANGE_TARGET;
             if (box2d.getPlayers().size <= 1) {
                 target = bot;
                 return;
             }
-            target = box2d.getPlayers().random();
-            if (target == bot) {
-                target = box2d.getPlayers()
-                        .get((box2d.getPlayers().indexOf(target, true) + 1) / box2d.getPlayers().size);
+            multipleTargets = box2d.getPlayers().size > 2;
+            if (multipleTargets) {
+                target = box2d.getPlayers().random();
+                if (target == bot) {
+                    target = box2d.getPlayers()
+                            .get((box2d.getPlayers().indexOf(target, true) + 1) / box2d.getPlayers().size);
+                }
+            } else {
+                for (final Player player : box2d.getPlayers()) {
+                    if (player != bot) {
+                        target = player;
+                        break;
+                    }
+                }
             }
         }
         if (timeSinceMoveChange >= UPDATES_TO_CHANGE_MOVEMENT) {
@@ -52,7 +63,7 @@ public class ComputerControl extends AbstractControl {
     }
 
     private static float random(final Box2DService box2d) {
-        final float random = MathUtils.random(box2d.isSoloMode() ? 2f : 10f);
+        final float random = MathUtils.random(box2d.isSoloMode() ? 1f : 7.5f);
         return MathUtils.randomBoolean() ? random : -random;
     }
 
@@ -74,6 +85,7 @@ public class ComputerControl extends AbstractControl {
     public void reset(final Player player) {
         super.reset(player);
         bot = player;
+        multipleTargets = true;
         timeSinceTarget = UPDATES_TO_CHANGE_TARGET;
         timeSinceMoveChange = UPDATES_TO_CHANGE_MOVEMENT;
     }

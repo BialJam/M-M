@@ -6,35 +6,35 @@ filter: Nearest,Nearest
 repeat: none
 color-picker-bar-selector
   rotate: false
-  xy: 286, 1
+  xy: 251, 1
   size: 14, 28
   orig: 14, 28
   offset: 0, 0
   index: -1
 color-picker-cross
   rotate: false
-  xy: 765, 259
+  xy: 955, 385
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 color-picker-selector-horizontal
   rotate: false
-  xy: 777, 282
+  xy: 464, 87
   size: 6, 1
   orig: 6, 1
   offset: 0, 0
   index: -1
 color-picker-selector-vertical
   rotate: false
-  xy: 810, 302
+  xy: 950, 378
   size: 1, 6
   orig: 1, 6
   offset: 0, 0
   index: -1
 cursor
   rotate: false
-  xy: 409, 85
+  xy: 918, 330
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -70,77 +70,77 @@ icon-arrow-right
   index: -1
 icon-close
   rotate: false
-  xy: 301, 9
+  xy: 761, 226
   size: 20, 20
   orig: 44, 44
   offset: 12, 12
   index: -1
 icon-drive
   rotate: false
-  xy: 442, 103
+  xy: 765, 247
   size: 36, 10
   orig: 44, 44
   offset: 4, 18
   index: -1
 icon-file-audio
   rotate: false
-  xy: 879, 475
+  xy: 995, 475
   size: 28, 36
   orig: 44, 44
   offset: 8, 4
   index: -1
 icon-file-image
   rotate: false
-  xy: 839, 396
+  xy: 344, 1
   size: 26, 30
   orig: 44, 44
   offset: 9, 7
   index: -1
 icon-file-pdf
   rotate: false
-  xy: 380, 79
+  xy: 995, 440
   size: 28, 34
   orig: 44, 44
   offset: 8, 5
   index: -1
 icon-file-text
   rotate: false
-  xy: 879, 444
+  xy: 955, 396
   size: 26, 30
   orig: 44, 44
   offset: 9, 7
   index: -1
 icon-folder
   rotate: false
-  xy: 777, 284
+  xy: 348, 40
   size: 32, 24
   orig: 44, 44
   offset: 6, 12
   index: -1
 icon-folder-new
   rotate: false
-  xy: 777, 309
+  xy: 393, 84
   size: 35, 29
   orig: 44, 44
   offset: 5, 7
   index: -1
 icon-folder-parent
   rotate: false
-  xy: 409, 89
+  xy: 464, 89
   size: 32, 24
   orig: 44, 44
   offset: 6, 12
   index: -1
 icon-folder-star
   rotate: false
-  xy: 251, 3
+  xy: 429, 87
   size: 34, 26
   orig: 44, 44
   offset: 5, 9
   index: -1
 icon-refresh
   rotate: false
-  xy: 939, 481
+  xy: 923, 354
   size: 26, 30
   orig: 44, 44
   offset: 9, 7
@@ -154,14 +154,14 @@ icon-star
   index: -1
 icon-star-outline
   rotate: false
-  xy: 313, 30
+  xy: 313, 32
   size: 34, 32
   orig: 44, 44
   offset: 5, 6
   index: -1
 icon-trash
   rotate: false
-  xy: 966, 481
+  xy: 893, 303
   size: 24, 30
   orig: 44, 44
   offset: 10, 7
@@ -180,6 +180,13 @@ logo_pl
   orig: 256, 183
   offset: 2, 20
   index: -1
+loss
+  rotate: false
+  xy: 839, 385
+  size: 115, 126
+  orig: 128, 128
+  offset: 6, 1
+  index: -1
 solo_en
   rotate: false
   xy: 512, 388
@@ -196,14 +203,14 @@ solo_pl
   index: -1
 sprite
   rotate: false
-  xy: 313, 63
+  xy: 881, 334
   size: 41, 50
   orig: 64, 64
   offset: 13, 8
   index: -1
 t-base
   rotate: false
-  xy: 355, 65
+  xy: 368, 65
   size: 24, 48
   split: 8, 8, 8, 8
   orig: 24, 48
@@ -211,7 +218,7 @@ t-base
   index: -1
 t-border
   rotate: false
-  xy: 991, 508
+  xy: 802, 254
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -240,14 +247,14 @@ t-check-on
   index: -1
 t-dot
   rotate: false
-  xy: 284, 1
+  xy: 761, 224
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 t-dot-border
   rotate: false
-  xy: 813, 333
+  xy: 881, 259
   size: 5, 5
   split: 2, 2, 2, 2
   orig: 5, 5
@@ -255,21 +262,21 @@ t-dot-border
   index: -1
 t-hknob
   rotate: false
-  xy: 348, 48
+  xy: 381, 50
   size: 6, 14
   orig: 6, 32
   offset: 0, 9
   index: -1
 t-hline
   rotate: false
-  xy: 251, 1
+  xy: 765, 386
   size: 32, 1
   orig: 32, 1
   offset: 0, 0
   index: -1
 t-hslider
   rotate: false
-  xy: 906, 466
+  xy: 923, 345
   size: 1, 8
   orig: 1, 8
   offset: 0, 0
@@ -290,7 +297,7 @@ t-radio-on
   index: -1
 t-rounded
   rotate: false
-  xy: 908, 481
+  xy: 313, 1
   size: 30, 30
   split: 14, 14, 14, 14
   orig: 30, 30
@@ -298,7 +305,7 @@ t-rounded
   index: -1
 t-select
   rotate: false
-  xy: 765, 339
+  xy: 313, 65
   size: 54, 48
   split: 8, 32, 0, 48
   orig: 54, 48
@@ -306,56 +313,56 @@ t-select
   index: -1
 t-select-down
   rotate: false
-  xy: 820, 379
+  xy: 393, 75
   size: 14, 8
   orig: 14, 8
   offset: 0, 0
   index: -1
 t-select-up
   rotate: false
-  xy: 380, 70
+  xy: 266, 21
   size: 14, 8
   orig: 14, 8
   offset: 0, 0
   index: -1
 t-tree-minus
   rotate: false
-  xy: 355, 54
+  xy: 497, 103
   size: 10, 10
   orig: 16, 16
   offset: 2, 4
   index: -1
 t-tree-plus
   rotate: false
-  xy: 867, 428
+  xy: 983, 428
   size: 8, 14
   orig: 8, 14
   offset: 0, 0
   index: -1
 t-vknob
   rotate: false
-  xy: 839, 389
+  xy: 348, 33
   size: 14, 6
   orig: 32, 6
   offset: 9, 0
   index: -1
 t-vline
   rotate: false
-  xy: 761, 214
+  xy: 893, 270
   size: 1, 32
   orig: 1, 32
   offset: 0, 0
   index: -1
 t-vslider
   rotate: false
-  xy: 908, 479
+  xy: 429, 85
   size: 8, 1
   orig: 8, 1
   offset: 0, 0
   index: -1
 t-window
   rotate: false
-  xy: 765, 270
+  xy: 881, 265
   size: 11, 68
   split: 5, 5, 64, 3
   orig: 11, 68
@@ -363,7 +370,7 @@ t-window
   index: -1
 t-window-border
   rotate: false
-  xy: 867, 443
+  xy: 983, 443
   size: 11, 68
   split: 5, 5, 64, 3
   orig: 11, 68
@@ -371,10 +378,17 @@ t-window-border
   index: -1
 t-window-resize
   rotate: false
-  xy: 839, 427
+  xy: 955, 427
   size: 27, 84
   split: 3, 19, 2, 20
   pad: 5, 5, 50, 7
   orig: 27, 84
   offset: 0, 0
+  index: -1
+win
+  rotate: false
+  xy: 765, 258
+  size: 115, 126
+  orig: 128, 128
+  offset: 6, 1
   index: -1

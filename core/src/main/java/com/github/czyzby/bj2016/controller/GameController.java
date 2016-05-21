@@ -41,7 +41,7 @@ import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
 import com.github.czyzby.lml.annotation.LmlActor;
 
 /** Renders Box2D world. */
-@View(id = "game", value = "ui/templates/game.lml")
+@View(id = "game", value = "ui/templates/game.lml", themes = "music/megasong.ogg")
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer {
     private static final float GAME_LENGTH = 60f; // In seconds.
     private static final int BACKGROUND_X = (int) -(Box2DUtil.WIDTH / 2f),
@@ -53,6 +53,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @Inject private GameAssetService gameAssetService;
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
     @LmlActor("points[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Label> pointLabels;
+    @LmlActor("icon[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Image> playerIcons;
     @LmlActor("time") private Label timerLabel;
     @LmlActor("solo") private Image soloPrompt;
     private final int[] cachedPoints = new int[Configuration.PLAYERS_AMOUNT];
@@ -96,6 +97,8 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         for (final Player player : box2d.getPlayers()) {
             final Sprite sprite = gameAssetService.getSprite(player.getSprite().getDrawableName());
             sprites.add(new PlayerSprite(player, sprite));
+            playerIcons.get(player.getId())
+                    .setDrawable(gameAssetService.getDrawable(player.getSprite().getSmallDrawableName()));
             playerViews.get(player.getId()).setVisible(true);
             pointLabels.get(player.getId()).setText(String.valueOf(player.getId()));
         }

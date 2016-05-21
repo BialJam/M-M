@@ -7,5 +7,6 @@ public enum EntityType {
     PLAYER,
     MINION,
     BLOCK,
-    BOUND;
+    BOUND,
+    BONUS;
 }
