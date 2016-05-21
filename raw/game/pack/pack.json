@@ -1,5 +1,7 @@
 {
   duplicatePadding: false,
   paddingX: 1,
-  paddingY: 1
+  paddingY: 1,
+  filterMin: MipMapLinearNearest,
+  filterMag: MipMapLinearNearest
 }
