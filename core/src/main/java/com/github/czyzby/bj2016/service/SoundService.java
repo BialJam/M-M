@@ -13,7 +13,8 @@ import com.github.czyzby.autumn.mvc.stereotype.Asset;
 @Component
 public class SoundService {
     @Inject private MusicService musicService;
-    @Asset(value = {}, type = Sound.class) private Array<Sound> punchSounds;
+    @Asset(value = { "sounds/punch0.ogg", "sounds/punch1.ogg", "sounds/punch2.ogg", "sounds/punch3.ogg",
+            "sounds/punch4.ogg" }, type = Sound.class) private Array<Sound> punchSounds;
 
     /** Starts a random punch sound. */
     public void playRandomPunchSound() {

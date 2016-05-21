@@ -40,6 +40,8 @@ public class Box2DService extends AbstractService {
     @Inject private PlayerService playerService;
     @Inject private GridService gridService;
     @Inject private ContactService contactService;
+    @Inject private SoundService soundService;
+
     @Inject private GameController gameController; // "Because rules are meant to be broken."
 
     private World world;
@@ -212,7 +214,7 @@ public class Box2DService extends AbstractService {
             if (block.isDestroyed()) {
                 spawnBonus(block);
                 block.destroy();
-                // TODO Sound?
+                soundService.playRandomPunchSound();
                 blocks.remove();
             }
         }
@@ -232,7 +234,7 @@ public class Box2DService extends AbstractService {
             minion.update(delta);
             if (minion.isDestroyed()) {
                 minion.destroy();
-                // TODO SOUND?
+                soundService.playRandomPunchSound();
                 minions.remove();
             }
         }
