@@ -15,11 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.github.czyzby.autumn.annotation.Inject;
+import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.bj2016.configuration.Configuration;
+import com.github.czyzby.bj2016.controller.dialog.LossController;
+import com.github.czyzby.bj2016.controller.dialog.WinController;
 import com.github.czyzby.bj2016.entity.Block;
 import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
@@ -37,8 +40,11 @@ import com.github.czyzby.lml.annotation.LmlActor;
 /** Renders Box2D world. */
 @View(id = "game", value = "ui/templates/game.lml")
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer {
-    private static final int BG_X = (int) -(Box2DUtil.WIDTH / 2f), BG_Y = (int) -(Box2DUtil.HEIGHT / 2f);
+    private static final float GAME_LENGTH = 60f; // In seconds.
+    private static final int BACKGROUND_X = (int) -(Box2DUtil.WIDTH / 2f),
+            BACKGROUND_Y = (int) -(Box2DUtil.HEIGHT / 2f);
 
+    @Inject private InterfaceService interfaceService;
     @Inject private Box2DService box2d;
     @Inject private GameAssetService gameAssetService;
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
@@ -61,6 +67,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     public void show(final Stage stage, final Action action) {
         box2d.create();
         running = true;
+        timer = 0f;
         background = gameAssetService.getRandomBackground();
         for (final Table table : playerViews) {
             table.setVisible(false);
@@ -128,7 +135,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         batch.begin();
         batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);
         batch.setColor(white);
-        batch.draw(background, BG_X, BG_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
+        batch.draw(background, BACKGROUND_X, BACKGROUND_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
         for (final BlockSprite block : blocks) {
             if (block.update(delta)) {
                 blocks.remove();
@@ -158,18 +165,25 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         }
         timer += delta;
         Strings.clearBuilder(helperBuilder);
-        if (timer < 60f) {
-            helperBuilder.append("00:");
-            if (timer < 10f) {
-                helperBuilder.append('0').append((int) timer);
-            } else {
-                helperBuilder.append((int) timer);
-            }
-        } else {
-            helperBuilder.append("!!!:!!!");
+        if (timer >= GAME_LENGTH) {
             box2d.setSoloMode();
+            helperBuilder.append("!!!:!!!");
+        } else {
+            final int minutes = (int) timer / 60;
+            final int seconds = (int) timer % 60;
+            printHour(minutes);
+            helperBuilder.append(':');
+            printHour(seconds);
         }
         timerLabel.setText(helperBuilder);
+    }
+
+    private void printHour(final int minutes) {
+        // GWT does not support string format.
+        if (minutes < 10) {
+            helperBuilder.append('0');
+        }
+        helperBuilder.append(minutes);
     }
 
     private void renderPlayers(final float delta, final Batch batch) {
@@ -196,10 +210,27 @@ public class GameController extends StandardViewShower implements ViewResizer, V
 
     /** Will end game if all players are dead. */
     private void validatePlayers() {
+        if (!running) {
+            return;
+        }
         if (!isAnyPlayerActive()) {
             running = false;
-            // TODO show dialog.
+            interfaceService.showDialog(LossController.class);
+        } else if (getActivePlayersCount() == 1) {
+            running = false;
+            box2d.addPenalty(3);
+            interfaceService.showDialog(WinController.class);
         }
+    }
+
+    private int getActivePlayersCount() {
+        int count = 0;
+        for (final Player player : box2d.getPlayers()) {
+            if (!player.isDestroyed()) {
+                count++;
+            }
+        }
+        return count;
     }
 
     private boolean isAnyPlayerActive() {

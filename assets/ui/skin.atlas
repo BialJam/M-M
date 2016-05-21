@@ -1,40 +1,40 @@
 
 skin.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 color-picker-bar-selector
   rotate: false
-  xy: 541, 2
+  xy: 807, 399
   size: 14, 28
   orig: 14, 28
   offset: 0, 0
   index: -1
 color-picker-cross
   rotate: false
-  xy: 1, 3
+  xy: 765, 297
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 color-picker-selector-horizontal
   rotate: false
-  xy: 555, 40
+  xy: 859, 431
   size: 6, 1
   orig: 6, 1
   offset: 0, 0
   index: -1
 color-picker-selector-vertical
   rotate: false
-  xy: 686, 51
+  xy: 16, 1
   size: 1, 6
   orig: 1, 6
   offset: 0, 0
   index: -1
 cursor
   rotate: false
-  xy: 721, 58
+  xy: 1020, 508
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -42,140 +42,154 @@ cursor
   index: -1
 default
   rotate: false
-  xy: 1, 23
+  xy: 1, 279
   size: 510, 232
   orig: 512, 256
   offset: 0, 24
   index: -1
 font-small
   rotate: false
-  xy: 512, 91
+  xy: 1, 114
   size: 509, 164
   orig: 512, 256
   offset: 0, 91
   index: -1
 icon-arrow-left
   rotate: false
-  xy: 721, 62
+  xy: 41, 85
   size: 36, 28
   orig: 44, 44
   offset: 4, 8
   index: -1
 icon-arrow-right
   rotate: false
-  xy: 758, 62
+  xy: 904, 483
   size: 36, 28
   orig: 44, 44
   offset: 4, 8
   index: -1
 icon-close
   rotate: false
-  xy: 637, 1
+  xy: 1, 8
   size: 20, 20
   orig: 44, 44
   offset: 12, 12
   index: -1
 icon-drive
   rotate: false
-  xy: 512, 31
+  xy: 904, 472
   size: 36, 10
   orig: 44, 44
   offset: 4, 18
   index: -1
 icon-file-audio
   rotate: false
-  xy: 994, 54
+  xy: 777, 340
   size: 28, 36
   orig: 44, 44
   offset: 8, 4
   index: -1
 icon-file-image
   rotate: false
-  xy: 661, 11
+  xy: 291, 83
   size: 26, 30
   orig: 44, 44
   offset: 9, 7
   index: -1
 icon-file-pdf
   rotate: false
-  xy: 688, 23
+  xy: 41, 50
   size: 28, 34
   orig: 44, 44
   offset: 8, 5
   index: -1
 icon-file-text
   rotate: false
-  xy: 556, 9
+  xy: 318, 83
   size: 26, 30
   orig: 44, 44
   offset: 9, 7
   index: -1
 icon-folder
   rotate: false
-  xy: 866, 66
+  xy: 113, 89
   size: 32, 24
   orig: 44, 44
   offset: 6, 12
   index: -1
 icon-folder-new
   rotate: false
-  xy: 795, 61
+  xy: 859, 433
   size: 35, 29
   orig: 44, 44
   offset: 5, 7
   index: -1
 icon-folder-parent
   rotate: false
-  xy: 899, 66
+  xy: 972, 487
   size: 32, 24
   orig: 44, 44
   offset: 6, 12
   index: -1
 icon-folder-star
   rotate: false
-  xy: 831, 64
+  xy: 78, 87
   size: 34, 26
   orig: 44, 44
   offset: 5, 9
   index: -1
 icon-refresh
   rotate: false
-  xy: 717, 27
+  xy: 345, 83
   size: 26, 30
   orig: 44, 44
   offset: 9, 7
   index: -1
 icon-star
   rotate: false
-  xy: 932, 62
+  xy: 941, 483
   size: 30, 28
   orig: 44, 44
   offset: 7, 8
   index: -1
 icon-star-outline
   rotate: false
-  xy: 686, 58
+  xy: 824, 430
   size: 34, 32
   orig: 44, 44
   offset: 5, 6
   index: -1
 icon-trash
   rotate: false
-  xy: 583, 9
+  xy: 372, 83
   size: 24, 30
   orig: 44, 44
   offset: 10, 7
   index: -1
+logo_pl
+  rotate: false
+  xy: 512, 287
+  size: 252, 140
+  orig: 256, 183
+  offset: 2, 20
+  index: -1
+solo_pl
+  rotate: false
+  xy: 512, 428
+  size: 311, 83
+  orig: 340, 90
+  offset: 10, 2
+  index: -1
 sprite
   rotate: false
-  xy: 567, 40
+  xy: 765, 377
   size: 41, 50
   orig: 64, 64
   offset: 13, 8
   index: -1
 t-base
   rotate: false
-  xy: 661, 42
+  xy: 879, 463
   size: 24, 48
   split: 8, 8, 8, 8
   orig: 24, 48
@@ -183,7 +197,7 @@ t-base
   index: -1
 t-border
   rotate: false
-  xy: 725, 58
+  xy: 1020, 504
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -191,35 +205,35 @@ t-border
   index: -1
 t-border-circle
   rotate: false
-  xy: 512, 2
+  xy: 146, 85
   size: 28, 28
   orig: 28, 28
   offset: 0, 0
   index: -1
 t-check-off
   rotate: false
-  xy: 744, 33
+  xy: 175, 85
   size: 28, 28
   orig: 28, 28
   offset: 0, 0
   index: -1
 t-check-on
   rotate: false
-  xy: 773, 32
+  xy: 204, 85
   size: 28, 28
   orig: 28, 28
   offset: 0, 0
   index: -1
 t-dot
   rotate: false
-  xy: 1022, 212
+  xy: 41, 48
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 t-dot-border
   rotate: false
-  xy: 549, 36
+  xy: 512, 281
   size: 5, 5
   split: 2, 2, 2, 2
   orig: 5, 5
@@ -227,42 +241,42 @@ t-dot-border
   index: -1
 t-hknob
   rotate: false
-  xy: 869, 49
+  xy: 895, 448
   size: 6, 14
   orig: 6, 32
   offset: 0, 9
   index: -1
 t-hline
   rotate: false
-  xy: 866, 64
+  xy: 113, 87
   size: 32, 1
   orig: 32, 1
   offset: 0, 0
   index: -1
 t-hslider
   rotate: false
-  xy: 1022, 214
+  xy: 904, 463
   size: 1, 8
   orig: 1, 8
   offset: 0, 0
   index: -1
 t-radio-off
   rotate: false
-  xy: 802, 32
+  xy: 233, 85
   size: 28, 28
   orig: 28, 28
   offset: 0, 0
   index: -1
 t-radio-on
   rotate: false
-  xy: 831, 35
+  xy: 262, 85
   size: 28, 28
   orig: 28, 28
   offset: 0, 0
   index: -1
 t-rounded
   rotate: false
-  xy: 963, 60
+  xy: 777, 309
   size: 30, 30
   split: 14, 14, 14, 14
   orig: 30, 30
@@ -270,7 +284,7 @@ t-rounded
   index: -1
 t-select
   rotate: false
-  xy: 512, 42
+  xy: 824, 463
   size: 54, 48
   split: 8, 32, 0, 48
   orig: 54, 48
@@ -278,56 +292,56 @@ t-select
   index: -1
 t-select-down
   rotate: false
-  xy: 688, 14
+  xy: 1005, 503
   size: 14, 8
   orig: 14, 8
   offset: 0, 0
   index: -1
 t-select-up
   rotate: false
-  xy: 1, 14
+  xy: 397, 105
   size: 14, 8
   orig: 14, 8
   offset: 0, 0
   index: -1
 t-tree-minus
   rotate: false
-  xy: 860, 38
+  xy: 941, 472
   size: 10, 10
   orig: 16, 16
   offset: 2, 4
   index: -1
 t-tree-plus
   rotate: false
-  xy: 860, 49
+  xy: 29, 30
   size: 8, 14
   orig: 8, 14
   offset: 0, 0
   index: -1
 t-vknob
   rotate: false
-  xy: 556, 2
+  xy: 1, 1
   size: 14, 6
   orig: 32, 6
   offset: 9, 0
   index: -1
 t-vline
   rotate: false
-  xy: 1022, 223
+  xy: 70, 52
   size: 1, 32
   orig: 1, 32
   offset: 0, 0
   index: -1
 t-vslider
   rotate: false
-  xy: 1, 1
+  xy: 824, 428
   size: 8, 1
   orig: 8, 1
   offset: 0, 0
   index: -1
 t-window
   rotate: false
-  xy: 649, 22
+  xy: 765, 308
   size: 11, 68
   split: 5, 5, 64, 3
   orig: 11, 68
@@ -335,7 +349,7 @@ t-window
   index: -1
 t-window-border
   rotate: false
-  xy: 637, 22
+  xy: 29, 45
   size: 11, 68
   split: 5, 5, 64, 3
   orig: 11, 68
@@ -343,7 +357,7 @@ t-window-border
   index: -1
 t-window-resize
   rotate: false
-  xy: 609, 6
+  xy: 1, 29
   size: 27, 84
   split: 3, 19, 2, 20
   pad: 5, 5, 50, 7

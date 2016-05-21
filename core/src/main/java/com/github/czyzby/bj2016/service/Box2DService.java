@@ -83,6 +83,8 @@ public class Box2DService extends AbstractService {
                 spawnMinions(player);
                 if (control.isHumanControlled()) {
                     player.setHealth(100f - penalty - deaths[player.getId()]);
+                } else {
+                    player.setHealth(150f);
                 }
             }
         }

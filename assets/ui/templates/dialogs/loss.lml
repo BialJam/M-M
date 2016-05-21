@@ -1,0 +1,4 @@
+<dialog title="@ohBoy">
+	@lossPrompt
+	<textButton onResult="goto:menu">@back</textButton>
+</dialog>
