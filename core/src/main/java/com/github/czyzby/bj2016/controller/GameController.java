@@ -3,9 +3,9 @@ package com.github.czyzby.bj2016.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -27,9 +27,11 @@ import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.controller.dialog.LossController;
 import com.github.czyzby.bj2016.controller.dialog.WinController;
 import com.github.czyzby.bj2016.entity.Block;
+import com.github.czyzby.bj2016.entity.Bonus;
 import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.entity.sprite.BlockSprite;
+import com.github.czyzby.bj2016.entity.sprite.BonusSprite;
 import com.github.czyzby.bj2016.entity.sprite.MinionSprite;
 import com.github.czyzby.bj2016.entity.sprite.PlayerSprite;
 import com.github.czyzby.bj2016.service.Box2DService;
@@ -41,7 +43,8 @@ import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
 import com.github.czyzby.lml.annotation.LmlActor;
 
 /** Renders Box2D world. */
-@View(id = "game", value = "ui/templates/game.lml", themes = "music/megasong.ogg")
+@View(id = "game", value = "ui/templates/game.lml", themes = { "music/ElectricRain.ogg", "music/SnakeTrance.ogg",
+        "music/TechnoDreaming.ogg", "music/TechnoCelebration.ogg" })
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer {
     private static final float GAME_LENGTH = 60f; // In seconds.
     private static final int BACKGROUND_X = (int) -(Box2DUtil.WIDTH / 2f),
@@ -63,14 +66,17 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     private final Array<PlayerSprite> deadPlayers = GdxArrays.newArray();
     private final PooledList<BlockSprite> blocks = PooledList.newList();
     private final PooledList<MinionSprite> minions = PooledList.newList();
+    private final PooledList<BonusSprite> bonuses = PooledList.newList();
+    private final IntMap<Sprite> minionSprites = new IntMap<Sprite>();
     private final float white = Color.WHITE.toFloatBits();
-    private Texture background;
+    private TextureRegion background;
 
     private float timer;
     private boolean running;
 
     @Override
     public void show(final Stage stage, final Action action) {
+        bonuses.clear();
         box2d.create();
         running = true;
         timer = 0f;
@@ -114,17 +120,21 @@ public class GameController extends StandardViewShower implements ViewResizer, V
 
     private void createMinionSprites() {
         minions.clear();
-        final IntMap<Sprite> minionSprites = new IntMap<Sprite>();
         for (final Minion minion : box2d.getMinions()) {
-            if (!minionSprites.containsKey(minion.getId())) {
-                final Sprite sprite = gameAssetService.getSprite(minion.getParent().getSprite().getSmallDrawableName());
-                sprite.setSize(sprite.getRegionWidth() / Box2DUtil.PPU, sprite.getRegionHeight() / Box2DUtil.PPU);
-                sprite.setOrigin(sprite.getRegionWidth() / 2f / Box2DUtil.PPU,
-                        sprite.getRegionWidth() / 2f / Box2DUtil.PPU);
-                minionSprites.put(minion.getId(), sprite);
-            }
-            minions.addFirst(new MinionSprite(minion, minionSprites.get(minion.getId())));
+            addMinion(minion);
         }
+    }
+
+    /** @param minion will be added to the minions list. */
+    public void addMinion(final Minion minion) {
+        if (!minionSprites.containsKey(minion.getId())) {
+            final Sprite sprite = gameAssetService.getSprite(minion.getParent().getSprite().getSmallDrawableName());
+            sprite.setSize(sprite.getRegionWidth() / Box2DUtil.PPU, sprite.getRegionHeight() / Box2DUtil.PPU);
+            sprite.setOrigin(sprite.getRegionWidth() / 2f / Box2DUtil.PPU,
+                    sprite.getRegionWidth() / 2f / Box2DUtil.PPU);
+            minionSprites.put(minion.getId(), sprite);
+        }
+        minions.addFirst(new MinionSprite(minion, minionSprites.get(minion.getId())));
     }
 
     @Override
@@ -144,11 +154,14 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);
         batch.setColor(white);
         batch.draw(background, BACKGROUND_X, BACKGROUND_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
+        for (final BonusSprite bonus : bonuses) {
+            if (bonus.render(batch, delta)) {
+                bonuses.remove();
+            }
+        }
         for (final BlockSprite block : blocks) {
-            if (block.update(delta)) {
+            if (block.render(batch, delta)) {
                 blocks.remove();
-            } else {
-                block.draw(batch);
             }
         }
         for (final PlayerSprite player : deadPlayers) {
@@ -189,6 +202,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
 
     private void showSoloPrompt() {
         final float duration = 0.8f;
+        soloPrompt.setColor(1f, 1f, 1f, 0f);
         soloPrompt.addAction(Actions.sequence(Actions.moveTo(0f, 0f), Actions.alpha(0f), Actions.scaleTo(0f, 0f),
                 Actions.parallel(Actions.fadeIn(duration, Interpolation.fade),
                         Actions.moveBy(stage.getWidth() * 2f / 7f, stage.getHeight() / 2f, duration,
@@ -270,5 +284,10 @@ public class GameController extends StandardViewShower implements ViewResizer, V
             helperBuilder.append(points);
             pointLabels.get(player.getId()).setText(helperBuilder);
         }
+    }
+
+    /** @param bonus will be wrapped with a sprite. */
+    public void addBonus(final Bonus bonus) {
+        bonuses.add(new BonusSprite(bonus, gameAssetService.getSprite(bonus.getBonus().getDrawableName())));
     }
 }

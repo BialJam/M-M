@@ -22,9 +22,10 @@ public class BlockSprite {
         sprite.setPosition(block.getX() - sprite.getWidth() / 2f, block.getY() - sprite.getHeight() / 2f);
     }
 
-    /** @param delta time since last update.
+    /** @param batch must be begun.
+     * @param delta time since last update.
      * @return true if block should be removed. */
-    public boolean update(final float delta) {
+    public boolean render(final Batch batch, final float delta) {
         if (block.isDestroyed()) {
             if (height == null) {
                 height = new FloatRange(sprite.getHeight(), 0.2f);
@@ -36,11 +37,7 @@ public class BlockSprite {
                 hidden = true;
             }
         }
-        return hidden;
-    }
-
-    /** @param batch must be begun. */
-    public void draw(final Batch batch) {
         sprite.draw(batch);
+        return hidden;
     }
 }

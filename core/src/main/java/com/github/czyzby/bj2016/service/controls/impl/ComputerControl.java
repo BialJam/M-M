@@ -63,7 +63,7 @@ public class ComputerControl extends AbstractControl {
     }
 
     private static float random(final Box2DService box2d) {
-        final float random = MathUtils.random(box2d.isSoloMode() ? 1f : 7.5f);
+        final float random = MathUtils.random(box2d.isSoloMode() ? 1f : 8f);
         return MathUtils.randomBoolean() ? random : -random;
     }
 

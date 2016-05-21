@@ -1,4 +1,4 @@
-<dialog title="@ohBoy" titleAlign="center">
-	<image style="loss"/>
+<dialog title="@ohBoy" titleAlign="center" style="dialog">
+	<image style="loss" />
 	<textButton onResult="goto:menu" growX="true">@back</textButton>
 </dialog>

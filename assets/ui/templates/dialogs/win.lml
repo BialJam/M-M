@@ -1,5 +1,5 @@
-<dialog title="@yeah" titleAlign="center">
+<dialog title="@yeah" titleAlign="center" style="dialog">
 	<image style="win"/>
 	<textButton onResult="goto:game" row="true" growX="true">@continue</textButton>
 	<textButton onResult="goto:menu" growX="true">@giveUp</textButton>
-</dialog>s
+</dialog>

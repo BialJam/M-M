@@ -43,7 +43,7 @@ public class GameAssetService {
     }
 
     /** @return random background texture. */
-    public Texture getRandomBackground() {
-        return backgrounds.get(MathUtils.random(backgrounds.size - 1));
+    public TextureRegion getRandomBackground() {
+        return new TextureRegion(backgrounds.get(MathUtils.random(backgrounds.size - 1)), 0, 0, 700, 700);
     }
 }

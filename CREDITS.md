@@ -1,1 +1,3 @@
-- *Megasong* - (Emma Andersson)[http://opengameart.org/users/emmama].
+- Code: Michał Jadczuk.
+- Graphics: Marta Zajkowska.
+- Music: (Eric Matyas)[http://soundimage.org/].

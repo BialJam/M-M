@@ -24,7 +24,7 @@ public class GridService {
         generator.generate(grid);
         final float size = grid.getWidth() * grid.getHeight();
         final int count = getFullCellsAmount();
-        if (count < size / 10f || count > size / 2f) {
+        if (count < size / 8f || count > size * 2f / 3f) {
             createGrid();
         }
     }

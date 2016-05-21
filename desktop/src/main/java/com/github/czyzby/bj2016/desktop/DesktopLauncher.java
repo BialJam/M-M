@@ -22,6 +22,7 @@ public class DesktopLauncher {
         configuration.title = "BialJam, M&M 2016";
         configuration.width = Root.WIDTH;
         configuration.height = Root.HEIGHT;
+        configuration.resizable = false; // Meh.
         return configuration;
     }
 }

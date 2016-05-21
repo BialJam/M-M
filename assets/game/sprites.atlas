@@ -34,7 +34,7 @@ dres
   index: -1
 dres-small
   rotate: false
-  xy: 876, 65
+  xy: 713, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -48,9 +48,16 @@ emo
   index: -1
 emo-small
   rotate: false
-  xy: 713, 16
+  xy: 746, 16
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 729, 49
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 kibol
@@ -62,14 +69,21 @@ kibol
   index: -1
 kibol-small
   rotate: false
-  xy: 909, 65
+  xy: 779, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 kosz
   rotate: false
-  xy: 729, 49
+  xy: 778, 49
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+lawka
+  rotate: false
+  xy: 827, 49
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -83,7 +97,7 @@ menel
   index: -1
 menel-small
   rotate: false
-  xy: 746, 16
+  xy: 812, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -97,7 +111,7 @@ moher
   index: -1
 moher-small
   rotate: false
-  xy: 942, 65
+  xy: 845, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -111,21 +125,28 @@ punk
   index: -1
 punk-small
   rotate: false
-  xy: 779, 16
+  xy: 878, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 778, 49
+  xy: 876, 49
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 stone
   rotate: false
-  xy: 827, 49
+  xy: 925, 49
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+trampoline
+  rotate: false
+  xy: 974, 49
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

@@ -32,7 +32,7 @@ public class MenuController extends StandardViewShower implements ActionContaine
 
     @OnMessage(AutumnMessage.ASSETS_LOADED)
     public boolean assignBackground() {
-        background = new TextureRegion(backgroundTexture, 0, 324, 700, 700);
+        background = new TextureRegion(backgroundTexture, 0, 0, 700, 700);
         return OnMessage.REMOVE;
     }
 

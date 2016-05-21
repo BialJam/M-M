@@ -1,6 +1,7 @@
 package com.github.czyzby.bj2016.service;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -11,7 +12,10 @@ import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Destroy;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.bj2016.configuration.Configuration;
+import com.github.czyzby.bj2016.controller.GameController;
 import com.github.czyzby.bj2016.entity.Block;
+import com.github.czyzby.bj2016.entity.Bonus;
+import com.github.czyzby.bj2016.entity.BonusType;
 import com.github.czyzby.bj2016.entity.BoundsEntity;
 import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
@@ -36,6 +40,7 @@ public class Box2DService extends AbstractService {
     @Inject private PlayerService playerService;
     @Inject private GridService gridService;
     @Inject private ContactService contactService;
+    @Inject private GameController gameController; // "Because rules are meant to be broken."
 
     private World world;
     private float timeSinceUpdate;
@@ -43,6 +48,7 @@ public class Box2DService extends AbstractService {
     private final Array<Player> players = GdxArrays.newArray();
     private final PooledList<Block> blocks = PooledList.newList();
     private final PooledList<Minion> minions = PooledList.newList();
+    private final PooledList<Bonus> bonuses = PooledList.newList();
     private boolean soloMode;
     private int penalty;
     private final int[] deaths = new int[Configuration.PLAYERS_AMOUNT];
@@ -117,11 +123,20 @@ public class Box2DService extends AbstractService {
         for (int index = 0; index < minionsAmount; index++) {
             final float x = index % MINION_ROW_SIZE;
             final float y = index / MINION_ROW_SIZE;
-            final Minion minion = new Minion(this, player, gridService);
-            minion.getBody().setTransform(x * 1.1f + playerX, y * 1.1f + playerY, 0f);
-            player.addMinion();
-            minions.add(minion);
+            final float posX = x * 1.1f + playerX;
+            final float posY = y * 1.1f + playerY;
+            spawnMinion(player, posX, posY);
         }
+    }
+
+    /** @param player owner of the minion.
+     * @param x starting X position.
+     * @param y starting Y position. */
+    public void spawnMinion(final Player player, final float x, final float y) {
+        final Minion minion = new Minion(this, player, gridService);
+        minion.getBody().setTransform(x, y, 0f);
+        player.addMinion();
+        minions.add(minion);
     }
 
     /** @return list of all player minions. */
@@ -162,9 +177,21 @@ public class Box2DService extends AbstractService {
             world.step(STEP, 8, 3);
             updatePlayers();
             updateBlocks(delta);
+            updateBonuses(delta);
             updateMinions(delta);
         }
         return updated;
+    }
+
+    private void updateBonuses(final float delta) {
+        for (final Bonus bonus : bonuses) {
+            bonus.update(delta);
+            if (bonus.isDestroyed()) {
+                bonus.destroy();
+                bonuses.remove();
+                // TODO sound?
+            }
+        }
     }
 
     private void updatePlayers() {
@@ -183,10 +210,20 @@ public class Box2DService extends AbstractService {
         for (final Block block : blocks) {
             block.update(delta);
             if (block.isDestroyed()) {
+                spawnBonus(block);
                 block.destroy();
                 // TODO Sound?
                 blocks.remove();
             }
+        }
+    }
+
+    private void spawnBonus(final Block block) {
+        if (MathUtils.randomBoolean(0.333f)) {
+            final Bonus bonus = new Bonus(this, BonusType.getRandom());
+            bonus.getBody().setTransform(block.getBody().getPosition().x, block.getBody().getPosition().y, 0f);
+            bonuses.add(bonus);
+            gameController.addBonus(bonus);
         }
     }
 
@@ -239,6 +276,7 @@ public class Box2DService extends AbstractService {
         players.clear();
         blocks.clear();
         minions.clear();
+        bonuses.clear();
         soloMode = false;
         if (world != null) {
             world.dispose();
