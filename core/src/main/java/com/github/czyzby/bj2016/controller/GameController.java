@@ -52,7 +52,6 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         }
         createPlayerSprites();
         createBlockSprites();
-        System.out.println("Blocks: " + blocks.size());
         super.show(stage, Actions.sequence(action, Actions.run(new Runnable() {
             @Override
             public void run() { // Listening to user input events:

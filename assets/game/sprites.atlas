@@ -13,14 +13,14 @@ barbie
   index: -1
 barbie-small
   rotate: false
-  xy: 486, 16
+  xy: 583, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bush
   rotate: false
-  xy: 486, 49
+  xy: 583, 49
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -34,7 +34,7 @@ dres
   index: -1
 dres-small
   rotate: false
-  xy: 535, 65
+  xy: 730, 65
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -48,7 +48,7 @@ emo
   index: -1
 emo-small
   rotate: false
-  xy: 568, 65
+  xy: 616, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -62,7 +62,7 @@ kibol
   index: -1
 kibol-small
   rotate: false
-  xy: 601, 65
+  xy: 763, 65
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -76,8 +76,36 @@ moher
   index: -1
 moher-small
   rotate: false
-  xy: 634, 65
+  xy: 649, 16
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+punk
+  rotate: false
+  xy: 486, 1
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+punk-small
+  rotate: false
+  xy: 796, 65
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 632, 49
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+stone
+  rotate: false
+  xy: 681, 49
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1

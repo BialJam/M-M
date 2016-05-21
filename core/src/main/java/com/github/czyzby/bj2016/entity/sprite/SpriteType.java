@@ -8,7 +8,8 @@ public enum SpriteType {
     FAN("kibol"),
     EMO("emo"),
     LADY("moher"),
-    BARBIE("barbie");
+    BARBIE("barbie"),
+    PUNK("punk");
 
     private final String id;
     private final String smallDrawable;

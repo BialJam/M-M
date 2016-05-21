@@ -10,14 +10,15 @@ import com.github.czyzby.noise4j.map.generator.cellular.CellularAutomataGenerato
  * @author MJ */
 @Component
 public class GridService {
-    private final Grid grid = new Grid((int) (Box2DUtil.WIDTH / (48f / Box2DUtil.PPU)),
-            (int) (Box2DUtil.HEIGHT / (48f / Box2DUtil.PPU)));
+    public static final int WIDTH = (int) (Box2DUtil.WIDTH / (48f / Box2DUtil.PPU));
+    public static final int HEIGHT = (int) (Box2DUtil.HEIGHT / (48f / Box2DUtil.PPU));
+    private final Grid grid = new Grid(WIDTH, HEIGHT);
 
     /** Uses cellular automata generator to fill map with random obstacles. */
     public void createGrid() {
         grid.set(0f);
         final CellularAutomataGenerator generator = new CellularAutomataGenerator();
-        generator.setAliveChance(0.6f);
+        generator.setAliveChance(0.55f);
         generator.generate(grid);
     }
 

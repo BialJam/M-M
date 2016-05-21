@@ -28,6 +28,7 @@ import com.github.czyzby.noise4j.map.Grid.CellConsumer;
 public class Box2DService extends AbstractService {
     private static final Vector2 GRAVITY = new Vector2(0f, 0f); // Box2D world gravity vector.
     private static final float STEP = 1f / 30f; // Length of a single Box2D step.
+    private static final int LIMIT = 5;
     @Inject private ControlsService controlsService;
     @Inject private PlayerService playerService;
     @Inject private GridService gridService;
@@ -55,7 +56,7 @@ public class Box2DService extends AbstractService {
         gridService.getGrid().forEach(new CellConsumer() {
             @Override
             public boolean consume(final Grid grid, final int x, final int y, final float value) {
-                if (gridService.isFull(x, y)) {
+                if (gridService.isFull(x, y) && validate(x, y)) {
                     final Block block = new Block(Box2DService.this, BlockType.getRandom());
                     final Body body = block.getBody();
                     position.x = -(Box2DUtil.WIDTH / 2f) + x * 48f / Box2DUtil.PPU;
@@ -66,6 +67,22 @@ public class Box2DService extends AbstractService {
                 return CONTINUE;
             }
         });
+    }
+
+    /** @param x cell X.
+     * @param y cell Y.
+     * @return true if this cell can be filled. */
+    protected boolean validate(final int x, final int y) {
+        if (x < LIMIT && y < LIMIT) {
+            return !controlsService.isActive(3);
+        } else if (x < LIMIT && GridService.HEIGHT - y < LIMIT) {
+            return !controlsService.isActive(0);
+        } else if (GridService.WIDTH - x < LIMIT && y < LIMIT) {
+            return !controlsService.isActive(1);
+        } else if (GridService.WIDTH - x < LIMIT && GridService.HEIGHT - y < LIMIT) {
+            return !controlsService.isActive(2);
+        }
+        return true;
     }
 
     private BoundsEntity createGameBounds() {
