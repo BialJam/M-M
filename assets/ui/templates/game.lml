@@ -3,7 +3,9 @@
 		<label color="t-highlight">@player0</label>
 		<label id="points0" width="100" textAlign="right">81</label>
 	</table>
-	<label id="time" align="top" color="black">00:00</label>
+	<table align="top" background="border-dot" color="t-highlight">
+		<label id="time" width="100" textAlign="center">00:00</label>
+	</table>
 	<table id="player2" align="topRight" row="true" background="border-dot">
 		<label color="t-highlight">@player2</label>
 		<label id="points2" width="100" textAlign="right">81</label>
@@ -12,7 +14,7 @@
 		<label color="t-highlight">@player3</label>
 		<label id="points3" width="100" textAlign="right">81</label>
 	</table>
-	<textButton style="menu-bar" onChange="goto:menu" align="bottom">@back
+	<textButton style="dark" align="bottom" onChange="goto:menu">@back
 	</textButton>
 	<table id="player1" align="bottomRight" background="border-dot">
 		<label color="t-highlight">@player1</label>

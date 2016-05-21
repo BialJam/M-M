@@ -44,8 +44,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
     @LmlActor("points[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Label> pointLabels;
     private final int[] cachedPoints = new int[Configuration.PLAYERS_AMOUNT];
-    private final StringBuilder[] builders = new StringBuilder[] { new StringBuilder(), new StringBuilder(),
-            new StringBuilder(), new StringBuilder() };
+    private final StringBuilder helperBuilder = new StringBuilder();
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
     private final Array<PlayerSprite> sprites = GdxArrays.newArray();
     private final Array<PlayerSprite> deadPlayers = GdxArrays.newArray();
@@ -53,6 +52,8 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     private final PooledList<MinionSprite> minions = PooledList.newList();
     private final float white = Color.WHITE.toFloatBits();
     private Texture background;
+
+    private float timer;
 
     @Override
     public void show(final Stage stage, final Action action) {
@@ -141,6 +142,8 @@ public class GameController extends StandardViewShower implements ViewResizer, V
                 minions.remove();
             }
         }
+        timer += delta;
+        Strings.clearBuilder(helperBuilder);
         renderPlayers(delta, batch);
         batch.end();
         stage.act(delta);
@@ -155,10 +158,9 @@ public class GameController extends StandardViewShower implements ViewResizer, V
             final Player player = sprite.getPlayer();
             if (player.getMinionsAmount() != cachedPoints[player.getId()]) {
                 cachedPoints[player.getId()] = player.getMinionsAmount();
-                final StringBuilder builder = builders[player.getId()];
-                Strings.clearBuilder(builder);
-                builder.append(player.getMinionsAmount());
-                pointLabels.get(player.getId()).setText(builder);
+                Strings.clearBuilder(helperBuilder);
+                helperBuilder.append(player.getMinionsAmount());
+                pointLabels.get(player.getId()).setText(helperBuilder);
             }
             if (sprite.isDead()) {
                 deadPlayers.add(sprite);
