@@ -13,6 +13,9 @@ public interface Box2DUtil {
     /** Height of Box2D world. */
     float HEIGHT = Root.HEIGHT / Box2DUtil.PPU;
 
+    float HALF_WIDTH = WIDTH / 2f;
+    float HALF_HEIGHT = HEIGHT / 2f;
+
     /** Player 1 minions. */
     short CAT_MINION0 = 1 << 0;
     /** Player 2 minions. */
@@ -47,4 +50,6 @@ public interface Box2DUtil {
 
     /** Speed of players (delta-dependent). */
     float PLAYER_SPEED = 17500f;
+    /** Speed of minions (delta-dependent). */
+    float MINION_SPEED = 1500f;
 }

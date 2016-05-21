@@ -115,7 +115,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         batch.begin();
         batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);
         batch.setColor(white);
-        // batch.draw(background, BG_X, BG_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
+        batch.draw(background, BG_X, BG_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
         for (final BlockSprite block : blocks) {
             if (block.update(delta)) {
                 blocks.remove();

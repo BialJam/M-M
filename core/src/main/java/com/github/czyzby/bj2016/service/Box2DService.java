@@ -29,8 +29,9 @@ public class Box2DService extends AbstractService {
     private static final Vector2 GRAVITY = new Vector2(0f, 0f); // Box2D world gravity vector.
     public static final float STEP = 1f / 30f; // Length of a single Box2D step.
     private static final int LIMIT = 5; // Amount of free squares around the players.
-    private static final int MINIONS_AMOUNT = 64;
-    private static final int MINION_ROW_SIZE = 8;
+    private static final int BOUND = 2; // Amount of free squares around the bounds.
+    private static final int MINIONS_AMOUNT = 81;
+    private static final int MINION_ROW_SIZE = 9;
     @Inject private ControlsService controlsService;
     @Inject private PlayerService playerService;
     @Inject private GridService gridService;
@@ -66,8 +67,8 @@ public class Box2DService extends AbstractService {
                 if (gridService.isFull(x, y) && validate(x, y)) {
                     final Block block = new Block(Box2DService.this, BlockType.getRandom());
                     final Body body = block.getBody();
-                    position.x = -(Box2DUtil.WIDTH / 2f) + x * 48f / Box2DUtil.PPU;
-                    position.y = -(Box2DUtil.HEIGHT / 2f) + y * 48f / Box2DUtil.PPU;
+                    position.x = -(Box2DUtil.WIDTH / 2f) + x * GridService.CELL_SIZE;
+                    position.y = -(Box2DUtil.HEIGHT / 2f) + y * GridService.CELL_SIZE;
                     body.setTransform(position, 0f);
                     blocks.add(block);
                 }
@@ -81,15 +82,15 @@ public class Box2DService extends AbstractService {
         float playerX = player.getX();
         float playerY = player.getY();
         if (playerX > 0f) {
-            playerX -= 9f; // X offset to prevent from going out of the bounds.
+            playerX -= 10f; // X offset to prevent from going out of the bounds.
         }
         if (playerY > 0f) {
-            playerY -= 7f; // Y offset to prevent from going out of the bounds.
+            playerY -= 8f; // Y offset to prevent from going out of the bounds.
         }
         for (int index = 0; index < MINIONS_AMOUNT; index++) {
             final float x = index % MINION_ROW_SIZE;
             final float y = index / 8;
-            final Minion minion = new Minion(this, player);
+            final Minion minion = new Minion(this, player, gridService);
             minion.getBody().setTransform(x * 1.1f + playerX, y * 1.1f + playerY, 0f);
             minions.add(minion);
         }
@@ -104,7 +105,9 @@ public class Box2DService extends AbstractService {
      * @param y cell Y.
      * @return true if this cell can be filled. */
     protected boolean validate(final int x, final int y) {
-        if (x < LIMIT && y < LIMIT) {
+        if (x < BOUND || y < BOUND || GridService.WIDTH - x < BOUND || GridService.HEIGHT - y < BOUND) {
+            return false;
+        } else if (x < LIMIT && y < LIMIT) {
             return !controlsService.isActive(3);
         } else if (x < LIMIT && GridService.HEIGHT - y < LIMIT) {
             return !controlsService.isActive(0);
@@ -189,6 +192,7 @@ public class Box2DService extends AbstractService {
     public void dispose() {
         players.clear();
         blocks.clear();
+        minions.clear();
         if (world != null) {
             world.dispose();
             world = null;

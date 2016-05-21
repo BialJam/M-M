@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.MathUtils;
  *
  * @author MJ */
 public enum BlockType {
-    BUSH("bush", 40f),
-    STONE("stone", 55f),
-    ROCK("rock", 60f);
+    BUSH("bush", 20f),
+    STONE("stone", 30f),
+    ROCK("rock", 35f);
 
     private final String id;
     private float health;
