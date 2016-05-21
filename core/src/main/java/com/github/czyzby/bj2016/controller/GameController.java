@@ -18,12 +18,15 @@ import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.bj2016.configuration.Configuration;
+import com.github.czyzby.bj2016.entity.Block;
 import com.github.czyzby.bj2016.entity.Player;
+import com.github.czyzby.bj2016.entity.sprite.BlockSprite;
 import com.github.czyzby.bj2016.entity.sprite.PlayerSprite;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.GameAssetService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
+import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
 import com.github.czyzby.lml.annotation.LmlActor;
 
 /** Renders Box2D world. */
@@ -36,22 +39,20 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
     private final Array<PlayerSprite> sprites = GdxArrays.newArray();
+    private final PooledList<BlockSprite> blocks = PooledList.newList();
     private final float white = Color.WHITE.toFloatBits();
     private Texture background;
 
     @Override
     public void show(final Stage stage, final Action action) {
         box2d.create();
-        sprites.clear();
         background = gameAssetService.getRandomBackground();
         for (final Table table : playerViews) {
             table.setVisible(false);
         }
-        for (final Player player : box2d.getPlayers()) {
-            final Sprite sprite = gameAssetService.getSprite(player.getSprite().getDrawableName());
-            sprites.add(new PlayerSprite(player, sprite));
-            playerViews.get(player.getId()).setVisible(true);
-        }
+        createPlayerSprites();
+        createBlockSprites();
+        System.out.println("Blocks: " + blocks.size());
         super.show(stage, Actions.sequence(action, Actions.run(new Runnable() {
             @Override
             public void run() { // Listening to user input events:
@@ -60,6 +61,23 @@ public class GameController extends StandardViewShower implements ViewResizer, V
                 Gdx.input.setInputProcessor(inputMultiplexer);
             }
         })));
+    }
+
+    private void createPlayerSprites() {
+        sprites.clear();
+        for (final Player player : box2d.getPlayers()) {
+            final Sprite sprite = gameAssetService.getSprite(player.getSprite().getDrawableName());
+            sprites.add(new PlayerSprite(player, sprite));
+            playerViews.get(player.getId()).setVisible(true);
+        }
+    }
+
+    private void createBlockSprites() {
+        blocks.clear();
+        for (final Block block : box2d.getBlocks()) {
+            final Sprite sprite = gameAssetService.getSprite(block.getBlockType().getDrawableName());
+            blocks.add(new BlockSprite(block, sprite));
+        }
     }
 
     @Override
@@ -79,6 +97,15 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);
         batch.setColor(white);
         batch.draw(background, BG_X, BG_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
+        for (final BlockSprite block : blocks) {
+            if (block.update(delta)) {
+                blocks.remove();
+                System.out.println("Block");
+                // Spawn explosion?
+            } else {
+                block.draw(batch);
+            }
+        }
         for (final PlayerSprite sprite : sprites) {
             sprite.update(delta);
             sprite.draw(batch);

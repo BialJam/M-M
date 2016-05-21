@@ -46,5 +46,5 @@ public interface Box2DUtil {
     short MASK_BLOCK = CAT_MINION | CAT_PLAYER0 | CAT_PLAYER1 | CAT_PLAYER2 | CAT_PLAYER3 | CAT_PLAYERS;
 
     /** Speed of players (delta-dependent). */
-    float PLAYER_SPEED = 10000f;
+    float PLAYER_SPEED = 17500f;
 }

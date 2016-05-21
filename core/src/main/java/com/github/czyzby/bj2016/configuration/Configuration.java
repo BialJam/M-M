@@ -59,7 +59,8 @@ public class Configuration {
     /** Thanks to the Initiate annotation, this method will be automatically invoked during context building. All
      * method's parameters will be injected with values from the context.
      *
-     * @param skinService contains GUI skin. */
+     * @param skinService contains GUI skin.
+     * @param interfaceService manages screens. */
     @Initiate
     public void initiateConfiguration(final SkinService skinService, final InterfaceService interfaceService) {
         // Loading default VisUI skin with the selected scale:

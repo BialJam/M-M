@@ -1,47 +1,82 @@
 
 sprites.png
-size: 512,128
+size: 1024,128
 format: RGBA8888
-filter: Nearest,Nearest
+filter: MipMapLinearNearest,MipMapLinearNearest
 repeat: none
-dres
+barbie
   rotate: false
   xy: 1, 1
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
-dres-small
+barbie-small
   rotate: false
-  xy: 292, 65
+  xy: 486, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-emo
+bush
+  rotate: false
+  xy: 486, 49
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+dres
   rotate: false
   xy: 98, 1
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
-emo-small
+dres-small
   rotate: false
-  xy: 292, 32
+  xy: 535, 65
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-kibol
+emo
   rotate: false
   xy: 195, 1
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
+emo-small
+  rotate: false
+  xy: 568, 65
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+kibol
+  rotate: false
+  xy: 292, 1
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
 kibol-small
   rotate: false
-  xy: 325, 65
+  xy: 601, 65
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+moher
+  rotate: false
+  xy: 389, 1
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+moher-small
+  rotate: false
+  xy: 634, 65
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

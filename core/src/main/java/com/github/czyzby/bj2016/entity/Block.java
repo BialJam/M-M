@@ -3,22 +3,27 @@ package com.github.czyzby.bj2016.entity;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.github.czyzby.bj2016.entity.sprite.BlockType;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 
-/** Represents bounds.
+/** Represents a single block entity.
  *
  * @author MJ */
-public class BoundsEntity extends AbstractEntity {
-    public BoundsEntity(final Box2DService box2d) {
+public class Block extends AbstractEntity {
+    private static final float HALF_SIZE = 48f / Box2DUtil.PPU / 2f;
+    private final BlockType blockType;
+
+    public Block(final Box2DService box2d, final BlockType blockType) {
         super(box2d);
+        this.blockType = blockType;
     }
 
     @Override
     public EntityType getType() {
-        return EntityType.BOUND;
+        return EntityType.BLOCK;
     }
 
     @Override
@@ -31,18 +36,22 @@ public class BoundsEntity extends AbstractEntity {
         bodyDef.type = BodyType.StaticBody;
         bodyDef.fixedRotation = true;
 
-        final ChainShape shape = new ChainShape();
-        final float w = Box2DUtil.WIDTH * 2f / 5f, h = Box2DUtil.HEIGHT * 2f / 5f;
-        shape.createLoop(new float[] { -w, -h, -w, h, w, h, w, -h });
+        final PolygonShape shape = new PolygonShape();
+        shape.setAsBox(HALF_SIZE, HALF_SIZE);
         final FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.restitution = 0.9f;
-        fixtureDef.friction = 0.2f;
+        fixtureDef.restitution = 1f;
+        fixtureDef.friction = 0f;
         fixtureDef.shape = shape;
-        fixtureDef.filter.categoryBits = Box2DUtil.CAT_BOUNDS;
+        fixtureDef.filter.categoryBits = Box2DUtil.CAT_BLOCK;
         fixtureDef.filter.maskBits = Box2DUtil.MASK_BLOCK;
         final Body body = box2d.getWorld().createBody(bodyDef);
         body.createFixture(fixtureDef);
+        shape.dispose();
         return body;
     }
 
+    /** @return displayed block type. */
+    public BlockType getBlockType() {
+        return blockType;
+    }
 }
