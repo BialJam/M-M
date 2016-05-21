@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
@@ -20,6 +22,7 @@ import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
+import com.github.czyzby.autumn.mvc.stereotype.ViewStage;
 import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.controller.dialog.LossController;
 import com.github.czyzby.bj2016.controller.dialog.WinController;
@@ -44,12 +47,14 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     private static final int BACKGROUND_X = (int) -(Box2DUtil.WIDTH / 2f),
             BACKGROUND_Y = (int) -(Box2DUtil.HEIGHT / 2f);
 
+    @ViewStage private Stage stage;
     @Inject private InterfaceService interfaceService;
     @Inject private Box2DService box2d;
     @Inject private GameAssetService gameAssetService;
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
     @LmlActor("points[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Label> pointLabels;
     @LmlActor("time") private Label timerLabel;
+    @LmlActor("solo") private Image soloPrompt;
     private final int[] cachedPoints = new int[Configuration.PLAYERS_AMOUNT];
     private final StringBuilder helperBuilder = new StringBuilder();
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
@@ -160,13 +165,14 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     }
 
     private void updateTimer(final float delta) {
-        if (box2d.isSoloMode()) {
+        if (box2d.isSoloMode() || !running) {
             return;
         }
         timer += delta;
         Strings.clearBuilder(helperBuilder);
         if (timer >= GAME_LENGTH) {
             box2d.setSoloMode();
+            showSoloPrompt();
             helperBuilder.append("!!!:!!!");
         } else {
             final int minutes = (int) timer / 60;
@@ -176,6 +182,18 @@ public class GameController extends StandardViewShower implements ViewResizer, V
             printHour(seconds);
         }
         timerLabel.setText(helperBuilder);
+    }
+
+    private void showSoloPrompt() {
+        final float duration = 0.8f;
+        soloPrompt.addAction(Actions.sequence(Actions.moveTo(0f, 0f), Actions.alpha(0f), Actions.scaleTo(0f, 0f),
+                Actions.parallel(Actions.fadeIn(duration, Interpolation.fade),
+                        Actions.moveBy(stage.getWidth() * 2f / 7f, stage.getHeight() / 2f, duration,
+                                Interpolation.bounceIn),
+                        Actions.rotateBy(720f, duration, Interpolation.bounceIn),
+                        Actions.scaleTo(1f, 1f, duration, Interpolation.bounceIn)),
+                Actions.delay(0.5f), Actions.fadeOut(0.3f, Interpolation.fade), Actions.removeActor()));
+        stage.addActor(soloPrompt);
     }
 
     private void printHour(final int minutes) {

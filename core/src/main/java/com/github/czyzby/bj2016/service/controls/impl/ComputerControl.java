@@ -45,14 +45,15 @@ public class ComputerControl extends AbstractControl {
         }
         if (timeSinceMoveChange >= UPDATES_TO_CHANGE_MOVEMENT) {
             timeSinceMoveChange -= UPDATES_TO_CHANGE_MOVEMENT;
-            final float x = target.getX() + random();
-            final float y = target.getY() + random();
+            final float x = target.getX() + random(box2d);
+            final float y = target.getY() + random(box2d);
             updateMovementWithAngle(MathUtils.atan2(y - bot.getY(), x - bot.getX()));
         }
     }
 
-    private static float random() {
-        return MathUtils.randomBoolean() ? MathUtils.random(10f) : -MathUtils.random(10f);
+    private static float random(final Box2DService box2d) {
+        final float random = MathUtils.random(box2d.isSoloMode() ? 2f : 10f);
+        return MathUtils.randomBoolean() ? random : -random;
     }
 
     @Override

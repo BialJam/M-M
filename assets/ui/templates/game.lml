@@ -20,4 +20,7 @@
 		<label color="t-highlight">@player1</label>
 		<label id="points1" width="100" textAlign="right">81</label>
 	</table>
+	<isolate>
+		<image id="solo" style="solo_{currentLocale}"/>
+	</isolate>
 </table>
