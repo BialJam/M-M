@@ -9,15 +9,18 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.bj2016.entity.sprite.SpriteType;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.bj2016.util.Box2DUtil;
+import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 
 /** Represents player Box2D entities.
  *
  * @author MJ */
 public class Player extends AbstractEntity {
+    private final Array<Minion> minions = GdxArrays.newArray();
     private final Control control;
     private final SpriteType sprite;
     private int minionsAmount;
@@ -70,10 +73,8 @@ public class Player extends AbstractEntity {
         bodyDef.fixedRotation = true;
         bodyDef.linearDamping = 2f;
         final Body body = box2d.getWorld().createBody(bodyDef);
-
         addHeadFixture(body);
         addBodyFixture(body);
-
         return body;
     }
 
@@ -126,9 +127,21 @@ public class Player extends AbstractEntity {
         return dir.x != 0f || dir.y != 0f;
     }
 
+    /** @return list of all minions, including the dead ones. */
+    public Array<Minion> getMinions() {
+        return minions;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        minions.clear();
+    }
+
     /** Increments minions counter. */
-    public void addMinion() {
+    public void addMinion(final Minion minion) {
         minionsAmount++;
+        minions.add(minion);
     }
 
     /** Decrements minions counter. */
@@ -175,8 +188,9 @@ public class Player extends AbstractEntity {
         final float angle = MathUtils.atan2(body.getPosition().y - this.body.getPosition().y,
                 body.getPosition().x - this.body.getPosition().x);
         damage(getTotalForce(body) / 2f);
-        this.body.applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.MINION_SPEED,
-                MathUtils.sin(angle) * Box2DUtil.MINION_SPEED, true);
+        box2d.getSoundService().playRandomPunchSound();
+        this.body.applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED,
+                MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED, true);
     }
 
     /** @param health will be subtracted from current health amount. */

@@ -1,6 +1,7 @@
 package com.github.czyzby.bj2016.entity;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 
@@ -35,10 +36,43 @@ public enum BonusType {
                 }
             }
         }
-    }
-    // SKULL
-    //
-    ;
+    },
+    SKULL("czaszka") {
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+            if (box2d.isSoloMode()) {
+                for (final Player entity : box2d.getPlayers()) {
+                    if (entity != player) {
+                        entity.damage(20f);
+                    }
+                }
+            } else {
+                for (final Player entity : box2d.getPlayers()) {
+                    if (entity != player) {
+                        final Array<Minion> minions = entity.getMinions();
+                        for (int index = 0; index < 5; index++) {
+                            final Minion minion = minions.random();
+                            if (!minion.isDestroyed()) {
+                                minion.setDestroyed(true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    MAGNET("magnez") {
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+            for (final Player entity : box2d.getPlayers()) {
+                if (entity != player) {
+                    final float angle = MathUtils.atan2(player.getY() - entity.getY(), player.getX() - entity.getX());
+                    entity.getBody().applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED,
+                            MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED, true);
+                }
+            }
+        }
+    };
 
     private final String id;
 

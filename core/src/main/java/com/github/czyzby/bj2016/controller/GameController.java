@@ -43,8 +43,8 @@ import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
 import com.github.czyzby.lml.annotation.LmlActor;
 
 /** Renders Box2D world. */
-@View(id = "game", value = "ui/templates/game.lml", themes = { "music/ElectricRain.ogg", "music/SnakeTrance.ogg",
-        "music/TechnoDreaming.ogg", "music/TechnoCelebration.ogg" })
+@View(id = "game", value = "ui/templates/game.lml", themes = { "music/fight.ogg", "music/battleTheme.ogg",
+        "music/notAnOption.ogg", "music/buySomething.ogg", "music/electroTheme.ogg" })
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer {
     private static final float GAME_LENGTH = 60f; // In seconds.
     private static final int BACKGROUND_X = (int) -(Box2DUtil.WIDTH / 2f),

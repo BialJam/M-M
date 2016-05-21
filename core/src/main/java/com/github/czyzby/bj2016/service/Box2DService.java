@@ -80,6 +80,11 @@ public class Box2DService extends AbstractService {
         world.setContactListener(contactService);
     }
 
+    /** @return service which allows to play sounds. */
+    public SoundService getSoundService() {
+        return soundService;
+    }
+
     private void createPlayers() {
         final Array<Control> controls = controlsService.getControls();
         for (int index = 0; index < Configuration.PLAYERS_AMOUNT; index++) {
@@ -137,7 +142,7 @@ public class Box2DService extends AbstractService {
     public void spawnMinion(final Player player, final float x, final float y) {
         final Minion minion = new Minion(this, player, gridService);
         minion.getBody().setTransform(x, y, 0f);
-        player.addMinion();
+        player.addMinion(minion);
         minions.add(minion);
     }
 

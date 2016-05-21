@@ -6,147 +6,161 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 barbie
   rotate: false
-  xy: 1, 1
+  xy: 1, 2
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 barbie-small
   rotate: false
-  xy: 680, 16
+  xy: 778, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bush
   rotate: false
-  xy: 680, 49
+  xy: 680, 50
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+czaszka
+  rotate: false
+  xy: 729, 50
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 dres
   rotate: false
-  xy: 98, 1
+  xy: 98, 2
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 dres-small
   rotate: false
-  xy: 713, 16
+  xy: 811, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 emo
   rotate: false
-  xy: 195, 1
+  xy: 195, 2
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 emo-small
   rotate: false
-  xy: 746, 16
+  xy: 844, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 729, 49
+  xy: 778, 50
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 kibol
   rotate: false
-  xy: 292, 1
+  xy: 292, 2
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 kibol-small
   rotate: false
-  xy: 779, 16
+  xy: 877, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 kosz
   rotate: false
-  xy: 778, 49
+  xy: 827, 50
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 lawka
   rotate: false
-  xy: 827, 49
+  xy: 876, 50
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+magnez
+  rotate: false
+  xy: 925, 50
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 menel
   rotate: false
-  xy: 389, 1
+  xy: 389, 2
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 menel-small
   rotate: false
-  xy: 812, 16
+  xy: 910, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 moher
   rotate: false
-  xy: 486, 1
+  xy: 486, 2
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 moher-small
   rotate: false
-  xy: 845, 16
+  xy: 943, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 punk
   rotate: false
-  xy: 583, 1
+  xy: 583, 2
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 punk-small
   rotate: false
-  xy: 878, 16
+  xy: 976, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 876, 49
+  xy: 974, 50
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 stone
   rotate: false
-  xy: 925, 49
+  xy: 680, 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 trampoline
   rotate: false
-  xy: 974, 49
+  xy: 729, 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
