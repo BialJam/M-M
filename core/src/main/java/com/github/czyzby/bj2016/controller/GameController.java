@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntMap;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
@@ -19,8 +20,10 @@ import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewSho
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.entity.Block;
+import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.entity.sprite.BlockSprite;
+import com.github.czyzby.bj2016.entity.sprite.MinionSprite;
 import com.github.czyzby.bj2016.entity.sprite.PlayerSprite;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.GameAssetService;
@@ -40,6 +43,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
     private final Array<PlayerSprite> sprites = GdxArrays.newArray();
     private final PooledList<BlockSprite> blocks = PooledList.newList();
+    private final PooledList<MinionSprite> minions = PooledList.newList();
     private final float white = Color.WHITE.toFloatBits();
     private Texture background;
 
@@ -52,6 +56,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         }
         createPlayerSprites();
         createBlockSprites();
+        createMinionSprites();
         super.show(stage, Actions.sequence(action, Actions.run(new Runnable() {
             @Override
             public void run() { // Listening to user input events:
@@ -79,6 +84,21 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         }
     }
 
+    private void createMinionSprites() {
+        minions.clear();
+        final IntMap<Sprite> minionSprites = new IntMap<Sprite>();
+        for (final Minion minion : box2d.getMinions()) {
+            if (!minionSprites.containsKey(minion.getId())) {
+                final Sprite sprite = gameAssetService.getSprite(minion.getParent().getSprite().getSmallDrawableName());
+                sprite.setSize(sprite.getRegionWidth() / Box2DUtil.PPU, sprite.getRegionHeight() / Box2DUtil.PPU);
+                sprite.setOrigin(sprite.getRegionWidth() / 2f / Box2DUtil.PPU,
+                        sprite.getRegionWidth() / 2f / Box2DUtil.PPU);
+                minionSprites.put(minion.getId(), sprite);
+            }
+            minions.addFirst(new MinionSprite(minion, minionSprites.get(minion.getId())));
+        }
+    }
+
     @Override
     public void resize(final Stage stage, final int width, final int height) {
         box2d.resize(width, height);
@@ -95,12 +115,17 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         batch.begin();
         batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);
         batch.setColor(white);
-        batch.draw(background, BG_X, BG_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
+        // batch.draw(background, BG_X, BG_Y, Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
         for (final BlockSprite block : blocks) {
             if (block.update(delta)) {
                 blocks.remove();
             } else {
                 block.draw(batch);
+            }
+        }
+        for (final MinionSprite minion : minions) {
+            if (minion.render(batch, delta)) {
+                minions.remove();
             }
         }
         for (final PlayerSprite sprite : sprites) {

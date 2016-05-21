@@ -2,7 +2,7 @@
 sprites.png
 size: 1024,128
 format: RGBA8888
-filter: MipMapLinearNearest,MipMapLinearNearest
+filter: MipMapLinearNearest,Nearest
 repeat: none
 barbie
   rotate: false

@@ -13,6 +13,7 @@ import com.github.czyzby.bj2016.service.controls.ControlType;
  *
  * @author MJ */
 public class ComputerControl extends AbstractControl {
+    // Updates are dependent on the time step (which is static), so they will not be affected by FPS.
     private static final int UPDATES_TO_CHANGE_TARGET = 30 * 10;
     private static final int UPDATES_TO_CHANGE_MOVEMENT = 30;
     private Player bot, target;

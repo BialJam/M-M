@@ -28,7 +28,25 @@ public class GridService {
         grid.set(0f);
         final CellularAutomataGenerator generator = new CellularAutomataGenerator();
         generator.setAliveChance(0.55f);
+        generator.setIterationsAmount(2);
         generator.generate(grid);
+        final float size = grid.getWidth() * grid.getHeight();
+        final int count = getFullCellsAmount();
+        if (count < size / 10f || count > size * 3f / 5f) {
+            createGrid();
+        }
+    }
+
+    private int getFullCellsAmount() {
+        int count = 0;
+        for (int x = 0; x < grid.getWidth(); x++) {
+            for (int y = 0; y < grid.getHeight(); y++) {
+                if (isFull(x, y)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     /** @return current state of grid.

@@ -18,12 +18,10 @@ import com.github.czyzby.bj2016.util.Box2DUtil;
  * @author MJ */
 public class Player extends AbstractEntity {
     private final Control control;
-    private final int id;
     private final SpriteType sprite;
 
     public Player(final Box2DService box2d, final int id, final Control control, final SpriteType sprite) {
-        super(box2d);
-        this.id = id;
+        super(box2d, id);
         this.control = control;
         this.sprite = sprite;
         setPosition(id);
@@ -45,11 +43,6 @@ public class Player extends AbstractEntity {
                 pos.set(-Box2DUtil.WIDTH / 3f, -Box2DUtil.HEIGHT / 3f);
         }
         body.setTransform(pos, 0f);
-    }
-
-    /** @return unique ID of the player. */
-    public int getId() {
-        return id;
     }
 
     /** @return image representing the player. */

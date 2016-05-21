@@ -11,14 +11,25 @@ public abstract class AbstractEntity implements Entity {
     protected final Box2DService box2d;
     protected final Body body;
     private boolean destroyed;
+    private final int id;
 
     public AbstractEntity(final Box2DService box2d) {
+        this(box2d, -1);
+    }
+
+    public AbstractEntity(final Box2DService box2d, final int id) {
+        this.id = id;
         this.box2d = box2d;
         body = createBody(box2d);
         body.setUserData(this);
         for (final Fixture fixture : body.getFixtureList()) {
             fixture.setUserData(this);
         }
+    }
+
+    /** @return player ID of the sprite. */
+    public int getId() {
+        return id;
     }
 
     /** @param box2d manages Box2D world.

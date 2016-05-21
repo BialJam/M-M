@@ -13,6 +13,7 @@ import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.entity.Block;
 import com.github.czyzby.bj2016.entity.BoundsEntity;
+import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.entity.sprite.BlockType;
 import com.github.czyzby.bj2016.service.controls.Control;
@@ -28,6 +29,8 @@ public class Box2DService extends AbstractService {
     private static final Vector2 GRAVITY = new Vector2(0f, 0f); // Box2D world gravity vector.
     public static final float STEP = 1f / 30f; // Length of a single Box2D step.
     private static final int LIMIT = 5; // Amount of free squares around the players.
+    private static final int MINIONS_AMOUNT = 64;
+    private static final int MINION_ROW_SIZE = 8;
     @Inject private ControlsService controlsService;
     @Inject private PlayerService playerService;
     @Inject private GridService gridService;
@@ -38,6 +41,7 @@ public class Box2DService extends AbstractService {
     private final Viewport viewport = new StretchViewport(Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
     private final Array<Player> players = GdxArrays.newArray();
     private final PooledList<Block> blocks = PooledList.newList();
+    private final PooledList<Minion> minions = PooledList.newList();
 
     /** Call this method to (re)create Box2D world according to current settings. */
     public void create() {
@@ -52,6 +56,7 @@ public class Box2DService extends AbstractService {
                 final Player player = new Player(this, index, control, playerService.getSpriteType(index));
                 players.add(player);
                 control.reset(player);
+                spawnMinions(player);
             }
         }
         final Vector2 position = new Vector2();
@@ -70,6 +75,29 @@ public class Box2DService extends AbstractService {
             }
         });
         world.setContactListener(contactService);
+    }
+
+    private void spawnMinions(final Player player) {
+        float playerX = player.getX();
+        float playerY = player.getY();
+        if (playerX > 0f) {
+            playerX -= 9f; // X offset to prevent from going out of the bounds.
+        }
+        if (playerY > 0f) {
+            playerY -= 7f; // Y offset to prevent from going out of the bounds.
+        }
+        for (int index = 0; index < MINIONS_AMOUNT; index++) {
+            final float x = index % MINION_ROW_SIZE;
+            final float y = index / 8;
+            final Minion minion = new Minion(this, player);
+            minion.getBody().setTransform(x * 1.1f + playerX, y * 1.1f + playerY, 0f);
+            minions.add(minion);
+        }
+    }
+
+    /** @return list of all player minions. */
+    public PooledList<Minion> getMinions() {
+        return minions;
     }
 
     /** @param x cell X.
@@ -112,7 +140,14 @@ public class Box2DService extends AbstractService {
                     blocks.remove();
                 }
             }
-            // TODO update entities, destroy
+            for (final Minion minion : minions) {
+                minion.update(delta);
+                if (minion.isDestroyed()) {
+                    minion.destroy();
+                    // TODO SOUND?
+                    minions.remove();
+                }
+            }
         }
         return updated;
     }
