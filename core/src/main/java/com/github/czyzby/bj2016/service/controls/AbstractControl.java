@@ -2,6 +2,7 @@ package com.github.czyzby.bj2016.service.controls;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.github.czyzby.bj2016.entity.Player;
 
 /** Abstract base for all controls. */
 public abstract class AbstractControl implements Control {
@@ -34,7 +35,7 @@ public abstract class AbstractControl implements Control {
     }
 
     @Override
-    public void reset() {
+    public void reset(final Player player) {
         movement.set(0f, 0f);
     }
 }

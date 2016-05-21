@@ -9,18 +9,19 @@ import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogShower;
 import com.github.czyzby.autumn.mvc.stereotype.ViewDialog;
+import com.github.czyzby.bj2016.service.ControlsService;
+import com.github.czyzby.bj2016.service.controls.Control;
+import com.github.czyzby.bj2016.service.controls.ControlType;
+import com.github.czyzby.bj2016.service.controls.impl.ComputerControl;
+import com.github.czyzby.bj2016.service.controls.impl.GamePadControl;
+import com.github.czyzby.bj2016.service.controls.impl.InactiveControl;
+import com.github.czyzby.bj2016.service.controls.impl.KeyboardControl;
+import com.github.czyzby.bj2016.service.controls.impl.TouchControl;
 import com.github.czyzby.kiwi.util.gdx.GdxUtilities;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.lml.annotation.LmlAction;
 import com.github.czyzby.lml.annotation.LmlActor;
 import com.github.czyzby.lml.parser.action.ActionContainer;
-import com.github.czyzby.bj2016.service.ControlsService;
-import com.github.czyzby.bj2016.service.controls.Control;
-import com.github.czyzby.bj2016.service.controls.ControlType;
-import com.github.czyzby.bj2016.service.controls.impl.GamePadControl;
-import com.github.czyzby.bj2016.service.controls.impl.InactiveControl;
-import com.github.czyzby.bj2016.service.controls.impl.KeyboardControl;
-import com.github.czyzby.bj2016.service.controls.impl.TouchControl;
 
 /** Allows to switch control types. */
 @ViewDialog(id = "switch", value = "ui/templates/dialogs/switch.lml", cacheInstance = true)
@@ -48,10 +49,10 @@ public class ControlsSwitchController implements ActionContainer, ViewDialogShow
     public Iterable<ControlType> getControlTypes() {
         if (GdxUtilities.isRunningOnAndroid()) {
             // Keyboard controls on Android do not work well...
-            return GdxArrays.newArray(ControlType.TOUCH, ControlType.PAD, ControlType.INACTIVE);
+            return GdxArrays.newArray(ControlType.TOUCH, ControlType.PAD, ControlType.INACTIVE, ControlType.BOT);
         } else if (GdxUtilities.isRunningOnIOS()) {
             // Controllers (pads) do not exactly work on iOS.
-            return GdxArrays.newArray(ControlType.TOUCH, ControlType.INACTIVE);
+            return GdxArrays.newArray(ControlType.TOUCH, ControlType.INACTIVE, ControlType.BOT);
         } // Desktop supports all controllers:
         return GdxArrays.newArray(ControlType.values());
     }
@@ -71,6 +72,11 @@ public class ControlsSwitchController implements ActionContainer, ViewDialogShow
         changeControls(new KeyboardControl());
     }
 
+    @LmlAction("BOT")
+    public void setComputerControls() {
+        changeControls(new ComputerControl());
+    }
+
     @LmlAction("PAD")
     public void setGamePadControls() {
         final Array<Controller> controllers = Controllers.getControllers();
@@ -84,7 +90,7 @@ public class ControlsSwitchController implements ActionContainer, ViewDialogShow
     private void changeControls(final Control control) {
         service.setControl(playerId, control);
         controlsController.refreshPlayerView(playerId, control);
-        if (control.isActive()) {
+        if (control.isActive() && control.getType() != ControlType.BOT) {
             editController.setControl(control);
             interfaceService.showDialog(ControlsEditController.class);
         }

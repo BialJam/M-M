@@ -66,10 +66,7 @@ public class Player extends AbstractEntity {
         final Body body = box2d.getWorld().createBody(bodyDef);
 
         addHeadFixture(body);
-        final PolygonShape shape = new PolygonShape();
-        shape.setAsBox(48f / 35f, 96f / 40f, new Vector2(0f, -1f), 0f);
-        body.createFixture(getFixtureDef(shape));
-        shape.dispose();
+        addBodyFixture(body);
 
         return body;
     }
@@ -92,6 +89,13 @@ public class Player extends AbstractEntity {
         shape.dispose();
     }
 
+    private static void addBodyFixture(final Body body) {
+        final PolygonShape shape = new PolygonShape();
+        shape.setAsBox(48f / 35f, 96f / 40f, new Vector2(0f, -1f), 0f);
+        body.createFixture(getFixtureDef(shape));
+        shape.dispose();
+    }
+
     @Override
     public EntityType getType() {
         return EntityType.PLAYER;
@@ -105,7 +109,7 @@ public class Player extends AbstractEntity {
     @Override
     public void update(final float delta) {
         final Vector2 pos = body.getPosition();
-        control.update(box2d.getViewport(), pos.x, pos.y);
+        control.update(box2d, box2d.getViewport(), pos.x, pos.y);
         final Vector2 dir = control.getMovementDirection();
         body.applyForceToCenter(dir.x * Box2DUtil.PLAYER_SPEED * delta, dir.y * Box2DUtil.PLAYER_SPEED * delta, true);
     }

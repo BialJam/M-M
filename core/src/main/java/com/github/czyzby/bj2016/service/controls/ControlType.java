@@ -3,12 +3,13 @@ package com.github.czyzby.bj2016.service.controls;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.utils.Array;
-import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.bj2016.configuration.preferences.ControlsData;
+import com.github.czyzby.bj2016.service.controls.impl.ComputerControl;
 import com.github.czyzby.bj2016.service.controls.impl.GamePadControl;
 import com.github.czyzby.bj2016.service.controls.impl.InactiveControl;
 import com.github.czyzby.bj2016.service.controls.impl.KeyboardControl;
 import com.github.czyzby.bj2016.service.controls.impl.TouchControl;
+import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 
 /** Represents all types of available input sources. */
 public enum ControlType {
@@ -43,6 +44,12 @@ public enum ControlType {
         @Override
         public Control create(final ControlsData data) {
             return new InactiveControl();
+        }
+    },
+    BOT {
+        @Override
+        public Control create(final ControlsData data) {
+            return new ComputerControl();
         }
     };
 

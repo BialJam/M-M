@@ -1,5 +1,6 @@
 package com.github.czyzby.bj2016.entity;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -15,10 +16,12 @@ import com.github.czyzby.bj2016.util.Box2DUtil;
 public class Block extends AbstractEntity {
     private static final float HALF_SIZE = 48f / Box2DUtil.PPU / 2f;
     private final BlockType blockType;
+    private float health;
 
     public Block(final Box2DService box2d, final BlockType blockType) {
         super(box2d);
         this.blockType = blockType;
+        health = blockType.getHealth();
     }
 
     @Override
@@ -53,5 +56,19 @@ public class Block extends AbstractEntity {
     /** @return displayed block type. */
     public BlockType getBlockType() {
         return blockType;
+    }
+
+    @Override
+    public void beginCollision(final Entity entity) {
+        if (entity.getType() == EntityType.PLAYER) {
+            health -= total(entity.getBody().getLinearVelocity());
+            if (health < 0f) {
+                setDestroyed(true);
+            }
+        }
+    }
+
+    private static float total(final Vector2 vec2) {
+        return Math.abs(vec2.x) + Math.abs(vec2.y);
     }
 }

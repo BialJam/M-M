@@ -44,5 +44,4 @@ public class BoundsEntity extends AbstractEntity {
         body.createFixture(fixtureDef);
         return body;
     }
-
 }

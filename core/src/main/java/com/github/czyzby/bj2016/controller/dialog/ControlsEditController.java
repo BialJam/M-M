@@ -280,7 +280,7 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
             position.set(mockUpEntity.getParent().getX() + (parentSize - size) / 2f,
                     mockUpEntity.getParent().getY() + (parentSize - size) / 2f);
             mockUpEntity.getParent().localToStageCoordinates(position);
-            control.update(stage.getViewport(), position.x, position.y);
+            control.update(null, stage.getViewport(), position.x, position.y);
             mockUpEntity.setPosition(x.getCurrentValue(), y.getCurrentValue());
             return false;
         }

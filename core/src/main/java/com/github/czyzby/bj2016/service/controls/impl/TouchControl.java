@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.czyzby.bj2016.configuration.preferences.ControlsData;
+import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.controls.AbstractControl;
 import com.github.czyzby.bj2016.service.controls.ControlType;
 
@@ -42,8 +43,8 @@ public class TouchControl extends AbstractControl {
     }
 
     @Override
-    public void update(final Viewport gameViewport, final float gameX, final float gameY) {
-        gameViewport.project(entityPosition.set(gameX, gameY));
+    public void update(final Box2DService box2d, final Viewport viewport, final float gameX, final float gameY) {
+        viewport.project(entityPosition.set(gameX, gameY));
     }
 
     @Override

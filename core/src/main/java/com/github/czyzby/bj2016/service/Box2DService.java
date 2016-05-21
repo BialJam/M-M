@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.czyzby.autumn.annotation.Component;
@@ -19,7 +18,7 @@ import com.github.czyzby.bj2016.entity.sprite.BlockType;
 import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
-import com.github.czyzby.kiwi.util.gdx.collection.GdxSets;
+import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
 import com.github.czyzby.noise4j.map.Grid;
 import com.github.czyzby.noise4j.map.Grid.CellConsumer;
 
@@ -27,17 +26,18 @@ import com.github.czyzby.noise4j.map.Grid.CellConsumer;
 @Component
 public class Box2DService extends AbstractService {
     private static final Vector2 GRAVITY = new Vector2(0f, 0f); // Box2D world gravity vector.
-    private static final float STEP = 1f / 30f; // Length of a single Box2D step.
-    private static final int LIMIT = 5;
+    public static final float STEP = 1f / 30f; // Length of a single Box2D step.
+    private static final int LIMIT = 5; // Amount of free squares around the players.
     @Inject private ControlsService controlsService;
     @Inject private PlayerService playerService;
     @Inject private GridService gridService;
+    @Inject private ContactService contactService;
 
     private World world;
     private float timeSinceUpdate;
     private final Viewport viewport = new StretchViewport(Box2DUtil.WIDTH, Box2DUtil.HEIGHT);
     private final Array<Player> players = GdxArrays.newArray();
-    private final ObjectSet<Block> blocks = GdxSets.newSet();
+    private final PooledList<Block> blocks = PooledList.newList();
 
     /** Call this method to (re)create Box2D world according to current settings. */
     public void create() {
@@ -49,7 +49,9 @@ public class Box2DService extends AbstractService {
         for (int index = 0; index < Configuration.PLAYERS_AMOUNT; index++) {
             final Control control = controls.get(index);
             if (control.isActive()) {
-                players.add(new Player(this, index, control, playerService.getSpriteType(index)));
+                final Player player = new Player(this, index, control, playerService.getSpriteType(index));
+                players.add(player);
+                control.reset(player);
             }
         }
         final Vector2 position = new Vector2();
@@ -67,6 +69,7 @@ public class Box2DService extends AbstractService {
                 return CONTINUE;
             }
         });
+        world.setContactListener(contactService);
     }
 
     /** @param x cell X.
@@ -101,6 +104,14 @@ public class Box2DService extends AbstractService {
             for (final Player player : players) {
                 player.update(STEP);
             }
+            for (final Block block : blocks) {
+                block.update(delta);
+                if (block.isDestroyed()) {
+                    block.destroy();
+                    // TODO Sound?
+                    blocks.remove();
+                }
+            }
             // TODO update entities, destroy
         }
         return updated;
@@ -112,7 +123,7 @@ public class Box2DService extends AbstractService {
     }
 
     /** @return all blocks currently displayed on the screen. */
-    public ObjectSet<Block> getBlocks() {
+    public PooledList<Block> getBlocks() {
         return blocks;
     }
 

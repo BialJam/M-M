@@ -29,4 +29,10 @@ public interface Entity {
 
     /** @return position on Y axis. */
     float getY();
+
+    /** @param entity has begun a collision with the entity. */
+    void beginCollision(Entity entity);
+
+    /** @param entity has ended the collision with the entity. */
+    void endCollision(Entity entity);
 }

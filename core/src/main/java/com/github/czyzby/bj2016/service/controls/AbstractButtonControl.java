@@ -3,6 +3,8 @@ package com.github.czyzby.bj2016.service.controls;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.czyzby.bj2016.configuration.preferences.ControlsData;
+import com.github.czyzby.bj2016.entity.Player;
+import com.github.czyzby.bj2016.service.Box2DService;
 
 /** Abstract base for controls that use buttons, like keyboard keys or game pads buttons. */
 public abstract class AbstractButtonControl extends AbstractControl {
@@ -43,7 +45,7 @@ public abstract class AbstractButtonControl extends AbstractControl {
     }
 
     @Override
-    public void update(final Viewport gameViewport, final float gameX, final float gameY) {
+    public void update(final Box2DService box2d, final Viewport viewport, final float gameX, final float gameY) {
         // Button controls usually do not need relative position of controlled entity.
     }
 
@@ -72,8 +74,8 @@ public abstract class AbstractButtonControl extends AbstractControl {
     }
 
     @Override
-    public void reset() {
-        super.reset();
+    public void reset(final Player player) {
+        super.reset(player);
         pressedButtons.clear();
     }
 

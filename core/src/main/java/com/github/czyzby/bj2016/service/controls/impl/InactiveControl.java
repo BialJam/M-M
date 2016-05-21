@@ -4,6 +4,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.czyzby.bj2016.configuration.preferences.ControlsData;
+import com.github.czyzby.bj2016.entity.Player;
+import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.bj2016.service.controls.ControlType;
 
@@ -24,7 +26,7 @@ public class InactiveControl implements Control {
     }
 
     @Override
-    public void update(final Viewport gameViewport, final float gameX, final float gameY) {
+    public void update(final Box2DService box2d, final Viewport viewport, final float gameX, final float gameY) {
     }
 
     @Override
@@ -42,6 +44,6 @@ public class InactiveControl implements Control {
     }
 
     @Override
-    public void reset() {
+    public void reset(final Player player) {
     }
 }

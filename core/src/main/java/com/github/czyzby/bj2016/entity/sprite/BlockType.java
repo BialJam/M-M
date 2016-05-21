@@ -6,14 +6,16 @@ import com.badlogic.gdx.math.MathUtils;
  *
  * @author MJ */
 public enum BlockType {
-    BUSH("bush"),
-    STONE("stone"),
-    ROCK("rock");
+    BUSH("bush", 40f),
+    STONE("stone", 55f),
+    ROCK("rock", 60f);
 
     private final String id;
+    private float health;
 
-    private BlockType(final String id) {
+    private BlockType(final String id, final float health) {
         this.id = id;
+        this.health = health;
     }
 
     /** @return unique ID of sprite. */
@@ -29,6 +31,11 @@ public enum BlockType {
     /** @return random block type. */
     public static BlockType getRandom() {
         return values()[MathUtils.random(values().length - 1)];
+    }
+
+    /** @return duration of the obstacle. */
+    public float getHealth() {
+        return health;
     }
 
     @Override

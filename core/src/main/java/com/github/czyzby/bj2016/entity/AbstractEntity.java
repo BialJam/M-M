@@ -54,4 +54,12 @@ public abstract class AbstractEntity implements Entity {
     public float getY() {
         return body.getPosition().y;
     }
+
+    @Override
+    public void beginCollision(final Entity entity) {
+    }
+
+    @Override
+    public void endCollision(final Entity entity) {
+    }
 }

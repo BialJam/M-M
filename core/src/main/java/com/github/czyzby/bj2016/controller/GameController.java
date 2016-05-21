@@ -99,8 +99,6 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         for (final BlockSprite block : blocks) {
             if (block.update(delta)) {
                 blocks.remove();
-                System.out.println("Block");
-                // Spawn explosion?
             } else {
                 block.draw(batch);
             }
