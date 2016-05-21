@@ -43,6 +43,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @Inject private GameAssetService gameAssetService;
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
     @LmlActor("points[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Label> pointLabels;
+    @LmlActor("time") private Label timerLabel;
     private final int[] cachedPoints = new int[Configuration.PLAYERS_AMOUNT];
     private final StringBuilder helperBuilder = new StringBuilder();
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
@@ -142,12 +143,31 @@ public class GameController extends StandardViewShower implements ViewResizer, V
                 minions.remove();
             }
         }
-        timer += delta;
-        Strings.clearBuilder(helperBuilder);
+        updateTimer(delta);
         renderPlayers(delta, batch);
         batch.end();
         stage.act(delta);
         stage.draw();
+    }
+
+    private void updateTimer(final float delta) {
+        if (box2d.isSoloMode()) {
+            return;
+        }
+        timer += delta;
+        Strings.clearBuilder(helperBuilder);
+        if (timer < 60f) {
+            helperBuilder.append("00:");
+            if (timer < 10f) {
+                helperBuilder.append('0').append((int) timer);
+            } else {
+                helperBuilder.append((int) timer);
+            }
+        } else {
+            helperBuilder.append("!!!:!!!");
+            box2d.setSoloMode();
+        }
+        timerLabel.setText(helperBuilder);
     }
 
     private void renderPlayers(final float delta, final Batch batch) {
@@ -156,12 +176,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
             sprite.update(delta);
             sprite.draw(batch);
             final Player player = sprite.getPlayer();
-            if (player.getMinionsAmount() != cachedPoints[player.getId()]) {
-                cachedPoints[player.getId()] = player.getMinionsAmount();
-                Strings.clearBuilder(helperBuilder);
-                helperBuilder.append(player.getMinionsAmount());
-                pointLabels.get(player.getId()).setText(helperBuilder);
-            }
+            updatePlayerPoints(player, box2d.isSoloMode() ? (int) player.getHealth() : player.getMinionsAmount());
             if (sprite.isDead()) {
                 deadPlayers.add(sprite);
                 removeDead = true;
@@ -173,6 +188,15 @@ public class GameController extends StandardViewShower implements ViewResizer, V
                     sprites.removeIndex(index);
                 }
             }
+        }
+    }
+
+    private void updatePlayerPoints(final Player player, final int points) {
+        if (points != cachedPoints[player.getId()]) {
+            cachedPoints[player.getId()] = points;
+            Strings.clearBuilder(helperBuilder);
+            helperBuilder.append(points);
+            pointLabels.get(player.getId()).setText(helperBuilder);
         }
     }
 }

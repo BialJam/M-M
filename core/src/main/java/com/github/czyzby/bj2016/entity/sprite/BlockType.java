@@ -8,7 +8,8 @@ import com.badlogic.gdx.math.MathUtils;
 public enum BlockType {
     BUSH("bush", 20f),
     STONE("stone", 30f),
-    ROCK("rock", 35f);
+    ROCK("rock", 35f),
+    TRASH("kosz", 25f);
 
     private final String id;
     private float health;

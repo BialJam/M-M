@@ -34,7 +34,7 @@ dres
   index: -1
 dres-small
   rotate: false
-  xy: 827, 65
+  xy: 876, 65
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -62,9 +62,16 @@ kibol
   index: -1
 kibol-small
   rotate: false
-  xy: 860, 65
+  xy: 909, 65
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+kosz
+  rotate: false
+  xy: 729, 49
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 menel
@@ -90,7 +97,7 @@ moher
   index: -1
 moher-small
   rotate: false
-  xy: 893, 65
+  xy: 942, 65
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -111,14 +118,14 @@ punk-small
   index: -1
 rock
   rotate: false
-  xy: 729, 49
+  xy: 778, 49
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 stone
   rotate: false
-  xy: 778, 49
+  xy: 827, 49
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

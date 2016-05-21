@@ -17,6 +17,7 @@ import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.entity.sprite.BlockType;
 import com.github.czyzby.bj2016.service.controls.Control;
+import com.github.czyzby.bj2016.service.controls.impl.ComputerControl;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
@@ -43,6 +44,9 @@ public class Box2DService extends AbstractService {
     private final Array<Player> players = GdxArrays.newArray();
     private final PooledList<Block> blocks = PooledList.newList();
     private final PooledList<Minion> minions = PooledList.newList();
+    private boolean soloMode;
+    private int penalty;
+    private final int[] deaths = new int[Configuration.PLAYERS_AMOUNT];
 
     /** Call this method to (re)create Box2D world according to current settings. */
     public void create() {
@@ -50,16 +54,7 @@ public class Box2DService extends AbstractService {
         gridService.createGrid();
         world = new World(GRAVITY, true);
         createGameBounds();
-        final Array<Control> controls = controlsService.getControls();
-        for (int index = 0; index < Configuration.PLAYERS_AMOUNT; index++) {
-            final Control control = controls.get(index);
-            if (control.isActive()) {
-                final Player player = new Player(this, index, control, playerService.getSpriteType(index));
-                players.add(player);
-                control.reset(player);
-                spawnMinions(player);
-            }
-        }
+        createPlayers();
         final Vector2 position = new Vector2();
         gridService.getGrid().forEach(new CellConsumer() {
             @Override
@@ -78,6 +73,35 @@ public class Box2DService extends AbstractService {
         world.setContactListener(contactService);
     }
 
+    private void createPlayers() {
+        final Array<Control> controls = controlsService.getControls();
+        for (int index = 0; index < Configuration.PLAYERS_AMOUNT; index++) {
+            final Control control = controls.get(index);
+            if (control.isActive()) {
+                final Player player = new Player(this, index, control, playerService.getSpriteType(index));
+                players.add(player);
+                control.reset(player);
+                spawnMinions(player);
+                if (!(control instanceof ComputerControl)) {
+                    player.setHealth(100f - penalty);
+                }
+            }
+        }
+    }
+
+    /** @param penalty will be subtracted from starting minions amount and health amount. */
+    public void addPenalty(final int penalty) {
+        this.penalty += penalty;
+    }
+
+    /** No penalty will be applied to players. */
+    public void resetPenalty() {
+        penalty = 0;
+        for (int index = 0; index < deaths.length; index++) {
+            deaths[index] = 0;
+        }
+    }
+
     private void spawnMinions(final Player player) {
         float playerX = player.getX();
         float playerY = player.getY();
@@ -87,7 +111,9 @@ public class Box2DService extends AbstractService {
         if (playerY > 0f) {
             playerY -= 8f; // Y offset to prevent from going out of the bounds.
         }
-        for (int index = 0; index < MINIONS_AMOUNT; index++) {
+        final int minionsAmount = player.getControl() instanceof ComputerControl ? MINIONS_AMOUNT
+                : MINIONS_AMOUNT - penalty;
+        for (int index = 0; index < minionsAmount; index++) {
             final float x = index % MINION_ROW_SIZE;
             final float y = index / 8;
             final Minion minion = new Minion(this, player, gridService);
@@ -145,6 +171,7 @@ public class Box2DService extends AbstractService {
             final Player player = players.get(index);
             player.update(STEP);
             if (player.isDestroyed()) {
+                deaths[player.getId()] = deaths[player.getId()] + 1;
                 player.destroy();
                 players.removeValue(player, true);
             }
@@ -211,9 +238,23 @@ public class Box2DService extends AbstractService {
         players.clear();
         blocks.clear();
         minions.clear();
+        soloMode = false;
         if (world != null) {
             world.dispose();
             world = null;
         }
+    }
+
+    /** Changes to second stage of the game. */
+    public void setSoloMode() {
+        soloMode = true;
+        for (final Minion minion : minions) {
+            minion.setDestroyed(true);
+        }
+    }
+
+    /** @return true if game is in the second stage. */
+    public boolean isSoloMode() {
+        return soloMode;
     }
 }

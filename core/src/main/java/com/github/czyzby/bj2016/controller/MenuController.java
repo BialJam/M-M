@@ -1,9 +1,13 @@
 package com.github.czyzby.bj2016.controller;
 
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
+import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.bj2016.controller.dialog.NotEnoughPlayersErrorController;
+import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.ControlsService;
 import com.github.czyzby.lml.annotation.LmlAction;
 import com.github.czyzby.lml.parser.action.ActionContainer;
@@ -12,9 +16,16 @@ import com.github.czyzby.lml.parser.action.ActionContainer;
  *
  * This is application's main view, displaying a menu with several options. */
 @View(id = "menu", value = "ui/templates/menu.lml", themes = "music/theme.ogg")
-public class MenuController implements ActionContainer {
+public class MenuController extends StandardViewShower implements ActionContainer {
     @Inject private InterfaceService interfaceService;
     @Inject private ControlsService controlsService;
+    @Inject private Box2DService box2dService;
+
+    @Override
+    public void show(final Stage stage, final Action action) {
+        box2dService.resetPenalty(); // Going back to menu resets progress.
+        super.show(stage, action);
+    }
 
     @LmlAction("startGame")
     public void startPlaying() {

@@ -172,18 +172,4 @@ public class Minion extends AbstractEntity {
         super.setDestroyed(destroyed);
         parent.removeMinion();
     }
-
-    private static float getTotalForce(final Body body) {
-        return Math.abs(body.getLinearVelocity().x) + Math.abs(body.getLinearVelocity().y);
-    }
-
-    private static float getDirectionOffset(final Body body, final Body other) {
-        final Vector2 velocity = body.getLinearVelocity();
-        float angle = MathUtils.atan2(velocity.y, velocity.x);
-        final float x = MathUtils.cos(angle);
-        final float y = MathUtils.sin(angle);
-        angle = MathUtils.atan2(other.getPosition().y - body.getPosition().y,
-                other.getPosition().x - body.getPosition().x);
-        return Math.abs(x - MathUtils.cos(angle)) + Math.abs(y - MathUtils.sin(angle));
-    }
 }

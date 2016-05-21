@@ -28,6 +28,9 @@ public class ComputerControl extends AbstractControl {
     public void update(final Box2DService box2d, final Viewport viewport, final float gameX, final float gameY) {
         timeSinceTarget++;
         timeSinceMoveChange++;
+        if (target != null && target.isDestroyed()) {
+            timeSinceTarget += UPDATES_TO_CHANGE_TARGET;
+        }
         if (timeSinceTarget >= UPDATES_TO_CHANGE_TARGET) {
             timeSinceTarget -= UPDATES_TO_CHANGE_TARGET;
             if (box2d.getPlayers().size <= 1) {

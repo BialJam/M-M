@@ -1,5 +1,6 @@
 package com.github.czyzby.bj2016.entity;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -20,12 +21,23 @@ public class Player extends AbstractEntity {
     private final Control control;
     private final SpriteType sprite;
     private int minionsAmount;
+    private float health = 100f;
 
     public Player(final Box2DService box2d, final int id, final Control control, final SpriteType sprite) {
         super(box2d, id);
         this.control = control;
         this.sprite = sprite;
         setPosition(id);
+    }
+
+    /** @param health will become health amount. */
+    public void setHealth(final float health) {
+        this.health = health;
+    }
+
+    /** @return current health amount. */
+    public float getHealth() {
+        return health;
     }
 
     private void setPosition(final int id) {
@@ -122,7 +134,7 @@ public class Player extends AbstractEntity {
     /** Decrements minions counter. */
     public void removeMinion() {
         minionsAmount--;
-        if (minionsAmount == 0) {
+        if (minionsAmount == 0 && !box2d.isSoloMode()) {
             setDestroyed(true);
         }
     }
@@ -130,5 +142,49 @@ public class Player extends AbstractEntity {
     /** @return current amount of minions. */
     public int getMinionsAmount() {
         return minionsAmount;
+    }
+
+    @Override
+    public void beginCollision(final Entity entity) {
+        if (box2d.isSoloMode() && entity.getType() == EntityType.PLAYER) {
+            final Player other = (Player) entity;
+            if (other.getId() < getId()) {
+                // Applying the effect only once.
+                return;
+            }
+            final float offset = getDirectionOffset(body, other.body);
+            final float otherOffset = getDirectionOffset(other.body, body);
+            if (offset > otherOffset) {
+                damage(other.body);
+            } else if (otherOffset > offset) {
+                other.damage(body);
+            } else {
+                final float force = getTotalForce(body);
+                final float otherForce = getTotalForce(other.body);
+                if (force > otherForce) {
+                    other.damage(body);
+                } else if (force < otherForce) {
+                    damage(other.body);
+                }
+            }
+        }
+    }
+
+    /** @param body body of the minion that damaged this entity. */
+    private void damage(final Body body) {
+        final float angle = MathUtils.atan2(body.getPosition().y - this.body.getPosition().y,
+                body.getPosition().x - this.body.getPosition().x);
+        damage(getTotalForce(body) / 2f);
+        this.body.applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.MINION_SPEED,
+                MathUtils.sin(angle) * Box2DUtil.MINION_SPEED, true);
+    }
+
+    /** @param health will be subtracted from current health amount. */
+    public void damage(final float health) {
+        this.health -= health;
+        if (this.health <= 0f) {
+            setDestroyed(true);
+            this.health = 0f;
+        }
     }
 }

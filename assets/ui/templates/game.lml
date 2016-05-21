@@ -14,7 +14,7 @@
 		<label color="t-highlight">@player3</label>
 		<label id="points3" width="100" textAlign="right">81</label>
 	</table>
-	<textButton style="dark" align="bottom" onChange="goto:menu">@back
+	<textButton style="dark" align="bottom" onChange="goto:menu">@giveUp
 	</textButton>
 	<table id="player1" align="bottomRight" background="border-dot">
 		<label color="t-highlight">@player1</label>

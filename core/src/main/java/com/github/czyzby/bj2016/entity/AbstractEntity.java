@@ -1,5 +1,7 @@
 package com.github.czyzby.bj2016.entity;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.github.czyzby.bj2016.service.Box2DService;
@@ -72,5 +74,24 @@ public abstract class AbstractEntity implements Entity {
 
     @Override
     public void endCollision(final Entity entity) {
+    }
+
+    /** @param body entity body.
+     * @return combined values of x and y velocities. */
+    public static float getTotalForce(final Body body) {
+        return Math.abs(body.getLinearVelocity().x) + Math.abs(body.getLinearVelocity().y);
+    }
+
+    /** @param body entity body.
+     * @param other collider.
+     * @return difference between entity velocity and ideal vector pointing at the collider. */
+    public static float getDirectionOffset(final Body body, final Body other) {
+        final Vector2 velocity = body.getLinearVelocity();
+        float angle = MathUtils.atan2(velocity.y, velocity.x);
+        final float x = MathUtils.cos(angle);
+        final float y = MathUtils.sin(angle);
+        angle = MathUtils.atan2(other.getPosition().y - body.getPosition().y,
+                other.getPosition().x - body.getPosition().x);
+        return Math.abs(x - MathUtils.cos(angle)) + Math.abs(y - MathUtils.sin(angle));
     }
 }

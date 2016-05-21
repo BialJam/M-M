@@ -50,9 +50,12 @@ public class BoundsEntity extends AbstractEntity {
     @Override
     public void beginCollision(final Entity entity) {
         if (entity.getType() == EntityType.PLAYER) {
+            if (box2d.isSoloMode()) {
+                ((Player) entity).damage(Minion.getTotalForce(entity.getBody()));
+            }
             final Vector2 velocity = entity.getBody().getLinearVelocity();
-            final float angle = MathUtils.atan2(velocity.y + MathUtils.random(-2f, 2f),
-                    velocity.x + MathUtils.random(-2f, 2f));
+            final float angle = MathUtils.atan2(velocity.y + MathUtils.random(-1f, 1f),
+                    velocity.x + MathUtils.random(-1f, 1f));
             entity.getBody().applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED,
                     MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED, true);
         }
