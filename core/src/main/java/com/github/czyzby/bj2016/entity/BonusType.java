@@ -120,7 +120,7 @@ public enum BonusType {
                         }
                     } else if (entity.getType() == EntityType.PLAYER) {
                         if (box2d.isSoloMode() && entity != player) {
-                            ((Player) entity).damage(-20f);
+                            ((Player) entity).damage(10f);
                         }
                         final float angle = MathUtils.atan2(entity.getY() - player.getY(),
                                 entity.getX() - player.getX());

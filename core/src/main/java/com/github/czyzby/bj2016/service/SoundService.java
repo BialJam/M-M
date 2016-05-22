@@ -19,7 +19,7 @@ public class SoundService {
             type = Sound.class) private Array<Sound> crushSounds;
     @Asset(value = { "sounds/bonus0.ogg", "sounds/bonus1.ogg" }, type = Sound.class) private Array<Sound> bonusSounds;
     @Asset(value = { "sounds/jump0.ogg" }, type = Sound.class) private Array<Sound> jumpSounds;
-    @Asset(value = { "sounds/female0.ogg", "sounds/female1.ogg" },
+    @Asset(value = { "sounds/female0.ogg", "sounds/female1.ogg", "sounds/female2.ogg" },
             type = Sound.class) private Array<Sound> femaleScreams;
     @Asset(value = { "sounds/male0.ogg", "sounds/male1.ogg", "sounds/male2.ogg", "sounds/male3.ogg",
             "sounds/male4.ogg" }, type = Sound.class) private Array<Sound> maleScreams;

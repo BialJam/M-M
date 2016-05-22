@@ -6,12 +6,13 @@ import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
 import com.github.czyzby.autumn.mvc.component.preferences.dto.AbstractPreference;
 import com.github.czyzby.autumn.mvc.stereotype.preference.Property;
-import com.github.czyzby.kiwi.util.gdx.GdxUtilities;
-import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.service.controls.ControlType;
+import com.github.czyzby.bj2016.service.controls.impl.ComputerControl;
 import com.github.czyzby.bj2016.service.controls.impl.KeyboardControl;
 import com.github.czyzby.bj2016.service.controls.impl.TouchControl;
+import com.github.czyzby.kiwi.util.gdx.GdxUtilities;
+import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 
 /** Allows to save controls in preferences. */
 @Property("Controls")
@@ -23,7 +24,9 @@ public class ControlsPreference extends AbstractPreference<Array<ControlsData>> 
         final Array<ControlsData> controls = GdxArrays.newArray();
         // First player defaults to touch (on mobile) or keyboard (on desktop) controls.
         controls.add(GdxUtilities.isMobile() ? new TouchControl().toData() : new KeyboardControl().toData());
-        for (int index = 1; index < Configuration.PLAYERS_AMOUNT; index++) {
+        // Second player is an AI:
+        controls.add(new ComputerControl().toData());
+        for (int index = 2; index < Configuration.PLAYERS_AMOUNT; index++) {
             // Other players are simply inactive:
             controls.add(new ControlsData(ControlType.INACTIVE));
         }

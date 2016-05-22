@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
  * @author MJ */
 public enum BlockType {
     BUSH("bush", 20f),
+    BUSHES("krzewy", 20f),
     STONE("stone", 30f),
     ROCK("rock", 35f),
     TRASH("kosz", 25f),

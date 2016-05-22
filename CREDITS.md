@@ -1,4 +1,4 @@
 - Code: Michał Jadczuk.
 - Graphics: Marta Zajkowska.
-- Music: [Cleyton R. Xavier](http://opengameart.org/users/doppelganger/).
+- Music: [Cleyton R. Xavier](http://opengameart.org/users/doppelganger/), [MegaPixel Music](http://opengameart.org/users/pugly), [Kevin MacLeod](http://opengameart.org/content/funkorama)
 - Sounds: [Iwan Gabovitch](http://opengameart.org/users/qubodup/).

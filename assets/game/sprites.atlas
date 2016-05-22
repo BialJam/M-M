@@ -55,7 +55,7 @@ cpun
   index: -1
 cpun-small
   rotate: false
-  xy: 785, 169
+  xy: 834, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -69,7 +69,7 @@ cygan
   index: -1
 cygan-small
   rotate: false
-  xy: 834, 218
+  xy: 785, 120
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -104,7 +104,7 @@ emo
   index: -1
 emo-small
   rotate: false
-  xy: 785, 136
+  xy: 834, 185
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -137,6 +137,13 @@ kosz
   orig: 48, 48
   offset: 0, 0
   index: -1
+krzewy
+  rotate: false
+  xy: 687, 104
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 kujonka
   rotate: false
   xy: 493, 154
@@ -146,21 +153,21 @@ kujonka
   index: -1
 kujonka-small
   rotate: false
-  xy: 900, 218
+  xy: 867, 185
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 lawka
   rotate: false
-  xy: 687, 104
+  xy: 736, 153
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 magnez
   rotate: false
-  xy: 736, 153
+  xy: 785, 202
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -174,7 +181,7 @@ menel
   index: -1
 menel-small
   rotate: false
-  xy: 933, 218
+  xy: 900, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -188,7 +195,7 @@ moher
   index: -1
 moher-small
   rotate: false
-  xy: 966, 218
+  xy: 900, 185
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -202,28 +209,28 @@ punk
   index: -1
 punk-small
   rotate: false
-  xy: 753, 71
+  xy: 933, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 785, 202
+  xy: 148, 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 stone
   rotate: false
-  xy: 148, 1
+  xy: 736, 104
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 trampoline
   rotate: false
-  xy: 736, 104
+  xy: 785, 153
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
