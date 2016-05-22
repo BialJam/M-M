@@ -4,7 +4,8 @@ package com.github.czyzby.bj2016.entity.sprite;
  *
  * @author MJ */
 public enum EffectType {
-    EXPLOSION("boom");
+    EXPLOSION("boom"),
+    SMOKE("dymek");
 
     private final String id;
 

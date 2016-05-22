@@ -218,24 +218,23 @@ public enum BonusType {
             };
             final float width = Box2DUtil.WIDTH * 2f / 5f - Player.HALF_SIZE;
             final float height = Box2DUtil.HEIGHT * 2f / 5f - Player.HALF_SIZE;
-            for (int index = 0; index < 15; index++) {
-                isTaken[0] = true;
-                int testsAmount = 0;
-                float x = 0f;
-                float y = 0f;
-                while (isTaken[0] && testsAmount < 15) {
-                    isTaken[0] = false;
-                    x = MathUtils.random(-width, width);
-                    y = MathUtils.random(-height, height);
-                    box2d.getWorld().QueryAABB(callback, x - Block.HALF_SIZE, y - Block.HALF_SIZE, x + Block.HALF_SIZE,
-                            y + Block.HALF_SIZE);
-                    testsAmount++;
-                }
-                if (!isTaken[0]) {
-                    player.body.setTransform(x, y, 0f);
-                } else if (box2d.isSoloMode()) {
-                    player.damage(10f);
-                }
+            isTaken[0] = true;
+            int testsAmount = 0;
+            float x = 0f;
+            float y = 0f;
+            while (isTaken[0] && testsAmount < 15) {
+                isTaken[0] = false;
+                x = MathUtils.random(-width, width);
+                y = MathUtils.random(-height, height);
+                box2d.getWorld().QueryAABB(callback, x - Block.HALF_SIZE, y - Block.HALF_SIZE, x + Block.HALF_SIZE,
+                        y + Block.HALF_SIZE);
+                testsAmount++;
+            }
+            if (!isTaken[0]) {
+                player.body.setTransform(x, y, 0f);
+                box2d.spawnEffect(EffectType.SMOKE, x, y);
+            } else if (box2d.isSoloMode()) {
+                player.damage(10f);
             }
         }
 
