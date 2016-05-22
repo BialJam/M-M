@@ -10,7 +10,8 @@ public enum SpriteType {
     PUNK("punk"),
     BUM("menel"),
     BARBIE("barbie", true),
-    EMO("emo");
+    EMO("emo"),
+    NERD("kujonka", true);
 
     private final String id;
     private final String smallDrawable;

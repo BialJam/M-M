@@ -13,7 +13,7 @@ barbie
   index: -1
 barbie-small
   rotate: false
-  xy: 493, 72
+  xy: 590, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -34,21 +34,21 @@ boom
   index: -1
 bush
   rotate: false
-  xy: 493, 105
+  xy: 590, 202
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 buty
   rotate: false
-  xy: 590, 202
+  xy: 50, 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 czaszka
   rotate: false
-  xy: 50, 1
+  xy: 590, 153
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -62,7 +62,7 @@ dres
   index: -1
 dres-small
   rotate: false
-  xy: 542, 121
+  xy: 688, 169
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -76,7 +76,7 @@ emo
   index: -1
 emo-small
   rotate: false
-  xy: 590, 169
+  xy: 737, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -97,7 +97,7 @@ kibol
   index: -1
 kibol-small
   rotate: false
-  xy: 884, 218
+  xy: 623, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -109,79 +109,93 @@ kosz
   orig: 48, 48
   offset: 0, 0
   index: -1
-lawka
-  rotate: false
-  xy: 688, 202
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-magnez
-  rotate: false
-  xy: 148, 1
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-menel
+kujonka
   rotate: false
   xy: 396, 154
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
-menel-small
+kujonka-small
   rotate: false
-  xy: 623, 169
+  xy: 688, 136
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-moher
+lawka
+  rotate: false
+  xy: 590, 104
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+magnez
+  rotate: false
+  xy: 639, 153
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+menel
   rotate: false
   xy: 396, 57
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
-moher-small
+menel-small
   rotate: false
-  xy: 917, 218
+  xy: 770, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-punk
+moher
   rotate: false
   xy: 493, 154
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
+moher-small
+  rotate: false
+  xy: 803, 218
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+punk
+  rotate: false
+  xy: 493, 57
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
 punk-small
   rotate: false
-  xy: 656, 169
+  xy: 836, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 737, 202
+  xy: 688, 202
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 stone
   rotate: false
-  xy: 786, 202
+  xy: 148, 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 trampoline
   rotate: false
-  xy: 835, 202
+  xy: 639, 104
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
