@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.bj2016.service.Box2DService;
+import com.github.czyzby.bj2016.service.SoundService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 
 /** Contains all available types of bonuses.
@@ -25,6 +26,11 @@ public enum BonusType {
             final float angle = MathUtils.atan2(target.getY() - player.getY(), target.getX() - player.getX());
             player.getBody().applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED * 2f,
                     MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED * 2f, true);
+        }
+
+        @Override
+        public void playSound(final SoundService soundService) {
+            soundService.playRandomJumpSound();
         }
     },
     HEART("heart") {
@@ -75,20 +81,26 @@ public enum BonusType {
                 }
             }
         }
+
+        @Override
+        public void playSound(final SoundService soundService) {
+            soundService.playRandomJumpSound();
+        }
     },
     BOOTS("buty") {
         @Override
         public void apply(final Box2DService box2d, final Player player) {
-
+            // TODO
         }
     },
     BOMB("bomba") {
         private final Vector2 explosionStart = new Vector2();
         private final Vector2 explosionEnd = new Vector2();
         private final Vector2 currentPosition = new Vector2();
-        private final float angle15 = 15f * MathUtils.degreesToRadians;
-        private final float radius = 3f;
+        private final float angle15 = 10f * MathUtils.degreesToRadians;
+        private final float radius = 5f;
         private Box2DService box2d;
+        private Player player;
         private final RayCastCallback callback = new RayCastCallback() {
             @Override
             public float reportRayFixture(final Fixture fixture, final Vector2 point, final Vector2 normal,
@@ -99,10 +111,13 @@ public enum BonusType {
                     if (entity.getType() == EntityType.MINION || entity.getType() == EntityType.BLOCK) {
                         entity.setDestroyed(true);
                     } else if (entity.getType() == EntityType.PLAYER) {
-                        if (box2d.isSoloMode()) {
+                        if (box2d.isSoloMode() && entity != player) {
                             ((Player) entity).damage(-20f);
                         }
-                        // TODO push
+                        final float angle = MathUtils.atan2(entity.getY() - player.getY(),
+                                entity.getX() - player.getX());
+                        entity.getBody().applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED,
+                                MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED, true);
                     }
                 }
                 return 1f;
@@ -111,6 +126,8 @@ public enum BonusType {
 
         @Override
         public void apply(final Box2DService box2d, final Player player) {
+            this.box2d = box2d;
+            this.player = player;
             currentPosition.set(player.getX(), player.getY());
             for (float angle = 0f; angle < MathUtils.PI * 2; angle += angle15) {
                 explosionStart.set(currentPosition.x, currentPosition.y);
@@ -118,6 +135,12 @@ public enum BonusType {
                         currentPosition.y + radius * MathUtils.sin(angle));
                 box2d.getWorld().rayCast(callback, explosionStart, explosionEnd);
             }
+            // TODO spawn explosion?
+        }
+
+        @Override
+        public void playSound(final SoundService soundService) {
+            soundService.playRandomCrushSound();
         }
     };
 
@@ -144,6 +167,11 @@ public enum BonusType {
     /** @return random block type. */
     public static BonusType getRandom() {
         return values()[MathUtils.random(values().length - 1)];
+    }
+
+    /** @param soundService should be used to play bonus sound. */
+    public void playSound(final SoundService soundService) {
+        soundService.playRandomBonusSound();
     }
 
     @Override

@@ -63,7 +63,7 @@ public class Bonus extends AbstractEntity {
         super.destroy();
         if (target != null) {
             bonus.apply(box2d, target);
-            box2d.getSoundService().playRandomBonusSound();
+            bonus.playSound(box2d.getSoundService());
         }
     }
 

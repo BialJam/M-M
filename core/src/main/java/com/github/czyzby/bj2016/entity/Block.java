@@ -65,10 +65,17 @@ public class Block extends AbstractEntity {
             if (health < 0f) {
                 setDestroyed(true);
             }
+            box2d.getSoundService().playRandomPunchSound();
         }
     }
 
     private static float total(final Vector2 vec2) {
         return Math.abs(vec2.x) + Math.abs(vec2.y);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        box2d.getSoundService().playRandomCrushSound();
     }
 }

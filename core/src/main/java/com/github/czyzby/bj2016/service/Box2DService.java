@@ -218,7 +218,6 @@ public class Box2DService extends AbstractService {
             if (block.isDestroyed()) {
                 spawnBonus(block);
                 block.destroy();
-                soundService.playRandomPunchSound();
                 blocks.remove();
             }
         }
