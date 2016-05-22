@@ -39,7 +39,7 @@ public enum BonusType {
         @Override
         public void apply(final Box2DService box2d, final Player player) {
             if (box2d.isSoloMode()) {
-                player.damage(-20f);
+                player.damage(-25f);
             } else {
                 for (int index = 0; index < 3; index++) { // I <3 index.
                     box2d.spawnMinion(player, player.getX() + MathUtils.random(-1f, 1f),
@@ -54,7 +54,7 @@ public enum BonusType {
             if (box2d.isSoloMode()) {
                 player.damage(-10f);
             } else {
-                for (int index = 0; index < 9; index++) {
+                for (int index = 0; index < 8; index++) {
                     box2d.spawnMinion(player, player.getX() + MathUtils.random(-1f, 1f),
                             player.getY() + MathUtils.random(-2.5f, 2.5f));
                 }
