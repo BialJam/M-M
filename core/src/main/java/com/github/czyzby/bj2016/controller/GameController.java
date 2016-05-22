@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -70,7 +69,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @LmlActor("solo") private Image soloPrompt;
     private final int[] cachedPoints = new int[Configuration.PLAYERS_AMOUNT];
     private final StringBuilder helperBuilder = new StringBuilder();
-    private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
+    // private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
     private final Array<PlayerSprite> sprites = GdxArrays.newArray();
     private final Array<PlayerSprite> deadPlayers = GdxArrays.newArray();
     private final PooledList<BlockSprite> blocks = PooledList.newList();
@@ -166,7 +165,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         if (running && box2d.update(delta)) {
             sprites.sort();
         }
-        renderer.render(box2d.getWorld(), box2d.getViewport().getCamera().combined);
+        // renderer.render(box2d.getWorld(), box2d.getViewport().getCamera().combined);
         final Batch batch = stage.getBatch();
         batch.begin();
         batch.setProjectionMatrix(box2d.getViewport().getCamera().combined);
