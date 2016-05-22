@@ -62,7 +62,7 @@ cpun
   index: -1
 cpun-small
   rotate: false
-  xy: 932, 218
+  xy: 883, 120
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -76,7 +76,7 @@ cygan
   index: -1
 cygan-small
   rotate: false
-  xy: 883, 120
+  xy: 932, 169
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -97,7 +97,7 @@ dres
   index: -1
 dres-small
   rotate: false
-  xy: 720, 71
+  xy: 981, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -111,7 +111,7 @@ emo
   index: -1
 emo-small
   rotate: false
-  xy: 932, 185
+  xy: 720, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -146,7 +146,7 @@ kibol
   index: -1
 kibol-small
   rotate: false
-  xy: 965, 218
+  xy: 753, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -174,7 +174,7 @@ kujonka
   index: -1
 kujonka-small
   rotate: false
-  xy: 753, 71
+  xy: 786, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -202,7 +202,7 @@ menel
   index: -1
 menel-small
   rotate: false
-  xy: 965, 185
+  xy: 819, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -216,9 +216,16 @@ moher
   index: -1
 moher-small
   rotate: false
-  xy: 786, 71
+  xy: 852, 71
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+opony
+  rotate: false
+  xy: 834, 202
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 punk
@@ -230,49 +237,49 @@ punk
   index: -1
 punk-small
   rotate: false
-  xy: 819, 71
+  xy: 916, 120
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 834, 202
+  xy: 785, 104
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 stone
   rotate: false
-  xy: 785, 104
+  xy: 834, 153
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 studzienka
   rotate: false
-  xy: 834, 153
+  xy: 883, 202
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 torba
   rotate: false
-  xy: 883, 202
+  xy: 834, 104
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 trampoline
   rotate: false
-  xy: 834, 104
+  xy: 883, 153
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 wachlarz
   rotate: false
-  xy: 883, 153
+  xy: 932, 202
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

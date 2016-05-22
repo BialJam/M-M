@@ -12,7 +12,8 @@ public enum BlockType {
     BOULDER("boulder", 30f),
     ROCK("rock", 35f),
     TRASH("kosz", 20f),
-    BENCH("lawka", 25f);
+    BENCH("lawka", 25f),
+    TIRES("opony", 20f);
 
     private final String id;
     private float health;
