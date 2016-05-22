@@ -20,6 +20,7 @@ import com.github.czyzby.bj2016.entity.BoundsEntity;
 import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.entity.sprite.BlockType;
+import com.github.czyzby.bj2016.entity.sprite.EffectType;
 import com.github.czyzby.bj2016.service.controls.Control;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
@@ -140,7 +141,7 @@ public class Box2DService extends AbstractService {
      * @param x starting X position.
      * @param y starting Y position. */
     public void spawnMinion(final Player player, final float x, final float y) {
-        final Minion minion = new Minion(this, player, gridService);
+        final Minion minion = new Minion(this, player);
         minion.getBody().setTransform(x, y, 0f);
         player.addMinion(minion);
         minions.add(minion);
@@ -295,6 +296,13 @@ public class Box2DService extends AbstractService {
         for (final Minion minion : minions) {
             minion.setDestroyed(true);
         }
+    }
+
+    /** @param effect type of spawned effect.
+     * @param x Box2D position on X axis.
+     * @param y Box2D position on Y axis. */
+    public void spawnEffect(final EffectType effect, final float x, final float y) {
+        gameController.spawnEffect(effect, x, y);
     }
 
     /** @return true if game is in the second stage. */

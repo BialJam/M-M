@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.github.czyzby.bj2016.service.Box2DService;
-import com.github.czyzby.bj2016.service.GridService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 
 /** Represents players minion.
@@ -20,13 +19,11 @@ public class Minion extends AbstractEntity {
     private final Player parent;
     private final Vector2 movement = new Vector2();
     private float timeSinceLastTrack = MathUtils.random(TRACK_REFRESH);
-    @SuppressWarnings("unused") private final GridService grid;
     private float health = 20f;
 
-    public Minion(final Box2DService box2d, final Player parent, final GridService grid) {
+    public Minion(final Box2DService box2d, final Player parent) {
         super(box2d, parent.getId());
         this.parent = parent;
-        this.grid = grid;
     }
 
     @Override
@@ -156,10 +153,15 @@ public class Minion extends AbstractEntity {
     private void damage(final Body body) {
         final float angle = MathUtils.atan2(body.getPosition().y - this.body.getPosition().y,
                 body.getPosition().x - this.body.getPosition().x);
-        health -= getTotalForce(body);
         this.body.applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.MINION_SPEED,
                 MathUtils.sin(angle) * Box2DUtil.MINION_SPEED, true);
-        if (health <= 0f) {
+        damage(getTotalForce(body));
+    }
+
+    /** @param health will be subtracted from minion's health. */
+    public void damage(final float health) {
+        this.health -= health;
+        if (this.health <= 0f) {
             setDestroyed(true);
         }
     }

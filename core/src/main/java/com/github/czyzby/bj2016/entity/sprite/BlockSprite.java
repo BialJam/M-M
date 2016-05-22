@@ -9,10 +9,11 @@ import com.github.czyzby.kiwi.util.gdx.scene2d.range.FloatRange;
 /** Draws a single obstacle.
  *
  * @author MJ */
-public class BlockSprite {
+public class BlockSprite implements EntitySprite {
     private final Block block;
     private final Sprite sprite;
-    private FloatRange height;
+    private final FloatRange height = new FloatRange(0f, 0.2f);
+    private boolean removing;
     private boolean hidden;
 
     public BlockSprite(final Block block, final Sprite sprite) {
@@ -20,24 +21,31 @@ public class BlockSprite {
         this.sprite = sprite;
         sprite.setSize(sprite.getRegionWidth() / Box2DUtil.PPU, sprite.getRegionHeight() / Box2DUtil.PPU);
         sprite.setPosition(block.getX() - sprite.getWidth() / 2f, block.getY() - sprite.getHeight() / 2f);
+        height.setTargetValue(sprite.getHeight());
     }
 
-    /** @param batch must be begun.
-     * @param delta time since last update.
-     * @return true if block should be removed. */
+    @Override
     public boolean render(final Batch batch, final float delta) {
         if (block.isDestroyed()) {
-            if (height == null) {
-                height = new FloatRange(sprite.getHeight(), 0.2f);
+            if (!removing) {
                 height.setTargetValue(0f);
+                removing = true;
             } else if (height.isTransitionInProgress()) {
                 height.update(delta);
                 sprite.setSize(sprite.getWidth(), height.getCurrentValue());
             } else {
                 hidden = true;
             }
+        } else if (height.isTransitionInProgress()) {
+            height.update(delta);
+            sprite.setSize(sprite.getWidth(), height.getCurrentValue());
         }
         sprite.draw(batch);
         return hidden;
+    }
+
+    @Override
+    public Sprite getSprite() {
+        return sprite;
     }
 }

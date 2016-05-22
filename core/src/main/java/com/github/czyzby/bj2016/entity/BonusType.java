@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.Array;
+import com.github.czyzby.bj2016.entity.sprite.EffectType;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.SoundService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
@@ -90,7 +91,7 @@ public enum BonusType {
     BOOTS("buty") {
         @Override
         public void apply(final Box2DService box2d, final Player player) {
-            // TODO
+            player.addSpeed(1500f);
         }
     },
     BOMB("bomba") {
@@ -108,8 +109,15 @@ public enum BonusType {
                 final Object data = fixture.getUserData();
                 if (data != null) {
                     final Entity entity = (Entity) data;
-                    if (entity.getType() == EntityType.MINION || entity.getType() == EntityType.BLOCK) {
+                    if (entity.getType() == EntityType.BLOCK) {
                         entity.setDestroyed(true);
+                    } else if (entity.getType() == EntityType.MINION) {
+                        final Minion minion = (Minion) entity;
+                        if (minion.getId() == player.getId()) {
+                            minion.damage(5f);
+                        } else {
+                            minion.setDestroyed(true);
+                        }
                     } else if (entity.getType() == EntityType.PLAYER) {
                         if (box2d.isSoloMode() && entity != player) {
                             ((Player) entity).damage(-20f);
@@ -135,7 +143,7 @@ public enum BonusType {
                         currentPosition.y + radius * MathUtils.sin(angle));
                 box2d.getWorld().rayCast(callback, explosionStart, explosionEnd);
             }
-            // TODO spawn explosion?
+            box2d.spawnEffect(EffectType.EXPLOSION, currentPosition.x, currentPosition.y);
         }
 
         @Override

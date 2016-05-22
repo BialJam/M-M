@@ -25,6 +25,7 @@ public class Player extends AbstractEntity {
     private final SpriteType sprite;
     private int minionsAmount;
     private float health = 100f;
+    private float speed = Box2DUtil.PLAYER_SPEED;
 
     public Player(final Box2DService box2d, final int id, final Control control, final SpriteType sprite) {
         super(box2d, id);
@@ -118,7 +119,13 @@ public class Player extends AbstractEntity {
         final Vector2 pos = body.getPosition();
         control.update(box2d, box2d.getViewport(), pos.x, pos.y);
         final Vector2 dir = control.getMovementDirection();
-        body.applyForceToCenter(dir.x * Box2DUtil.PLAYER_SPEED * delta, dir.y * Box2DUtil.PLAYER_SPEED * delta, true);
+        body.applyForceToCenter(dir.x * speed * delta, dir.y * speed * delta, true);
+    }
+
+    /** @param speed will be used to modify character's speed. Note that speed is delta-dependent.
+     * @see Box2DUtil#PLAYER_SPEED */
+    public void addSpeed(final float speed) {
+        this.speed += speed;
     }
 
     /** @return true if player is currently moving. */

@@ -10,7 +10,7 @@ import com.github.czyzby.kiwi.util.gdx.scene2d.range.FloatRange;
 /** Draws a single player.
  *
  * @author MJ */
-public class PlayerSprite implements Comparable<PlayerSprite> {
+public class PlayerSprite implements Comparable<PlayerSprite>, EntitySprite {
     private final Player player;
     private final Sprite sprite;
     private final FloatRange rotation = new FloatRange(0f, 0.3f);
@@ -29,8 +29,13 @@ public class PlayerSprite implements Comparable<PlayerSprite> {
         return player;
     }
 
-    /** @param delta time since last update. */
-    public void update(final float delta) {
+    @Override
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public boolean render(final Batch batch, final float delta) {
         if (player.isDestroyed()) {
             if (!removing) {
                 removing = true;
@@ -38,7 +43,8 @@ public class PlayerSprite implements Comparable<PlayerSprite> {
             }
             rotation.update(delta);
             sprite.setRotation(rotation.getCurrentValue());
-            return;
+            sprite.draw(batch);
+            return false;
         } else if (player.isMoving()) {
             if (stopped) {
                 stopped = false;
@@ -56,11 +62,8 @@ public class PlayerSprite implements Comparable<PlayerSprite> {
         rotation.update(delta);
         sprite.setRotation(rotation.getCurrentValue());
         sprite.setPosition(player.getX() - sprite.getWidth() / 2f, player.getY() - sprite.getHeight() / 2f);
-    }
-
-    /** @param batch must be begun. */
-    public void draw(final Batch batch) {
         sprite.draw(batch);
+        return false;
     }
 
     @Override

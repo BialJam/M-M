@@ -32,6 +32,8 @@ import com.github.czyzby.bj2016.entity.Minion;
 import com.github.czyzby.bj2016.entity.Player;
 import com.github.czyzby.bj2016.entity.sprite.BlockSprite;
 import com.github.czyzby.bj2016.entity.sprite.BonusSprite;
+import com.github.czyzby.bj2016.entity.sprite.EffectSprite;
+import com.github.czyzby.bj2016.entity.sprite.EffectType;
 import com.github.czyzby.bj2016.entity.sprite.MinionSprite;
 import com.github.czyzby.bj2016.entity.sprite.PlayerSprite;
 import com.github.czyzby.bj2016.service.Box2DService;
@@ -67,6 +69,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     private final PooledList<BlockSprite> blocks = PooledList.newList();
     private final PooledList<MinionSprite> minions = PooledList.newList();
     private final PooledList<BonusSprite> bonuses = PooledList.newList();
+    private final PooledList<EffectSprite> effects = PooledList.newList();
     private final IntMap<Sprite> minionSprites = new IntMap<Sprite>();
     private final float white = Color.WHITE.toFloatBits();
     private TextureRegion background;
@@ -77,6 +80,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @Override
     public void show(final Stage stage, final Action action) {
         bonuses.clear();
+        effects.clear();
         box2d.create();
         running = true;
         timer = 0f;
@@ -165,8 +169,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
             }
         }
         for (final PlayerSprite player : deadPlayers) {
-            player.update(delta);
-            player.draw(batch);
+            player.render(batch, delta);
         }
         for (final MinionSprite minion : minions) {
             if (minion.render(batch, delta)) {
@@ -175,9 +178,21 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         }
         updateTimer(delta);
         renderPlayers(delta, batch);
+        for (final EffectSprite effect : effects) {
+            if (effect.render(batch, delta)) {
+                effects.remove();
+            }
+        }
         batch.end();
         stage.act(delta);
         stage.draw();
+    }
+
+    /** @param effect type of spawned effect.
+     * @param x Box2D position on X axis.
+     * @param y Box2D position on Y axis. */
+    public void spawnEffect(final EffectType effect, final float x, final float y) {
+        effects.add(new EffectSprite(effect, gameAssetService.getSprite(effect.getDrawableName()), x, y));
     }
 
     private void updateTimer(final float delta) {
@@ -224,8 +239,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     private void renderPlayers(final float delta, final Batch batch) {
         boolean removeDead = false;
         for (final PlayerSprite sprite : sprites) {
-            sprite.update(delta);
-            sprite.draw(batch);
+            sprite.render(batch, delta);
             final Player player = sprite.getPlayer();
             updatePlayerPoints(player, box2d.isSoloMode() ? (int) player.getHealth() : player.getMinionsAmount());
             if (sprite.isDead()) {

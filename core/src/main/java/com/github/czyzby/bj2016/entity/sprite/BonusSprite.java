@@ -9,7 +9,7 @@ import com.github.czyzby.kiwi.util.gdx.scene2d.range.FloatRange;
 /** Draws a single bonus sprite.
  *
  * @author MJ */
-public class BonusSprite {
+public class BonusSprite implements EntitySprite {
     private final Bonus bonus;
     private final Sprite sprite;
     private final FloatRange alpha = new FloatRange(1f, 0.2f);
@@ -28,14 +28,12 @@ public class BonusSprite {
         return bonus;
     }
 
-    /** @return bonus drawable. */
+    @Override
     public Sprite getSprite() {
         return sprite;
     }
 
-    /** @param must be begun.
-     * @param delta time passed since last render.
-     * @return true if sprite should be removed. */
+    @Override
     public boolean render(final Batch batch, final float delta) {
         if (bonus.isDestroyed()) {
             if (!removing) {

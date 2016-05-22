@@ -9,7 +9,7 @@ import com.github.czyzby.kiwi.util.gdx.scene2d.range.FloatRange;
 /** Draws minions.
  *
  * @author MJ */
-public class MinionSprite {
+public class MinionSprite implements EntitySprite {
     private final FloatRange rotation = new FloatRange(MathUtils.random(40f) - 20f, 0.3f);
     private final FloatRange alpha = new FloatRange(1f, 0.3f);
     private final Sprite sprite;
@@ -23,9 +23,12 @@ public class MinionSprite {
         rotation.setTargetValue(MathUtils.randomBoolean() ? -21f : 21f);
     }
 
-    /** @param batch used to draw the sprite.
-     * @param delta time since last render.
-     * @return true if entity should be removed. */
+    @Override
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
     public boolean render(final Batch batch, final float delta) {
         if (minion.isDestroyed()) {
             if (!removing) {
