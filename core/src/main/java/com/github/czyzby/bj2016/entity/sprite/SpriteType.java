@@ -1,5 +1,7 @@
 package com.github.czyzby.bj2016.entity.sprite;
 
+import com.badlogic.gdx.math.MathUtils;
+
 /** Contains types of are available character sprites in the game.
  *
  * @author MJ */
@@ -12,7 +14,8 @@ public enum SpriteType {
     BARBIE("barbie", true),
     EMO("emo"),
     NERD("kujonka", true),
-    SWINDLER("cygan");
+    SWINDLER("cygan"),
+    JUNKIE("cpun");
 
     private final String id;
     private final String smallDrawable;
@@ -51,5 +54,9 @@ public enum SpriteType {
     @Override
     public String toString() {
         return id;
+    }
+
+    public static SpriteType getRandom() {
+        return values()[MathUtils.random(values().length - 1)];
     }
 }

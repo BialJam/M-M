@@ -1,16 +1,20 @@
 package com.github.czyzby.bj2016.service;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Initiate;
+import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.bj2016.configuration.Configuration;
 import com.github.czyzby.bj2016.entity.sprite.SpriteType;
+import com.github.czyzby.bj2016.service.controls.Control;
 
 /** Manages player game settings.
  *
  * @author MJ */
 @Component
 public class PlayerService {
+    @Inject private ControlsService controlsService;
     private final IntMap<SpriteType> sprites = new IntMap<SpriteType>(Configuration.PLAYERS_AMOUNT);
 
     @Initiate
@@ -60,5 +64,28 @@ public class PlayerService {
         final SpriteType previousType = SpriteType.values()[prev];
         setSpriteType(playerId, previousType);
         return previousType;
+    }
+
+    public void rerollComputerSprites() {
+        final Array<Control> controls = controlsService.getControls();
+        for (int index = 0; index < controls.size; index++) {
+            final Control control = controls.get(index);
+            if (control.isActive() && !control.isHumanControlled()) {
+                SpriteType sprite = SpriteType.getRandom();
+                while (isUsed(sprite)) {
+                    sprite = SpriteType.values()[(sprite.ordinal() + 1) % SpriteType.values().length];
+                }
+                sprites.put(index, sprite);
+            }
+        }
+    }
+
+    private boolean isUsed(final SpriteType sprite) {
+        for (final SpriteType currentSprite : sprites.values()) {
+            if (sprite == currentSprite) {
+                return true;
+            }
+        }
+        return false;
     }
 }

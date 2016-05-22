@@ -13,7 +13,7 @@ barbie
   index: -1
 barbie-small
   rotate: false
-  xy: 590, 72
+  xy: 687, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -34,63 +34,77 @@ boom
   index: -1
 bush
   rotate: false
-  xy: 590, 105
+  xy: 687, 202
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 buty
   rotate: false
-  xy: 687, 202
+  xy: 50, 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-cygan
+cpun
   rotate: false
   xy: 202, 57
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
-cygan-small
+cpun-small
   rotate: false
-  xy: 639, 121
+  xy: 785, 169
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-czaszka
-  rotate: false
-  xy: 50, 1
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-dres
+cygan
   rotate: false
   xy: 299, 154
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
-dres-small
+cygan-small
   rotate: false
-  xy: 687, 169
+  xy: 834, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-emo
+czaszka
+  rotate: false
+  xy: 687, 153
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+dres
   rotate: false
   xy: 299, 57
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
+dres-small
+  rotate: false
+  xy: 720, 71
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+emo
+  rotate: false
+  xy: 396, 154
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
 emo-small
   rotate: false
-  xy: 981, 218
+  xy: 785, 136
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -104,14 +118,14 @@ heart
   index: -1
 kibol
   rotate: false
-  xy: 396, 154
+  xy: 396, 57
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 kibol-small
   rotate: false
-  xy: 720, 169
+  xy: 867, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -125,91 +139,91 @@ kosz
   index: -1
 kujonka
   rotate: false
-  xy: 396, 57
+  xy: 493, 154
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 kujonka-small
   rotate: false
-  xy: 753, 169
+  xy: 900, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 lawka
   rotate: false
-  xy: 785, 202
+  xy: 687, 104
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 magnez
   rotate: false
-  xy: 148, 1
+  xy: 736, 153
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 menel
   rotate: false
-  xy: 493, 154
+  xy: 493, 57
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 menel-small
   rotate: false
-  xy: 786, 169
+  xy: 933, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 moher
   rotate: false
-  xy: 493, 57
+  xy: 590, 154
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 moher-small
   rotate: false
-  xy: 819, 169
+  xy: 966, 218
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 punk
   rotate: false
-  xy: 590, 154
+  xy: 590, 57
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 punk-small
   rotate: false
-  xy: 852, 169
+  xy: 753, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 834, 202
+  xy: 785, 202
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 stone
   rotate: false
-  xy: 883, 202
+  xy: 148, 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 trampoline
   rotate: false
-  xy: 932, 202
+  xy: 736, 104
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

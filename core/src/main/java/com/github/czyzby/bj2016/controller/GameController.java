@@ -39,6 +39,7 @@ import com.github.czyzby.bj2016.entity.sprite.MinionSprite;
 import com.github.czyzby.bj2016.entity.sprite.PlayerSprite;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.service.GameAssetService;
+import com.github.czyzby.bj2016.service.PlayerService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
 import com.github.czyzby.kiwi.util.common.Strings;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
@@ -58,6 +59,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @Inject private Box2DService box2d;
     @Inject private GameAssetService gameAssetService;
     @Inject private LocaleService localeService;
+    @Inject private PlayerService playerService;
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
     @LmlActor("points[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Label> pointLabels;
     @LmlActor("icon[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Image> playerIcons;
@@ -278,6 +280,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         } else if (getActivePlayersCount() == 1) {
             running = false;
             box2d.addPenalty(3);
+            playerService.rerollComputerSprites();
             interfaceService.showDialog(WinController.class);
         }
     }
