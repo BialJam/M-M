@@ -1,5 +1,6 @@
 package com.github.czyzby.bj2016.desktop;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner;
@@ -23,6 +24,9 @@ public class DesktopLauncher {
         configuration.width = Root.WIDTH;
         configuration.height = Root.HEIGHT;
         configuration.resizable = false; // Meh.
+        for (final int size : new int[] { 128, 64, 32, 16 }) {
+            configuration.addIcon("icon" + size + ".png", FileType.Internal);
+        }
         return configuration;
     }
 }

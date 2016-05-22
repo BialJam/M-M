@@ -108,6 +108,16 @@ public enum BonusType {
             player.addSpeed(1500f);
         }
     },
+    DRINK("energetyk") {
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+            if (box2d.isSoloMode()) {
+                player.addSpeed(1000f);
+            } else {
+                player.addMinionSpeed(150f);
+            }
+        }
+    },
     BOMB("bomba") {
         private final Vector2 explosionStart = new Vector2();
         private final Vector2 explosionEnd = new Vector2();

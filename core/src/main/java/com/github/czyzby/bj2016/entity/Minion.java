@@ -43,8 +43,8 @@ public class Minion extends AbstractEntity {
             timeSinceLastTrack = 0;
             updateMovement();
         }
-        body.applyForceToCenter(delta * movement.x * Box2DUtil.MINION_SPEED,
-                delta * movement.y * Box2DUtil.MINION_SPEED, true);
+        body.applyForceToCenter(delta * movement.x * parent.getMinionSpeed(),
+                delta * movement.y * parent.getMinionSpeed(), true);
     }
 
     private void updateMovement() {
