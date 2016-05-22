@@ -238,6 +238,11 @@ public enum BonusType {
                 }
             }
         }
+
+        @Override
+        public void playSound(final SoundService soundService) {
+            soundService.playRandomJumpSound();
+        }
     },;
 
     private final String id;
