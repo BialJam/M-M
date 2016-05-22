@@ -7,11 +7,12 @@ import com.badlogic.gdx.math.MathUtils;
  * @author MJ */
 public enum BlockType {
     BUSH("bush", 20f),
-    BUSHES("krzewy", 20f),
+    BUSHES("krzewy", 15f),
     STONE("stone", 30f),
+    BOULDER("boulder", 30f),
     ROCK("rock", 35f),
-    TRASH("kosz", 25f),
-    BENCH("lawka", 30f);
+    TRASH("kosz", 20f),
+    BENCH("lawka", 25f);
 
     private final String id;
     private float health;
