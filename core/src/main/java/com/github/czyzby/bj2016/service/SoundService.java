@@ -17,6 +17,10 @@ public class SoundService {
             "sounds/punch4.ogg" }, type = Sound.class) private Array<Sound> punchSounds;
     @Asset(value = { "sounds/bonus0.ogg", "sounds/bonus1.ogg", "sounds/bonus2.ogg" },
             type = Sound.class) private Array<Sound> bonusSounds;
+    @Asset(value = { "sounds/female0.ogg", "sounds/female1.ogg" },
+            type = Sound.class) private Array<Sound> femaleScreams;
+    @Asset(value = { "sounds/male0.ogg", "sounds/male1.ogg", "sounds/male2.ogg", "sounds/male3.ogg",
+            "sounds/male4.ogg" }, type = Sound.class) private Array<Sound> maleScreams;
 
     /** Starts a random punch sound. */
     public void playRandomPunchSound() {
@@ -26,5 +30,15 @@ public class SoundService {
     /** Starts a random bonus sound. */
     public void playRandomBonusSound() {
         musicService.play(bonusSounds.random());
+    }
+
+    /** Starts a random female death sound. */
+    public void playRandomFemaleScream() {
+        musicService.play(femaleScreams.random());
+    }
+
+    /** Starts a random male death sound. */
+    public void playRandomMaleScream() {
+        musicService.play(maleScreams.random());
     }
 }

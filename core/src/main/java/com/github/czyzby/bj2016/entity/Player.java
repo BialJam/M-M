@@ -136,6 +136,11 @@ public class Player extends AbstractEntity {
     public void destroy() {
         super.destroy();
         minions.clear();
+        if (sprite.isFemale()) {
+            box2d.getSoundService().playRandomFemaleScream();
+        } else {
+            box2d.getSoundService().playRandomMaleScream();
+        }
     }
 
     /** Increments minions counter. */

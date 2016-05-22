@@ -1,6 +1,9 @@
 package com.github.czyzby.bj2016.entity;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.bj2016.service.Box2DService;
 import com.github.czyzby.bj2016.util.Box2DUtil;
@@ -50,7 +53,7 @@ public enum BonusType {
                 for (final Player entity : box2d.getPlayers()) {
                     if (entity != player) {
                         final Array<Minion> minions = entity.getMinions();
-                        for (int index = 0; index < 5; index++) {
+                        for (int index = 0; index < 10; index++) {
                             final Minion minion = minions.random();
                             if (!minion.isDestroyed()) {
                                 minion.setDestroyed(true);
@@ -70,6 +73,50 @@ public enum BonusType {
                     entity.getBody().applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED,
                             MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED, true);
                 }
+            }
+        }
+    },
+    BOOTS("buty") {
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+
+        }
+    },
+    BOMB("bomba") {
+        private final Vector2 explosionStart = new Vector2();
+        private final Vector2 explosionEnd = new Vector2();
+        private final Vector2 currentPosition = new Vector2();
+        private final float angle15 = 15f * MathUtils.degreesToRadians;
+        private final float radius = 3f;
+        private Box2DService box2d;
+        private final RayCastCallback callback = new RayCastCallback() {
+            @Override
+            public float reportRayFixture(final Fixture fixture, final Vector2 point, final Vector2 normal,
+                    final float fraction) {
+                final Object data = fixture.getUserData();
+                if (data != null) {
+                    final Entity entity = (Entity) data;
+                    if (entity.getType() == EntityType.MINION || entity.getType() == EntityType.BLOCK) {
+                        entity.setDestroyed(true);
+                    } else if (entity.getType() == EntityType.PLAYER) {
+                        if (box2d.isSoloMode()) {
+                            ((Player) entity).damage(-20f);
+                        }
+                        // TODO push
+                    }
+                }
+                return 1f;
+            }
+        };
+
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+            currentPosition.set(player.getX(), player.getY());
+            for (float angle = 0f; angle < MathUtils.PI * 2; angle += angle15) {
+                explosionStart.set(currentPosition.x, currentPosition.y);
+                explosionEnd.set(currentPosition.x + radius * MathUtils.cos(angle),
+                        currentPosition.y + radius * MathUtils.sin(angle));
+                box2d.getWorld().rayCast(callback, explosionStart, explosionEnd);
             }
         }
     };

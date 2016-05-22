@@ -196,7 +196,6 @@ public class Box2DService extends AbstractService {
             if (bonus.isDestroyed()) {
                 bonus.destroy();
                 bonuses.remove();
-                // TODO sound?
             }
         }
     }

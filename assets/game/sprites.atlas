@@ -6,161 +6,175 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 barbie
   rotate: false
-  xy: 1, 2
+  xy: 1, 19
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 barbie-small
   rotate: false
-  xy: 778, 17
+  xy: 876, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+bomba
+  rotate: false
+  xy: 680, 67
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 bush
   rotate: false
-  xy: 680, 50
+  xy: 729, 67
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+buty
+  rotate: false
+  xy: 778, 67
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 czaszka
   rotate: false
-  xy: 729, 50
+  xy: 827, 67
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 dres
   rotate: false
-  xy: 98, 2
+  xy: 98, 19
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 dres-small
   rotate: false
-  xy: 811, 17
+  xy: 909, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 emo
   rotate: false
-  xy: 195, 2
+  xy: 195, 19
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 emo-small
   rotate: false
-  xy: 844, 17
+  xy: 942, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 778, 50
+  xy: 876, 67
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 kibol
   rotate: false
-  xy: 292, 2
+  xy: 292, 19
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 kibol-small
   rotate: false
-  xy: 877, 17
+  xy: 975, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 kosz
   rotate: false
-  xy: 827, 50
+  xy: 925, 67
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 lawka
   rotate: false
-  xy: 876, 50
+  xy: 974, 67
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 magnez
   rotate: false
-  xy: 925, 50
+  xy: 680, 18
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 menel
   rotate: false
-  xy: 389, 2
+  xy: 389, 19
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 menel-small
   rotate: false
-  xy: 910, 17
+  xy: 876, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 moher
   rotate: false
-  xy: 486, 2
+  xy: 486, 19
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 moher-small
   rotate: false
-  xy: 943, 17
+  xy: 909, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 punk
   rotate: false
-  xy: 583, 2
+  xy: 583, 19
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 punk-small
   rotate: false
-  xy: 976, 17
+  xy: 942, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 974, 50
+  xy: 729, 18
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 stone
   rotate: false
-  xy: 680, 1
+  xy: 778, 18
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 trampoline
   rotate: false
-  xy: 729, 1
+  xy: 827, 18
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
