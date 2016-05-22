@@ -6,4 +6,7 @@
     <extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.bj2016.configuration" />
     <extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.bj2016.controller" />
     <extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.bj2016.service" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.TextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.Texture" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.audio.Sound" />
 </module>
