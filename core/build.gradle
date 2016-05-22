@@ -4,7 +4,6 @@ eclipse.project.name = appName + '-core'
 dependencies {
   compile "com.badlogicgames.gdx:gdx:$gdxVersion"
   compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-  compile "com.badlogicgames.box2dlights:box2dlights:$box2dlightsVersion"
   compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
   compile "com.github.czyzby:gdx-autumn-mvc:$autumnMvcVersion"
   compile "com.github.czyzby:gdx-lml:$lmlVersion"

@@ -281,6 +281,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         } else if (getActivePlayersCount() == 1) {
             running = false;
             box2d.addPenalty(3);
+            box2d.addPoint(getFirstPlayer().getId());
             playerService.rerollComputerSprites();
             interfaceService.showDialog(WinController.class);
         }
@@ -294,6 +295,15 @@ public class GameController extends StandardViewShower implements ViewResizer, V
             }
         }
         return count;
+    }
+
+    private Player getFirstPlayer() {
+        for (final Player player : box2d.getPlayers()) {
+            if (!player.isDestroyed()) {
+                return player;
+            }
+        }
+        return null;
     }
 
     private boolean isAnyPlayerActive() {

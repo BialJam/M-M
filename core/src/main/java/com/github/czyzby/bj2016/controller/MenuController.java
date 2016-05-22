@@ -38,7 +38,7 @@ public class MenuController extends StandardViewShower implements ActionContaine
 
     @Override
     public void show(final Stage stage, final Action action) {
-        box2dService.resetPenalty(); // Going back to menu resets progress.
+        box2dService.reset(); // Going back to menu resets progress.
         super.show(stage, action);
     }
 

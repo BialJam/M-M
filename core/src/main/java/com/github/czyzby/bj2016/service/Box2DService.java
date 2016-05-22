@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntIntMap;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.czyzby.autumn.annotation.Component;
@@ -57,6 +58,7 @@ public class Box2DService extends AbstractService {
     private boolean soloMode;
     private int penalty;
     private final int[] deaths = new int[Configuration.PLAYERS_AMOUNT];
+    private final IntIntMap scores = new IntIntMap();
 
     /** Call this method to (re)create Box2D world according to current settings. */
     public void create() {
@@ -106,6 +108,9 @@ public class Box2DService extends AbstractService {
                 spawnMinions(player);
                 if (control.isHumanControlled()) {
                     player.setHealth(100f - penalty - deaths[player.getId()]);
+                    if (!scores.containsKey(index)) {
+                        scores.put(index, 0);
+                    }
                 } else {
                     player.setHealth(150f);
                 }
@@ -118,9 +123,21 @@ public class Box2DService extends AbstractService {
         this.penalty += penalty;
     }
 
-    /** No penalty will be applied to players. */
-    public void resetPenalty() {
+    /** @param playerId has just won. */
+    public void addPoint(final int playerId) {
+        scores.getAndIncrement(playerId, 0, 1);
+    }
+
+    /** @param playerId ID of the player.
+     * @return current amount of points or 0. */
+    public int getPoints(final int playerId) {
+        return scores.get(playerId, 0);
+    }
+
+    /** No penalty will be applied to players, scores will be cleared. */
+    public void reset() {
         penalty = 0;
+        scores.clear();
         for (int index = 0; index < deaths.length; index++) {
             deaths[index] = 0;
         }

@@ -1,4 +1,6 @@
 <dialog title="@ohBoy" titleAlign="center" style="dialog">
-	<image style="loss" />
+	<image style="loss" row="true" />
+	<label style="small" row="true">@scores</label>
+	<table id="scores" grow="true" />
 	<textButton onResult="goto:menu" growX="true">@back</textButton>
 </dialog>
