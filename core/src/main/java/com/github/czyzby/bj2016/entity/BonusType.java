@@ -114,7 +114,7 @@ public enum BonusType {
                     } else if (entity.getType() == EntityType.MINION) {
                         final Minion minion = (Minion) entity;
                         if (minion.getId() == player.getId()) {
-                            minion.damage(5f);
+                            minion.damage(4f);
                         } else {
                             minion.setDestroyed(true);
                         }

@@ -4,6 +4,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -63,22 +65,29 @@ public class Box2DService extends AbstractService {
         world = new World(GRAVITY, true);
         createGameBounds();
         createPlayers();
-        final Vector2 position = new Vector2();
+        createBlocks();
+        world.setContactListener(contactService);
+    }
+
+    private void createBlocks() {
         gridService.getGrid().forEach(new CellConsumer() {
             @Override
             public boolean consume(final Grid grid, final int x, final int y, final float value) {
                 if (gridService.isFull(x, y) && validate(x, y)) {
-                    final Block block = new Block(Box2DService.this, BlockType.getRandom());
-                    final Body body = block.getBody();
-                    position.x = -(Box2DUtil.WIDTH / 2f) + x * GridService.CELL_SIZE;
-                    position.y = -(Box2DUtil.HEIGHT / 2f) + y * GridService.CELL_SIZE;
-                    body.setTransform(position, 0f);
-                    blocks.add(block);
+                    spawnBlock(-(Box2DUtil.WIDTH / 2f) + x * GridService.CELL_SIZE,
+                            -(Box2DUtil.HEIGHT / 2f) + y * GridService.CELL_SIZE);
                 }
                 return CONTINUE;
             }
         });
-        world.setContactListener(contactService);
+    }
+
+    private Block spawnBlock(final float x, final float y) {
+        final Block block = new Block(Box2DService.this, BlockType.getRandom());
+        final Body body = block.getBody();
+        body.setTransform(x, y, 0f);
+        blocks.add(block);
+        return block;
     }
 
     /** @return service which allows to play sounds. */
@@ -133,18 +142,27 @@ public class Box2DService extends AbstractService {
             final float y = index / MINION_ROW_SIZE;
             final float posX = x * 1.1f + playerX;
             final float posY = y * 1.1f + playerY;
-            spawnMinion(player, posX, posY);
+            addMinion(player, posX, posY);
         }
+    }
+
+    /** @param player owner of the minion.
+     * @param x starting X position.
+     * @param y starting Y position.
+     * @return minion entity. */
+    public Minion addMinion(final Player player, final float x, final float y) {
+        final Minion minion = new Minion(this, player);
+        minion.getBody().setTransform(x, y, 0f);
+        player.addMinion(minion);
+        minions.add(minion);
+        return minion;
     }
 
     /** @param player owner of the minion.
      * @param x starting X position.
      * @param y starting Y position. */
     public void spawnMinion(final Player player, final float x, final float y) {
-        final Minion minion = new Minion(this, player);
-        minion.getBody().setTransform(x, y, 0f);
-        player.addMinion(minion);
-        minions.add(minion);
+        gameController.addMinion(addMinion(player, x, y));
     }
 
     /** @return list of all player minions. */
@@ -225,7 +243,7 @@ public class Box2DService extends AbstractService {
     }
 
     private void spawnBonus(final Block block) {
-        if (MathUtils.randomBoolean(0.333f)) {
+        if (MathUtils.randomBoolean(soloMode ? 0.666f : 0.333f)) {
             final Bonus bonus = new Bonus(this, BonusType.getRandom());
             bonus.getBody().setTransform(block.getBody().getPosition().x, block.getBody().getPosition().y, 0f);
             bonuses.add(bonus);
@@ -295,6 +313,27 @@ public class Box2DService extends AbstractService {
         soloMode = true;
         for (final Minion minion : minions) {
             minion.setDestroyed(true);
+        }
+        // Spawning additional obstacles:
+        final boolean[] isTaken = new boolean[1];
+        final QueryCallback callback = new QueryCallback() {
+            @Override
+            public boolean reportFixture(final Fixture fixture) {
+                isTaken[0] = true;
+                return false;
+            }
+        };
+        final float width = Box2DUtil.WIDTH * 2f / 5f - Block.HALF_SIZE;
+        final float height = Box2DUtil.HEIGHT * 2f / 5f - Block.HALF_SIZE;
+        for (int index = 0; index < 15; index++) {
+            final float x = MathUtils.random(-width, width);
+            final float y = MathUtils.random(-height, height);
+            isTaken[0] = false;
+            world.QueryAABB(callback, x - Block.HALF_SIZE, y - Block.HALF_SIZE, x + Block.HALF_SIZE,
+                    y + Block.HALF_SIZE);
+            if (!isTaken[0]) {
+                gameController.addBlock(spawnBlock(x, y));
+            }
         }
     }
 

@@ -1,7 +1,7 @@
 <table fillParent="true" defaultExpand="true">
 	<table id="player0" align="topLeft" background="border-dot">
 		<image id="icon0"/>
-		<label color="t-highlight">@player0</label>
+		<label id="name0" color="t-highlight">@player0</label>
 		<label id="points0" width="100" textAlign="right">81</label>
 	</table>
 	<table align="top" background="border-dot" color="t-highlight">
@@ -9,19 +9,19 @@
 	</table>
 	<table id="player2" align="topRight" row="true" background="border-dot">
 		<image id="icon2"/>
-		<label color="t-highlight">@player2</label>
+		<label id="name2" color="t-highlight">@player2</label>
 		<label id="points2" width="100" textAlign="right">81</label>
 	</table>
 	<table id="player3" align="bottomLeft" background="border-dot">
 		<image id="icon3"/>
-		<label color="t-highlight">@player3</label>
+		<label id="name3" color="t-highlight">@player3</label>
 		<label id="points3" width="100" textAlign="right">81</label>
 	</table>
 	<textButton style="dark" align="bottom" onChange="goto:menu">@giveUp
 	</textButton>
 	<table id="player1" align="bottomRight" background="border-dot">
 		<image id="icon1"/>
-		<label color="t-highlight">@player1</label>
+		<label id="name1" color="t-highlight">@player1</label>
 		<label id="points1" width="100" textAlign="right">81</label>
 	</table>
 	<isolate>

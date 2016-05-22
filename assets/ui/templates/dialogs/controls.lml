@@ -6,7 +6,7 @@
 				<image id="sprite{loop:index}"/>
 			</container>
 			<textButton id="next{loop:index}" onChange="next">@gt</textButton>
-			<label color="vis-blue" style="small" align="left">@player{loop:index}</label>
+			<label id="name{loop:index}" textAlign="center" color="vis-blue" style="small" align="left" width="125">@player{loop:index}</label>
 			<textButton id="edit{loop:index}" onChange="edit">@edit</textButton>
 			<textButton id="switch{loop:index}" onChange="switch" row="true">@switch</textButton>
 		</:loop>

@@ -3,14 +3,17 @@ package com.github.czyzby.bj2016.controller.dialog;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.github.czyzby.autumn.annotation.Inject;
+import com.github.czyzby.autumn.mvc.component.i18n.LocaleService;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogShower;
 import com.github.czyzby.autumn.mvc.stereotype.ViewDialog;
 import com.github.czyzby.bj2016.configuration.Configuration;
+import com.github.czyzby.bj2016.entity.sprite.SpriteType;
 import com.github.czyzby.bj2016.service.ControlsService;
 import com.github.czyzby.bj2016.service.GameAssetService;
 import com.github.czyzby.bj2016.service.PlayerService;
@@ -29,9 +32,11 @@ public class ControlsController implements ActionContainer, ViewDialogShower {
     @Inject InterfaceService interfaceService;
     @Inject PlayerService playerService;
     @Inject GameAssetService gameAssetService;
+    @Inject LocaleService localeService;
     /** Controller edition buttons mapped by their in-view IDs. */
     @LmlActor("edit[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") private ObjectMap<String, Button> editButtons;
     @LmlActor("sprite[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") private ObjectMap<String, Image> spriteImages;
+    @LmlActor("name[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") private Array<Label> spriteNames;
 
     @Override
     public void doBeforeShow(final Window dialog) {
@@ -42,10 +47,11 @@ public class ControlsController implements ActionContainer, ViewDialogShower {
         }
     }
 
-    /** @param playerId ID of the player whic should be updated. */
+    /** @param playerId ID of the player which should be updated. */
     public void refreshPlayerSprite(final int playerId) {
-        spriteImages.get("sprite" + playerId)
-                .setDrawable(gameAssetService.getDrawable(playerService.getSpriteType(playerId).getDrawableName()));
+        final SpriteType sprite = playerService.getSpriteType(playerId);
+        spriteImages.get("sprite" + playerId).setDrawable(gameAssetService.getDrawable(sprite.getDrawableName()));
+        spriteNames.get(playerId).setText(localeService.getI18nBundle().get(sprite.name()));
     }
 
     /** @param control belongs to the player. Should be called after the control is switched.

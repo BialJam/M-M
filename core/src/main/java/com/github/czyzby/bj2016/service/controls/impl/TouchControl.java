@@ -14,12 +14,16 @@ import com.github.czyzby.bj2016.service.controls.ControlType;
 /** Allows to control entity with touch events. */
 public class TouchControl extends AbstractControl {
     private final Vector2 entityPosition = new Vector2();
+    private boolean moving;
+    private float x;
+    private float y;
 
     @Override
     public void attachInputListener(final InputMultiplexer inputMultiplexer) {
         inputMultiplexer.addProcessor(new InputAdapter() {
             @Override
             public boolean touchDown(final int screenX, final int screenY, final int pointer, final int button) {
+                moving = true;
                 updateDirection(screenX, Gdx.graphics.getHeight() - screenY);
                 return false;
             }
@@ -33,18 +37,23 @@ public class TouchControl extends AbstractControl {
             @Override
             public boolean touchUp(final int screenX, final int screenY, final int pointer, final int button) {
                 stop();
+                moving = false;
                 return false;
             }
         });
     }
 
-    private void updateDirection(final float x, final float y) {
-        updateMovementWithAngle(MathUtils.atan2(y - entityPosition.y, x - entityPosition.x));
+    private void updateDirection(final int x, final int y) {
+        this.x = x;
+        this.y = y;
     }
 
     @Override
     public void update(final Box2DService box2d, final Viewport viewport, final float gameX, final float gameY) {
         viewport.project(entityPosition.set(gameX, gameY));
+        if (moving) {
+            updateMovementWithAngle(MathUtils.atan2(y - entityPosition.y, x - entityPosition.x));
+        }
     }
 
     @Override

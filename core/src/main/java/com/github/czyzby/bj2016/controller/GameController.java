@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.github.czyzby.autumn.annotation.Inject;
+import com.github.czyzby.autumn.mvc.component.i18n.LocaleService;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
@@ -56,9 +57,11 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @Inject private InterfaceService interfaceService;
     @Inject private Box2DService box2d;
     @Inject private GameAssetService gameAssetService;
+    @Inject private LocaleService localeService;
     @LmlActor("player[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Table> playerViews;
     @LmlActor("points[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Label> pointLabels;
     @LmlActor("icon[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Image> playerIcons;
+    @LmlActor("name[0," + (Configuration.PLAYERS_AMOUNT - 1) + "]") Array<Label> nameLabels;
     @LmlActor("time") private Label timerLabel;
     @LmlActor("solo") private Image soloPrompt;
     private final int[] cachedPoints = new int[Configuration.PLAYERS_AMOUNT];
@@ -82,6 +85,7 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         bonuses.clear();
         effects.clear();
         box2d.create();
+        minionSprites.clear();
         running = true;
         timer = 0f;
         background = gameAssetService.getRandomBackground();
@@ -111,15 +115,21 @@ public class GameController extends StandardViewShower implements ViewResizer, V
                     .setDrawable(gameAssetService.getDrawable(player.getSprite().getSmallDrawableName()));
             playerViews.get(player.getId()).setVisible(true);
             pointLabels.get(player.getId()).setText(String.valueOf(player.getId()));
+            nameLabels.get(player.getId()).setText(localeService.getI18nBundle().get(player.getSprite().name()));
         }
     }
 
     private void createBlockSprites() {
         blocks.clear();
         for (final Block block : box2d.getBlocks()) {
-            final Sprite sprite = gameAssetService.getSprite(block.getBlockType().getDrawableName());
-            blocks.add(new BlockSprite(block, sprite));
+            addBlock(block);
         }
+    }
+
+    /** @param block Box2D entity which will be represented by a sprite. */
+    public void addBlock(final Block block) {
+        final Sprite sprite = gameAssetService.getSprite(block.getBlockType().getDrawableName());
+        blocks.add(new BlockSprite(block, sprite));
     }
 
     private void createMinionSprites() {
