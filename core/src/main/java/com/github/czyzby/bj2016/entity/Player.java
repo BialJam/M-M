@@ -20,6 +20,8 @@ import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
  *
  * @author MJ */
 public class Player extends AbstractEntity {
+    public static final float HALF_SIZE = 96f / Box2DUtil.PPU / 2f;
+
     private final Array<Minion> minions = GdxArrays.newArray();
     private final Control control;
     private final SpriteType sprite;
@@ -195,14 +197,14 @@ public class Player extends AbstractEntity {
         }
     }
 
-    /** @param body body of the minion that damaged this entity. */
+    /** @param body body of the player that damaged this entity. */
     private void damage(final Body body) {
-        final float angle = MathUtils.atan2(body.getPosition().y - this.body.getPosition().y,
-                body.getPosition().x - this.body.getPosition().x);
+        final float angle = MathUtils.atan2(this.body.getPosition().y - body.getPosition().y,
+                this.body.getPosition().x - body.getPosition().x);
         damage(getTotalForce(body) / 2f);
         box2d.getSoundService().playRandomPunchSound();
-        this.body.applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED,
-                MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED, true);
+        this.body.applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED / 2f,
+                MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED / 2f, true);
     }
 
     /** @param health will be subtracted from current health amount. */

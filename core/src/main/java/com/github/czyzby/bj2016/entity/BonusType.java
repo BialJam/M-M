@@ -3,6 +3,7 @@ package com.github.czyzby.bj2016.entity;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.bj2016.entity.sprite.EffectType;
@@ -43,6 +44,19 @@ public enum BonusType {
                 for (int index = 0; index < 3; index++) { // I <3 index.
                     box2d.spawnMinion(player, player.getX() + MathUtils.random(-1f, 1f),
                             player.getY() + MathUtils.random(-1f, 1f));
+                }
+            }
+        }
+    },
+    BAG("torba") {
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+            if (box2d.isSoloMode()) {
+                player.damage(-10f);
+            } else {
+                for (int index = 0; index < 9; index++) {
+                    box2d.spawnMinion(player, player.getX() + MathUtils.random(-1f, 1f),
+                            player.getY() + MathUtils.random(-2.5f, 2.5f));
                 }
             }
         }
@@ -150,7 +164,71 @@ public enum BonusType {
         public void playSound(final SoundService soundService) {
             soundService.playRandomCrushSound();
         }
-    };
+    },
+    TAR("glut") {
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+            player.addSpeed(-1000f);
+        }
+
+        @Override
+        public void playSound(final SoundService soundService) {
+            soundService.playRandomJumpSound();
+        }
+    },
+    FAN("wachlarz") {
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+            for (final Player entity : box2d.getPlayers()) {
+                if (entity != player) {
+                    final float angle = MathUtils.atan2(entity.getY() - player.getY(), entity.getX() - player.getX());
+                    entity.getBody().applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.PLAYER_SPEED,
+                            MathUtils.sin(angle) * Box2DUtil.PLAYER_SPEED, true);
+                }
+            }
+        }
+    },
+    TELEPORT("studzienka") {
+        @Override
+        public void apply(final Box2DService box2d, final Player player) {
+            final boolean[] isTaken = new boolean[1];
+            final QueryCallback callback = new QueryCallback() {
+                @Override
+                public boolean reportFixture(final Fixture fixture) {
+                    final Object data = fixture.getUserData();
+                    if (data != null) {
+                        final Entity entity = (Entity) data;
+                        if (entity.getType() == EntityType.PLAYER || entity.getType() == EntityType.BLOCK) {
+                            isTaken[0] = true;
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            };
+            final float width = Box2DUtil.WIDTH * 2f / 5f - Player.HALF_SIZE;
+            final float height = Box2DUtil.HEIGHT * 2f / 5f - Player.HALF_SIZE;
+            for (int index = 0; index < 15; index++) {
+                isTaken[0] = true;
+                int testsAmount = 0;
+                float x = 0f;
+                float y = 0f;
+                while (isTaken[0] && testsAmount < 15) {
+                    isTaken[0] = false;
+                    x = MathUtils.random(-width, width);
+                    y = MathUtils.random(-height, height);
+                    box2d.getWorld().QueryAABB(callback, x - Block.HALF_SIZE, y - Block.HALF_SIZE, x + Block.HALF_SIZE,
+                            y + Block.HALF_SIZE);
+                    testsAmount++;
+                }
+                if (!isTaken[0]) {
+                    player.body.setTransform(x, y, 0f);
+                } else if (box2d.isSoloMode()) {
+                    player.damage(10f);
+                }
+            }
+        }
+    },;
 
     private final String id;
 

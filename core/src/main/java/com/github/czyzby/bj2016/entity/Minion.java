@@ -151,8 +151,8 @@ public class Minion extends AbstractEntity {
 
     /** @param body body of the minion that damaged this entity. */
     private void damage(final Body body) {
-        final float angle = MathUtils.atan2(body.getPosition().y - this.body.getPosition().y,
-                body.getPosition().x - this.body.getPosition().x);
+        final float angle = MathUtils.atan2(this.body.getPosition().y - body.getPosition().y,
+                this.body.getPosition().x - body.getPosition().x);
         this.body.applyForceToCenter(MathUtils.cos(angle) * Box2DUtil.MINION_SPEED,
                 MathUtils.sin(angle) * Box2DUtil.MINION_SPEED, true);
         damage(getTotalForce(body));

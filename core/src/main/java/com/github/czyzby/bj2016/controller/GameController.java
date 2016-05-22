@@ -22,6 +22,7 @@ import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
+import com.github.czyzby.autumn.mvc.component.ui.dto.ThemeOrdering;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.autumn.mvc.stereotype.ViewStage;
 import com.github.czyzby.bj2016.configuration.Configuration;
@@ -48,7 +49,8 @@ import com.github.czyzby.lml.annotation.LmlActor;
 
 /** Renders Box2D world. */
 @View(id = "game", value = "ui/templates/game.lml",
-        themes = { "music/buySomething.ogg", "music/funkorama.ogg", "music/unfinishedBusiness.ogg" })
+        themes = { "music/funkorama.ogg", "music/buySomething.ogg", "music/unfinishedBusiness.ogg" },
+        themeOrdering = ThemeOrdering.RANDOM)
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer {
     private static final float GAME_LENGTH = 60f; // In seconds.
     private static final int BACKGROUND_X = (int) -(Box2DUtil.WIDTH / 2f),
